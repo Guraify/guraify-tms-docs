@@ -369,6 +369,18 @@ tiene campo propio se guarda tal cual en el Viaje para su análisis posterior.
      - Una fila por Parada de la ejecución que acabó sin ruta: ``origin`` (``excluded``, no se
        envió; ``provider``, el motor no la planificó), ``code`` y ``reason``. Pestaña Paradas
        sin planificar de la ejecución
+   * - Escenario de optimización
+     - ``tms.optimization.scenario`` (``source``, ``trip_ids``, ``stop_ids``,
+       ``source_snapshot_json``, ``evaluation_only``)
+     - El universo de Paradas, la foto de en qué Viaje estaba cada una (caducidad) y la
+       comparativa (``compare_rows()``, con la columna del plan actual)
+   * - Ventana de escenario
+     - ``tms.optimization.scenario.window`` (``engine``, ``plan_json``, ``plan_version``,
+       ``metrics_json``, ``routing_json``)
+     - Una alternativa del escenario: el plan en la forma de PTV, con el Viaje que conserva cada
+       ruta (``tripId``), sus cifras medidas contra el universo y el ruteo en seco. La torre de
+       control leerá y escribirá el plan con ``compute_metrics()``, ``route_plan_route()`` y
+       ``write_plan(plan, plan_version)``, que rechaza una versión que ya no es la vigente
    * - Preset de optimización
      - ``tms.ptv.preset``
      - Lo que el motor persigue y lo que puede violar (:ref:`presets-optimizacion`)
@@ -519,9 +531,6 @@ que necesita de Odoo está hecho casi todo; lo que queda es:
 - **Avisos al Destinatario.** El motor de avisos por correo, SMS y WhatsApp funciona
   (:doc:`/17.0/11_notifications/index`), pero le faltan dos piezas: la página que abre el enlace
   de seguimiento del aviso y la cuenta real de WhatsApp, con sus plantillas aprobadas por Meta.
-- **Escenarios de optimización.** El menú Planning › Escenarios ya existe y está en prueba:
-  comparar en paralelo varias planificaciones del mismo día antes de aplicar una. No se
-  documenta hasta que esté terminado.
 - **Indicadores para el cliente.** Los indicadores ya distinguen a quién se dirigen (equipo
   interno, cliente o transportista), pero todavía no hay una pantalla en la que el cliente o el
   transportista los vea.

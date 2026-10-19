@@ -1518,6 +1518,32 @@
    "manual": "LLEVA NOMBRES Y DIRECCIONES DE PARADAS: anonimizar. No pulsar Aplicar plan ni Revertir"
   },
   {
+   "id": "5_2_11",
+   "file": "5_2_trip-generation_11_escenario.png",
+   "folder": "5_operational-flows",
+   "instance": "agent",
+   "action": "tms.tms_optimization_scenario_action",
+   "model": "tms.optimization.scenario",
+   "view": "form",
+   "domain": [
+    [
+     "window_ids",
+     "!=",
+     false
+    ]
+   ],
+   "steps": [
+    {
+     "tab": "Comparison"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "manual": "Un escenario en borrador con dos ventanas Listas (por ejemplo, la foto del plan actual y una de OptiFlow). NO pulsar Aplicar ni Revertir: aplicar crea o cambia Viajes en la base.",
+   "note": "Escenario con dos ventanas y la pestaña Comparativa con la columna Plan actual"
+  },
+  {
    "id": "5_4_02",
    "file": "5_4_app-execution_02_despacho.png",
    "folder": "5_operational-flows",

@@ -60,9 +60,10 @@ donde se declara qué conductor está disponible, cuándo y con qué vehículo; 
 :term:`Optimizador de Paradas`, que agrupa las Paradas pendientes en Viajes sobre el mapa con el
 motor de PTV; **Encontrar ruta**, que coloca Órdenes nuevas en rutas ya hechas
 (:doc:`/17.0/5_operational-flows/5_2_trip-generation`); y los registros de cada cálculo lanzado
-(**Ejecuciones de optimización**, **Secuenciaciones**). Las dos primeras se describen en
-:doc:`3_3_planning-model`. El menú **Escenarios**, para comparar varias planificaciones del mismo
-día antes de aplicar una, está en prueba y no se documenta todavía. El submenú se llama
+(**Ejecuciones de optimización**, **Secuenciaciones**); y **Escenarios**, que compara varias
+planificaciones del mismo día antes de aplicar una
+(:ref:`17.0/5_operational-flows/5_2_trip-generation:5.2.5 Comparar antes de aplicar: Escenarios`).
+Las dos primeras se describen en :doc:`3_3_planning-model`. El submenú se llama
 «Planning» en
 la interfaz, la misma palabra que la entidad :term:`Planning`; en esta documentación se le llama
 Planificación cuando se habla del menú.

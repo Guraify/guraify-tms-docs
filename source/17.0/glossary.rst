@@ -418,7 +418,20 @@ para quien lo necesite.
       Asistente que, con el día ya planificado, pregunta al motor en qué ruta existente cabe cada
       Orden y a qué coste, enseña las diferencias de hasta tres candidatas y aplica lo confirmado
       con reversión. **Repartir este viaje** lo usa para repartir una ruta que se cae. Capítulo
-      5.2.5. Modelo ``tms.find.route``.
+      5.2.6. Modelo ``tms.find.route``.
+
+   Escenario
+      Conjunto de Paradas de un Planning y una fecha (las pendientes o las de unos Viajes ya
+      planificados) sobre el que se prueban varias planificaciones, cada una en una
+      :term:`ventana <Ventana de escenario>`, para compararlas con la misma regla y aplicar la
+      mejor. No toca ningún Viaje hasta que se aplica una ventana, y aplica por diferencias:
+      conserva los Viajes que ya existen. Capítulo 5.2.5. Modelo ``tms.optimization.scenario``.
+
+   Ventana de escenario
+      Una alternativa dentro de un :term:`Escenario`: un plan calculado por PTV Developer o PTV
+      OptiFlow, o el plan actual copiado en una ventana manual, con sus cifras. Se dice
+      «ventana» a secas solo dentro del escenario; no confundir con la ventana horaria de una
+      Parada. Capítulo 5.2.5. Modelo ``tms.optimization.scenario.window``.
 
    Perfil de jornada
       Conjunto de reglas de horas de conducción y pausas (por defecto, el reglamento europeo

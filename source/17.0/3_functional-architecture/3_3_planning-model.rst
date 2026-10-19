@@ -97,10 +97,10 @@ Para que la optimización produzca Viajes viables deben cumplirse algunas condic
        no programadas del día siguiente.
    * - Tramo con hub
      - Una entrega cuyo Tramo no tiene **hub de descarga**, o una recogida cuyo Tramo no tiene
-       **hub de carga**, no se envía al optimizador: no sabe desde dónde sale ni adónde va. Pasa
-       cuando el Tramo no resolvió su zona operativa al crearse, aunque la Parada sí la tenga, así
-       que en el mapa parece normal. La ejecución la lista como «Excluida por nosotros» con el
-       motivo (:ref:`17.0/5_operational-flows/5_2_trip-generation:5.2.4.1 La ejecución y las Paradas sin planificar`).
+       **hub de carga**, no sabe desde dónde sale ni adónde va. Pasa cuando el Tramo no resolvió
+       su zona operativa al crearse. Al lanzar la optimización, el Tramo sin hub toma el de su
+       Parada y se guarda en el Tramo; solo si la Parada tampoco lo tiene, no se envía al
+       optimizador, y la ejecución la lista como «Excluida por nosotros» con el motivo (:ref:`17.0/5_operational-flows/5_2_trip-generation:5.2.4.1 La ejecución y las Paradas sin planificar`).
    * - Franjas horarias coherentes
      - Las ventanas de las Paradas y la disponibilidad de los recursos deben poder cumplirse a
        la vez; una Parada cuya franja no encaje queda en la lista de lo no planificado.

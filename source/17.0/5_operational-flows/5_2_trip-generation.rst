@@ -6,7 +6,7 @@
 
    TMS › Operaciones › Tráfico › Viajes · botón **Asignar** de la lista de Órdenes ·
    **Acciones operativas › Asignar a viaje** en la lista de Paradas · TMS › Operaciones ›
-   Planning › Optimizador de Paradas
+   Planning › Optimizador de Paradas · TMS › Operaciones › Planning › Escenarios
 
 .. figure:: /_static/img/5_operational-flows/5_2_trip-generation_01_generacion-viajes.png
    :alt: Optimizador de Paradas
@@ -20,7 +20,9 @@ en una fecha. Hay tres maneras de hacerlo, y las tres producen el mismo resultad
 (:doc:`5_3_resource-assignment`) y que no sale a la calle hasta que alguien lo despacha
 (:doc:`5_4_app-execution`). La excepción es el Viaje que nace al enviar Paradas a una
 agencia, que puede quedar ya despachado si la agencia recibe las instrucciones por API o el
-Proyecto lo pide (ver :doc:`5_4_app-execution`).
+Proyecto lo pide (ver :doc:`5_4_app-execution`). Cuando hay que elegir entre varias
+optimizaciones del mismo día, un escenario las compara antes de aplicar una
+(:ref:`escenarios`).
 
 5.2.1 Qué contiene un Viaje
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -204,11 +206,16 @@ llenarlos. Se lanza desde el asistente Asignar en modo **Optimización**, o desd
    (con los minutos del Planning, cambiables en **Avanzado**), **Permitir violar restricciones
    de vía**, **Permitir violar jornada, km, paradas y carga** y **Respetar zonas operativas**
    (No, Estricto o Preferido). El planificador puede cambiarlas; lo que se ejecuta son las
-   casillas, no el preset. El asistente avisa de antemano de las Paradas con coordenadas
-   sospechosas, que quedan fuera, y de los vehículos cuyo turno no encaja con su hora de salida.
+   casillas, no el preset. El asistente avisa de antemano de las Paradas que **no se enviarán**
+   al optimizador y por qué (coordenadas sospechosas, conflicto de equipamiento, sin Tramo,
+   Tramo y Parada sin hub: los motivos de 5.2.4.1), cada una con su enlace: se abre encima del
+   asistente, se corrige y, al guardarla, el aviso se rehace. Con Paradas fuera, **Ejecutar**
+   pide confirmación. También avisa de los vehículos cuyo turno no encaja con su hora de salida.
 #. **Lanzar la optimización.** El sistema envía al motor las Paradas, los vehículos con sus
    capacidades, costes y zonas y los conductores con su perfil de jornada, y sigue el progreso
-   en un diálogo. Desde el primer momento, antes de que PTV termine, el diálogo dice cuántas
+   en un diálogo. Antes de enviar, el Tramo que no tiene hub toma el de su Parada y se guarda en
+   el Tramo; la ejecución lo anota en su aviso. Si el motor rechaza la petición al recibirla, la
+   ejecución queda **Fallida** con el motivo y el diálogo lo enseña. Desde el primer momento, antes de que PTV termine, el diálogo dice cuántas
    **Paradas de la ejecución** hay, cuántas son **Paradas no enviadas al optimizador** y, al
    acabar, cuántas son **Paradas enviadas y sin planificar**, con un aviso por cada motivo y las
    Paradas enlazadas (5.2.4.1). **Cancelar optimización** lo para; si se cierra el navegador, una
@@ -285,9 +292,10 @@ dónde hay que corregir:
      - Corregir la dirección o las coordenadas del contacto. Además, la Parada sale en la pestaña
        Paradas excluidas.
    * - ``NO_HUB``
-     - Su Tramo de entrega no tiene hub de descarga (o el de recogida, hub de carga). Sale en
-       inglés en la interfaz.
-     - Darle el hub al Tramo; casi siempre es un Tramo que no resolvió su zona operativa al
+     - Su Tramo de entrega no tiene hub de descarga (o el de recogida, hub de carga), y su Parada
+       tampoco tiene hub. Sale en inglés en la interfaz.
+     - Darle el hub a la Parada o al Tramo. Si solo le faltaba al Tramo, al lanzar toma el de su
+       Parada y ya no sale aquí; casi siempre es un Tramo que no resolvió su zona operativa al
        crearse (:doc:`/17.0/3_functional-architecture/3_3_planning-model`).
    * - ``EQUIPMENT_CONFLICT``
      - Sus Órdenes piden equipamiento contradictorio (una exige lo que otra excluye). En inglés.
@@ -311,9 +319,162 @@ dónde hay que corregir:
 Las Paradas con coordenadas sospechosas tienen además su aviso de siempre en el diálogo. Las
 ejecuciones anteriores al 12 de octubre de 2026 no tienen esta lista.
 
+.. _escenarios:
+
+5.2.5 Comparar antes de aplicar: Escenarios
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. admonition:: Ruta en Odoo
+   :class: tip
+
+   TMS › Operaciones › Planning › **Escenarios**
+
+El asistente Asignar lanza una optimización y su plan se aplica o se descarta. Un
+:term:`Escenario` sirve cuando hay que elegir entre varias: el mismo día con PTV OptiFlow y con
+PTV Developer, con más o menos vehículos, con más tiempo de cálculo, o frente a cómo está
+planificado ahora. Cada alternativa es una :term:`ventana <Ventana de escenario>`; el escenario
+las mide con la misma regla, las pone una al lado de otra y **no toca ningún Viaje hasta que se
+aplica una**. En Odoo los escenarios se trabajan con tablas; el dibujo de las rutas sobre el mapa
+será de la torre de control.
+
+.. CAPTURA: 5_2_11 — descomentar el figure cuando esté la imagen
+   .. figure:: /_static/img/5_operational-flows/5_2_trip-generation_11_escenario.png
+      :alt: Escenario con dos ventanas y su comparativa
+
+      Un escenario con dos ventanas y la pestaña Comparativa: la mejor cifra de cada fila
+      marcada y la columna Plan actual como referencia.
+
+5.2.5.1 Origen, universo y caducidad
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Un escenario se crea con un Planning, una fecha y un **Origen**:
+
+- **Paradas pendientes**: las Paradas de ruta de ese Planning y esa fecha que no tienen Viaje y
+  no se han despachado. Es planificar el día desde cero.
+- **Viajes planificados**: las Paradas de ruta de los Viajes que se eligen en **Viajes de
+  origen** (del mismo Planning y la misma fecha). Es replanificar lo que ya está hecho, o
+  comprobar si se podría hacer mejor.
+
+El botón **Paradas de carga** llena el **universo** del escenario: las Paradas sobre las que
+trabajan todas sus ventanas (pestaña **Paradas**). El nombre viene de la traducción del botón y
+quiere decir «cargar las Paradas» del origen en el escenario; no tiene que ver con las Paradas en
+las que se carga mercancía. Al cargarlas, el escenario guarda en qué Viaje estaba cada una.
+
+**Caducidad.** Si otra persona planifica una Parada del universo o la saca de su Viaje, el
+escenario queda **caducado**: un aviso dice cuántas Paradas cambiaron de Viaje desde que se
+cargaron, y ninguna ventana se puede aplicar hasta pulsar **Actualizar paradas**. Actualizar
+vuelve a leer el origen y limpia el plan de cada ventana: quita las Paradas que salieron del
+universo, las rutas que se quedan sin servicios y el Viaje que una ruta ya no puede conservar
+(5.2.5.4); la ventana cuyo plan cambia se vuelve a medir. Un escenario aplicado o cerrado no
+caduca: ya no puede aplicar nada.
+
+**Solo evaluación.** Con origen Viajes planificados, si alguno de ellos ya está despachado, en
+curso o terminado, o tiene alguna Parada reportada, el escenario es **Solo evaluación**: se
+optimiza y se compara, pero no se aplica. Un aviso dice qué Viajes lo causan.
+
+5.2.5.2 Las ventanas
+^^^^^^^^^^^^^^^^^^^^
+
+**Añadir ventana** abre una ventana nueva con el **Motor por defecto** del escenario. Cada ventana
+tiene el suyo:
+
+- **PTV Developer** o **PTV OptiFlow** calculan el plan. Se les dicen los vehículos como en el modo
+  Optimización del asistente: **Tipo de asignación** por categoría («Por Categoría»: cuántos
+  vehículos de cada categoría, con su hub y su ventana de salida, en la pestaña **Vehículos**) o
+  por franja («Por Turno»: las franjas del Plan de disponibilidad). OptiFlow lleva además la
+  **Duración de la optimización**, 120 segundos por defecto: con más tiempo da más vueltas al
+  problema. La ventana no lleva preset ni las casillas de lo que se puede violar (5.2.4): la
+  petición sale con los valores de siempre de cada motor.
+- **Manual** no calcula: su plan es el día tal como está. **Tomar foto del plan actual** lo copia:
+  una ruta por Viaje de origen, con su Viaje, y las Paradas sin Viaje como no planificadas. Es el
+  punto de partida contra el que se miden las demás.
+
+**Optimizar** lanza el cálculo y abre el mismo diálogo de progreso que el asistente; la ventana
+pasa por **Optimizando** y queda **Lista** con su plan, o **Fallido** con el motivo. El plan de una
+ventana **nunca se aplica solo**. Una ventana Lista o Fallida se puede volver a optimizar: el plan
+nuevo sustituye al anterior, la pestaña **Ejecuciones** guarda todas y **Última ejecución** abre
+la :ref:`ejecución <17.0/5_operational-flows/5_2_trip-generation:5.2.4.1 La ejecución y las Paradas sin planificar>`
+que dio el plan vigente.
+
+El grupo **Plan** de la ventana resume lo que el plan hace con el universo: rutas, **Paradas del
+escenario**, **Paradas planificadas**, **No enviadas** (nunca llegaron al motor: las «excluidas
+por nosotros» de 5.2.4.1), **No planificadas por el motor**, distancia, duración, coste y CO₂. Si
+alguna Parada se queda sin ruta, un aviso lo dice en la cabecera («29 de 106 paradas del
+escenario no tienen ruta en este plan…») y la pestaña **Sin planificar** las lista con su origen,
+su código y su motivo, los mismos de 5.2.4.1; en una ventana manual, la Parada que falta sale como
+``NOT_IN_PLAN``. La pestaña **Rutas** da una fila por ruta: su vehículo, el **Viaje** que
+conservará al aplicar (vacía, si creará uno nuevo), sus Paradas, km, horas, coste, CO₂ y si está
+ruteada.
+
+**Rutear plan (en seco)** pide a PTV la ruta de verdad de cada ruta del plan, en el orden del plan
+y con el vehículo de la ruta, y devuelve km, horas, coste, peajes y CO₂ (con el esquema de
+emisiones de la política operativa). **No escribe nada en los Viajes ni en las Paradas**: el
+resultado se queda en la ventana, y una ruta que cambia deja de contar como ruteada. Las cifras
+del ruteo pueden separarse bastante de la estimación del motor; para comparar con justicia, hay
+que rutear todas las ventanas.
+
+**Descartar** aparta una ventana de la elección; **Restablecer** la recupera (vuelve a Lista si
+tiene plan).
+
+5.2.5.3 La comparativa
+^^^^^^^^^^^^^^^^^^^^^^
+
+La pestaña **Comparativa** pone una columna por ventana con plan (Lista, Aplicada o Descartada;
+las descartadas, atenuadas) y la columna **Plan actual**, que mide con la misma regla lo que hay
+ahora en los Viajes: antes de aplicar, el punto de partida; después, lo que tienen los Viajes. Hay
+una fila por cifra: rutas, Paradas del escenario, planificadas, no enviadas, no planificadas por
+el motor, órdenes programadas y sin programar, distancia, duración, conducción, coste, CO₂,
+violaciones, tiempo de cálculo y transacciones de PTV.
+
+En cada fila se marca la **mejor ventana**: la más alta en Paradas planificadas y en órdenes
+programadas, la más baja en todo lo demás. Un empate no marca a nadie, y el Plan actual nunca gana:
+es la referencia. Dos cifras tienen su regla:
+
+- **Coste.** Una sola para todos los motores: por ruta, coste fijo, más el coste por hora por las
+  horas, más el coste por km por los km, más el coste por parada por las Paradas de cliente
+  servidas, con los costes del vehículo de la ruta o de su categoría (los mismos que se envían a
+  OptiFlow). La cifra que da OptiFlow, que cobra también la carga en el hub, se guarda aparte en la
+  ventana y no se compara.
+- **CO₂.** Solo sale del ruteo en seco, y el total solo cuando todas las rutas del plan están
+  ruteadas; si no, la celda dice «-».
+
+5.2.5.4 Aplicar y revertir
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Aplicar** (en la ficha de la ventana o en su fila, con confirmación) solo está en una ventana
+Lista, de un escenario en borrador, no caducado y que no sea de solo evaluación. Aplica **por
+diferencias**, conservando lo que ya existe:
+
+- **Una ruta con Viaje conserva ese Viaje**, con su conductor, su vehículo, su transportista y su
+  orden de compra: solo cambian sus Paradas, su orden y sus horas, y se vuelve a rutear.
+- **Qué Viaje conserva cada ruta.** La foto de la ventana manual ya lo trae. Las rutas de un
+  optimizador se emparejan solas cuando llega el plan: la ruta que nombra un vehículo, con el Viaje
+  de ese vehículo; las demás, con el Viaje con el que comparten más Paradas, de la misma categoría.
+  Se ve en la pestaña Rutas antes de aplicar.
+- **Una ruta sin Viaje crea uno nuevo**, planificado, como el asistente. Con origen Paradas
+  pendientes no hay Viajes de origen, así que todas las rutas crean Viaje.
+- **Una Parada del universo que el plan no sirve sale de su Viaje** y queda pendiente. La ventana
+  ya lo avisa antes de aplicar.
+- **Un Viaje de origen que se queda sin ninguna ruta se borra**: un Viaje sin Paradas de ruta no
+  existe. Un Viaje de origen que pierde Paradas sin conservarse se vuelve a secuenciar.
+- Si el plan pide conservar un Viaje que ya no se puede (se ha borrado, está terminado, es de un
+  arrastre de agencia o lo piden dos rutas), **no se aplica nada** y se dice por qué.
+
+Después, la ventana queda **Aplicada**, las demás **Descartadas** y el escenario **Aplicado**; la
+comparativa sigue enseñando todas.
+
+Aplicar pasa por una Ejecución de optimización, como el asistente, y se deshace desde ella
+(**Última ejecución** de la ventana › **Revertir**): cada Parada vuelve a su Viaje y a su orden,
+los Viajes conservados recuperan su cabecera, los que creó el plan se borran y **el escenario se
+reabre**, con la ventana aplicada y las que descartó el aplicar otra vez Listas (una descartada a
+mano sigue descartada); se puede aplicar otra. Si al aplicar se borró un Viaje de origen, la
+reversión ya no es posible y lo dice.
+
+**Cerrar** aparta un escenario en borrador sin aplicar nada; **Reabrir** lo devuelve a borrador.
+
 .. _encontrar-ruta:
 
-5.2.5 Cuando el día ya está planificado: Encontrar ruta
+5.2.6 Cuando el día ya está planificado: Encontrar ruta
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. admonition:: Ruta en Odoo
