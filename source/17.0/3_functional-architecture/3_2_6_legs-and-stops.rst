@@ -116,9 +116,9 @@ pruebas de entrega de la app, en cambio, se enlazan al Tramo y la Orden del even
 
 .. CAPTURA: 3_2_6_03 — descomentar el figure cuando esté la imagen
    .. figure:: /_static/img/3_functional-architecture/3_2_6_legs-and-stops_03_adjuntos.png
-      :alt: Pestaña Adjuntos de una Parada con la firma y la foto del albarán
+      :alt: Pestaña Adjuntos de un Tramo entregado con la foto del albarán
 
-      Pestaña Adjuntos de una Parada: la prueba de entrega que hizo el conductor.
+      Pestaña Adjuntos de un Tramo entregado: la foto del albarán que hizo el conductor con la app.
 
 3.2.6.2.1 Agrupación de Tramos en Paradas
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

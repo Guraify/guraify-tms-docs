@@ -109,7 +109,7 @@ local llama a los sistemas reales).
 | ✅ | `3_2_3_manifests.rst` | `3_2_3_manifests_03_fichero-error.png` | Lista de ficheros importados con uno en estado **Error** (en rojo). | TMS › Operaciones › Tráfico › Manifiestos › botón inteligente Ficheros (o la lista de ficheros importados) |
 | ✅ | `3_2_6_legs-and-stops.rst` | `3_2_6_legs-and-stops_01_parada.png` | Formulario de una Parada con su Tipo de Parada, sus Tramos agrupados y su estado. | TMS › Operaciones › Maestros › Paradas |
 | ✅ | `3_2_6_legs-and-stops.rst` | `3_2_6_legs-and-stops_02_envios-agencia.png` | Envíos a agencia (Agency Hand-overs): una fila por Parada enviada, con su Viaje, su agencia y su estado (activo / revertido). | TMS › Configuración › EDI › Envíos a agencia |
-| ⬜ | `3_2_6_legs-and-stops.rst` | `3_2_6_legs-and-stops_03_adjuntos.png` | Pestaña **Adjuntos** de una Parada: la prueba de entrega que hizo el conductor (firma y foto del albarán). | TMS › Operaciones › Maestros › Paradas › una Parada entregada › pestaña Adjuntos. **Lleva datos reales** (nombre, DNI, albarán): anonimizar antes de publicar |
+| ⬜ | `3_2_6_legs-and-stops.rst` | `3_2_6_legs-and-stops_03_adjuntos.png` | Pestaña **Adjuntos** de un Tramo entregado: la foto del albarán que hizo el conductor con la app. | TMS › Operaciones › Tráfico › Órdenes › una Orden entregada › su Tramo › pestaña Adjuntos. **Lleva datos reales** (nombre, DNI, albarán): anonimizar antes de publicar |
 | 🔁 | `3_2_4_api-inbox.rst` | `3_2_4_api-inbox_01_inbox.png` | Bandeja de entrada API (tms_int.api.inbox) con sus líneas y estados. | TMS › Operaciones › Tráfico › Bandeja de entrada API |
 | 🔁 | `3_2_5_active-leg.rst` | `3_2_5_active-leg_01_tramo-activo.png` | Cabecera de una Orden multitramo mostrando los datos del tramo activo. | TMS › Operaciones › Tráfico › Órdenes (la cabecera de la Orden muestra los datos del |
 | ✅ | `3_3_planning-model.rst` | `3_3_planning-model_02_plan-disponibilidad.png` | Plan de Disponibilidad de Conductores: vista Gantt de *slots* (planning.slot). | TMS › Operaciones › Planificación (Plan Disponibilidad Conductores, Optimizador de Paradas) |
@@ -209,7 +209,7 @@ local llama a los sistemas reales).
 | ⬜ | `7_5_webhooks.rst` | `7_5_webhooks_01_endpoint-webhook.png` | Endpoint configurado como webhook. | TMS › Configuración › EDI › Endpoints API |
 | ✅ | `7_6_automated-actions.rst` | `7_6_automated-actions_01_crons.png` | Tareas programadas que orquestan las integraciones. | Ajustes › Técnico › Automatización › Acciones planificadas |
 | ✅ | `7_7_integration-best-practices.rst` | `7_7_integration-best-practices_01_api-log.png` | Registro de actividad de las APIs (tms.api.log). |  |
-| ⬜ | `7_8_telematics.rst` | `7_8_telematics_01_proveedor.png` | El proveedor «app del conductor», el que viene de serie, con su mapeo de la posición. | TMS › Configuración › Telemática › Proveedores › app del conductor (automática, instancia local) |
+| ⬜ | `7_8_telematics.rst` | `7_8_telematics_01_proveedor.png` | El proveedor «app del conductor», el que viene de serie, con su modo de entrega y sus dispositivos. | TMS › Configuración › Telemática › Proveedores › app del conductor (automática, instancia local) |
 | ⬜ | `7_9_external-access.rst` | `7_9_external-access_01_politica-campos.png` | Política de campos del portal: qué campo de qué modelo se enseña a cada audiencia. | TMS › Configuración › Ajustes › Audiencias externas › Política de campos del portal (automática, instancia local) |
 
 ## Gestión de Recursos (cap. 6)
@@ -222,10 +222,14 @@ local llama a los sistemas reales).
 > `es.po` de los dos módulos (tarea anotada en `PLAN.md`); si urge, se aceptan en inglés.
 >
 > Odoo en español, unidades de prueba (matrículas inventadas), sin datos reales del cliente.
+>
+> **Decisión (16-oct-2026)**: las capturas se sacaron sobre la copia de Ludamany, con sus
+> matrículas reales. **Todas pasan por la anonimización**: matrículas, números de chasis, nombres
+> de conductores y mecánicos y la empresa (Transportes Ludamany S.R.L.).
 
 | Estado | Fichero .rst | Fichero | Qué muestra | Dónde |
 |---|---|---|---|---|
-| ⬜ | `6_1_area.rst` | `6_1_area_01_menu.png` | El menú Gestión de Recursos desplegado con sus cuatro bloques. | Menú raíz Gestión de Recursos |
+| ⬜ | `6_1_area.rst` | `6_1_area_01_menu.png` | Gestión de Recursos: los menús Mantenimiento y Configuración y, al entrar, los indicadores de mantenimiento. | Menú raíz Gestión de Recursos (pantalla de entrada) |
 | ⬜ | `6_2_odometer.rst` | `6_2_odometer_01_pestana-vehiculo.png` | Pestaña Odometer (TMS) de un vehículo: lectura actual, origen, antigüedad, km/día. | TMS › Maestros › Equipos › Vehículos › ficha › pestaña Odometer (TMS) |
 | ⬜ | `6_2_odometer.rst` | `6_2_odometer_02_anomalias.png` | Pantalla Odometer Anomalies con lecturas en borrador agrupadas por vehículo. | Gestión de Recursos › Configuración › Odometer Anomalies |
 | ⬜ | `6_3_maintenance-model.rst` | `6_3_maintenance-model_01_orden-trabajo.png` | Formulario de una orden de trabajo con vehículo, trabajo, tarea, odómetro y etapa. | Gestión de Recursos › Mantenimiento › Órdenes de trabajo |
@@ -272,7 +276,7 @@ local llama a los sistemas reales).
 | Estado | Fichero .rst | Fichero | Qué muestra | Dónde |
 |---|---|---|---|---|
 | ✅ | `8_1_active-passive-margin.rst` | `8_1_active-passive-margin_01_viaje.png` | Lista de Viajes con las columnas Activo, Pasivo, Beneficio y Margen %. | TMS › Operaciones › Tráfico › Viajes |
-| ⬜ | `8_4_purchase-orders.rst` | `8_4_purchase-orders_01_oc.png` | Orden de compra de un Viaje: línea de sección con la ruta y líneas por parada. | Viaje › botón inteligente de la orden de compra |
+| ⬜ | `8_4_purchase-orders.rst` | `8_4_purchase-orders_01_oc.png` | Orden de compra de un Viaje: línea de sección con la ruta y líneas por parada. | Viaje › campo Orden de compra (el enlace) › la ficha de la orden, con su línea de sección y sus líneas |
 | ✅ | `8_6_refunds.rst` | `8_6_refunds_01_lista.png` | Lista de Reembolsos con importe, cobrado, ingresado, pagado, saldos y estado. | TMS › Administración › Reembolsos |
 | ✅ | `8_8_control-reporting.rst` | `8_8_control-reporting_01_kpis.png` | Lista de KPIs del motor de indicadores con sección, formato y audiencias. | TMS › Métricas › KPIs |
 | ✅ | `8_8_control-reporting.rst` | `8_8_control-reporting_02_tablero.png` | Tablero Pending Invoicing. | TMS › Operaciones › Tableros › Pending Invoicing |

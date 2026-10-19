@@ -4,26 +4,26 @@
 .. admonition:: Ruta en Odoo
    :class: tip
 
-   Menú raíz **Gestión de Recursos**, con Mantenimiento, Combustible, Documentación y
-   Configuración.
+   Menú raíz **Gestión de Recursos**, con Mantenimiento y Configuración.
 
 .. CAPTURA: 6_1_01 — descomentar el figure cuando esté la imagen
    .. figure:: /_static/img/6_resources/6_1_area_01_menu.png
-      :alt: Menú Gestión de Recursos
+      :alt: Gestión de Recursos con sus menús y los indicadores de mantenimiento
 
-      El menú Gestión de Recursos con sus cuatro bloques.
+      Gestión de Recursos: los menús Mantenimiento y Configuración y, al entrar, los indicadores
+      de mantenimiento.
 
 Gestión de Recursos es una aplicación propia en el menú de Odoo, separada de TMS. La usa el
 taller y quien controla la flota, y agrupa lo que tiene que ver con los vehículos como recursos:
 cuántos kilómetros llevan y qué mantenimiento necesitan.
 
-El menú tiene cuatro bloques. **Mantenimiento** es el que usa el taller a diario: Indicadores,
+El menú tiene dos bloques. **Mantenimiento** es el que usa el taller a diario: Indicadores,
 Órdenes de trabajo, Calendario y Tablero del taller (las tres últimas son las pantallas nativas
 de Odoo), Reglas de preventivo, control de revisiones («Control de service» en el menú), carga
-masiva de revisiones («Carga masiva de service») y Rankings de objetivos. **Combustible** y
-**Documentación** son bloques reservados, sin contenido, que solo ve el administrador.
-**Configuración** reúne lo que se define una vez: anomalías de odómetro («Odometer Anomalies»
+masiva de revisiones («Carga masiva de service») y Rankings de objetivos. **Configuración** reúne lo que se define una vez: anomalías de odómetro («Odometer Anomalies»
 en el menú), Tareas de mantenimiento, Trabajos, Etapas de mantenimiento y Equipos de taller.
+**Combustible** y **Documentación** están previstos: el menú les tiene reservado su sitio, pero
+no aparecen hasta que se instalen sus módulos, que todavía no existen.
 
 Los permisos son los de la suite. El **usuario TMS** ve el bloque Mantenimiento entero, abre y
 cierra órdenes, carga revisiones y saca las salidas de taller; las reglas de preventivo las ve

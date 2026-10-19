@@ -4,8 +4,8 @@
 .. admonition:: Ruta en Odoo
    :class: tip
 
-   Botón inteligente de la orden de compra en el Viaje; TMS › Administración › Transacciones ›
-   Líneas de Orden de Compra.
+   Ficha del Viaje › campo **Orden de compra** (enlace a la orden) y botón inteligente **Pasivo**
+   (sus líneas); TMS › Administración › Transacciones › Líneas de Orden de Compra.
 
 .. CAPTURA: 8_4_01 — descomentar el figure cuando esté la imagen
    .. figure:: /_static/img/8_economic-administration/8_4_purchase-orders_01_oc.png

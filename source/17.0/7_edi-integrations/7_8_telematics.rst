@@ -31,9 +31,10 @@ envíe su posición, o que el servicio intermedio exista y se configure un prove
 
 .. CAPTURA: 7_8_01 — descomentar el figure cuando esté la imagen
    .. figure:: /_static/img/7_edi-integrations/7_8_telematics_01_proveedor.png
-      :alt: Ficha del proveedor de telemática de la app del conductor con su mapeo
+      :alt: Ficha del proveedor de telemática de la app del conductor
 
-      El proveedor «app del conductor», el que viene de serie, con su mapeo de la posición.
+      El proveedor «app del conductor», el que viene de serie, con su modo de entrega y sus
+      dispositivos.
 
 .. list-table::
    :header-rows: 1
