@@ -49,6 +49,13 @@ dejó la Orden de compra confirmada con las cantidades recibidas y a facturar fi
 la factura sale con los importes de la liquidación. La lista de **Líneas de Orden de Compra**
 ofrece los mismos botones **Crear factura agrupada** y **Línea de abono** que la de venta.
 
+**El canon de combustible en la factura.** Si la política del canon del cliente o del
+transportista es de aplicación **una vez por factura**, la factura agrupada (de venta o de
+compra) recibe una sola línea de canon, calculada Orden a Orden y sumada; mientras está en
+borrador se recalcula con **Recalcular canon**, y al confirmarla quedan bloqueados los periodos
+que cubre (:doc:`/17.0/8_economic-administration/8_9_fuel-surcharge`). La factura estándar de
+Odoo, una por Orden, no la lleva.
+
 5.7.3 Qué cambia al facturar
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

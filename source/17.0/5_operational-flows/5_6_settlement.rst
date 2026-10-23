@@ -72,6 +72,12 @@ de sección con la descripción del Viaje, la fecha, la distancia y los tiempos,
 conceptos calculados. Cuando el transportista es de **flota propia** no hay Orden de compra
 (ver :doc:`/17.0/8_economic-administration/8_1_active-passive-margin`).
 
+**El canon de combustible.** Con el canon activado en la compañía, cada tarificación, en la venta
+y en la compra, termina escribiendo una línea más, la del canon de combustible, calculada con la
+política del cliente o del transportista sobre las líneas base que acaba de generar. Es un
+cálculo aparte, con su pestaña y su botón **Recalcular canon**
+(:doc:`/17.0/8_economic-administration/8_9_fuel-surcharge`).
+
 5.6.4 Cuando el cálculo no puede hacerse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

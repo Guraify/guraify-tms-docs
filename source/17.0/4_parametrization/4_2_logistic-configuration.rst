@@ -232,7 +232,9 @@ distintivo no llegue al mínimo). Con ellos PTV aplica las restricciones viarias
 peajes y las emisiones de cada Viaje con el vehículo real y decide qué vehículo puede entrar en
 cada :term:`ZBE <Zona de bajas emisiones>`. **Antes de dar de alta la primera ZBE hay que
 rellenar el distintivo de los modelos**: un vehículo sin distintivo ni autorización no recibe
-ninguna Parada dentro de una.
+ninguna Parada dentro de una. La MMA del modelo y la marca **Vehículo de obras** (en el modelo y
+en el vehículo) dan además la **clase de vehículo** del canon de combustible, que elige el
+coeficiente legal (:doc:`/17.0/8_economic-administration/8_9_fuel-surcharge`).
 
 La categoría es el criterio de asignación por excelencia: el Optimizador de Paradas en modo
 por categoría pregunta cuántos vehículos de cada una hay disponibles, el Proyecto activa las

@@ -135,6 +135,12 @@ Tarifa (borrador, activa, caducada, archivada) se sincroniza con las fechas de s
 y una Tarifa caducada se puede ocultar sin perder el histórico. Campos en
 :doc:`/17.0/annexes/A_16_tarifas`.
 
+El inicio de la versión vigente es también la **fecha de referencia** del canon de combustible:
+cada revisión de precios reinicia la medida de cuánto ha subido o bajado el gasóleo desde que se
+pactó el precio. La Tarifa puede llevar su propia **política del canon**, en la pestaña de
+asignación, por detrás de la del cliente o el transportista
+(:doc:`/17.0/8_economic-administration/8_9_fuel-surcharge`).
+
 4.4.4 Líneas de tarifa y sus detalles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -257,6 +263,12 @@ normal de un producto de Odoo.
        :doc:`4_1_operational-configuration`, que clasifica la Orden; este clasifica el producto.
    * - Cuentas e impuestos
      - Los de Odoo. Es lo que decide cómo contabiliza cada concepto.
+   * - Base del canon de combustible
+     - Si las líneas de este producto entran en la base sobre la que se calcula el canon de
+       combustible (:doc:`/17.0/8_economic-administration/8_9_fuel-surcharge`): los portes y sus
+       suplementos sí; los reembolsos, la manipulación, los peajes y el propio canon no. Al
+       instalar el canon se marcan los productos de transporte que usa alguna Tarifa; el filtro
+       **Base del canon de combustible** de Ventas › Productos enseña cuáles.
 
 Cuando el motor crea una línea de venta o de compra, le pone el producto de la línea de tarifa
 (o del detalle, si lo tiene propio), y con él viajan la cuenta, los impuestos y la unidad.

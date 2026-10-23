@@ -634,6 +634,58 @@
    "map": true
   },
   {
+   "id": "8_9_01",
+   "file": "8_9_fuel-surcharge_01_politica.png",
+   "folder": "8_economic-administration",
+   "instance": "agent",
+   "action": "tms_fuel_surcharge.tms_fuel_surcharge_policy_action",
+   "model": "tms.fuel.surcharge.policy",
+   "view": "form",
+   "domain": [
+    [
+     "method",
+     "=",
+     "legal_es"
+    ]
+   ],
+   "steps": [
+    {
+     "tab": "Periods"
+    },
+    {
+     "wait": 1000
+    }
+   ],
+   "manual": "Hace falta el módulo tms_fuel_surcharge instalado y una política con la fórmula legal que tenga periodos calculados (una Orden tarificada con el interruptor encendido los escribe).",
+   "note": "Política del canon con la fórmula legal y su pestaña Periodos"
+  },
+  {
+   "id": "8_9_02",
+   "file": "8_9_fuel-surcharge_02_orden.png",
+   "folder": "8_economic-administration",
+   "instance": "agent",
+   "action": "tms.shipment_action",
+   "model": "sale.order",
+   "view": "form",
+   "domain": [
+    [
+     "tms_fuel_surcharge_amount",
+     "!=",
+     0
+    ]
+   ],
+   "steps": [
+    {
+     "tab": "Fuel Surcharge"
+    },
+    {
+     "wait": 1000
+    }
+   ],
+   "manual": "Una Orden tarificada con línea de canon (interruptor de la compañía encendido). Lleva datos reales: anonimizar.",
+   "note": "Pestaña Canon de combustible de una Orden"
+  },
+  {
    "id": "2_1_01",
    "file": "2_1_structural-logic_01_orden.png",
    "folder": "2_conceptual-model",

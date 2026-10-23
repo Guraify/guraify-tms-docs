@@ -9,7 +9,8 @@ se controlan. El capítulo 2 da el principio (:doc:`la Orden es el ingreso y el 
 se liquida y se factura (:doc:`5.6 </17.0/5_operational-flows/5_6_settlement>` y
 :doc:`5.7 </17.0/5_operational-flows/5_7_invoicing>`). Aquí está lo que hay entre medias: el
 modelo con el que un consultor configura la economía de una operativa y un responsable de
-administración la controla.
+administración la controla. Cierra el capítulo el canon de combustible, el recargo legal por la
+variación del gasóleo, que el TMS calcula y pone como una línea más (:doc:`8_9_fuel-surcharge`).
 
 .. mermaid::
 
@@ -35,3 +36,4 @@ administración la controla.
    8_6_refunds
    8_7_analytic-account
    8_8_control-reporting
+   8_9_fuel-surcharge

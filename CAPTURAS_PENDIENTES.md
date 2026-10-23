@@ -281,6 +281,8 @@ local llama a los sistemas reales).
 | ✅ | `8_6_refunds.rst` | `8_6_refunds_01_lista.png` | Lista de Reembolsos con importe, cobrado, ingresado, pagado, saldos y estado. | TMS › Administración › Reembolsos |
 | ✅ | `8_8_control-reporting.rst` | `8_8_control-reporting_01_kpis.png` | Lista de KPIs del motor de indicadores con sección, formato y audiencias. | TMS › Métricas › KPIs |
 | ✅ | `8_8_control-reporting.rst` | `8_8_control-reporting_02_tablero.png` | Tablero Pending Invoicing. | TMS › Operaciones › Tableros › Pending Invoicing |
+| ⬜ | `8_9_fuel-surcharge.rst` | `8_9_fuel-surcharge_01_politica.png` | Una política del canon con la fórmula legal: lado, método y aplicación, fechas, clase de vehículo y la pestaña Periodos con periodos calculados. | TMS › Administración › Opciones de Tarifa › Canon de combustible › Políticas › una política (instancia local; sin nombres de clientes en el nombre de la política) |
+| ⬜ | `8_9_fuel-surcharge.rst` | `8_9_fuel-surcharge_02_orden.png` | Pestaña Canon de combustible de una Orden: porcentaje e importe, canon legal, difiere y el botón Recalcular canon. | TMS › Operaciones › Tráfico › Órdenes › una Orden tarificada con canon › pestaña Canon de combustible. **Lleva cliente y destinatario**: anonimizar |
 
 ## Manual del conductor (cap. 10) — app móvil
 

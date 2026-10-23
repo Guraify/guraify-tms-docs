@@ -400,10 +400,13 @@ la ficha del contacto decide:
        horas por defecto de carga y descarga.
 
 La pestaña Propiedades TMS tiene además el grupo **TACÓGRAFO** de los conductores, que solo se
-lee (lo rellena la telemática), el grupo **AVISOS** (:doc:`/17.0/11_notifications/11_4_recipient`)
-y, para los responsables, la audiencia del portal del contacto. La cabecera lleva los botones
-**Reglas TMS** y, en los conductores, **Historial de vehículos**. Campos en
-:doc:`/17.0/annexes/A_34_contacto`.
+lee (lo rellena la telemática), el grupo **AVISOS** (:doc:`/17.0/11_notifications/11_4_recipient`),
+el grupo **Canon de combustible** de clientes y transportistas (la **política del canon** de
+ventas, para las Órdenes del cliente, y la de compras, para los Viajes del transportista, y la
+marca **Devolución del gasóleo profesional**, que cambia el precio con el que se mide el canon;
+:doc:`/17.0/8_economic-administration/8_9_fuel-surcharge`) y, para los responsables, la audiencia
+del portal del contacto. La cabecera lleva los botones **Reglas TMS** y, en los conductores,
+**Historial de vehículos**. Campos en :doc:`/17.0/annexes/A_34_contacto`.
 
 .. _conductores-app:
 

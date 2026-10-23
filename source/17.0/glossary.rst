@@ -292,6 +292,28 @@ para quien lo necesite.
       el coste de compra de los Viajes de un Transportista. (No se dice *pricelist*.) Modelo
       ``tms.pricelist``.
 
+   Canon de combustible
+      Recargo (o descuento) legal sobre el precio del transporte por la variación del precio del
+      gasóleo entre la fecha de referencia y la del transporte (artículo 38 de la Ley 15/2009).
+      El TMS lo calcula con la fórmula legal o con la :term:`política <Política del canon>`
+      pactada y lo pone como una línea más de la Orden, de la Orden de compra del Viaje o de la
+      factura. Capítulo 8.9. Módulo ``tms_fuel_surcharge``. (No se dice *recargo de carburante*
+      ni *fuel surcharge*.)
+
+   Política del canon
+      Cómo se calcula el :term:`Canon de combustible` para alguien: el método (fórmula legal,
+      mes de referencia y % de repercusión, tabla de precios, % fijo, incluido o a mano), si
+      se aplica orden a orden o una vez por factura, y de dónde salen la fecha de referencia y
+      la clase de vehículo. Se busca en la Orden o el Viaje, el Proyecto, el cliente o
+      transportista, la Tarifa y la compañía, en ese orden. Modelo
+      ``tms.fuel.surcharge.policy``.
+
+   Índice de precios del gasóleo
+      Serie semanal de precios del gasóleo (surtidor, antes de impuestos, impuesto de
+      hidrocarburos y devolución) con la que se mide la variación del :term:`Canon de
+      combustible`. De serie, la del Ministerio de Transportes, que se descarga sola cada
+      semana. Modelo ``tms.fuel.price.index``.
+
    Tarifa base
       Define **qué magnitud se cobra** (peso, volumen, bultos, palés, kilómetros, paradas…) y con
       qué escalado de rangos, y sirve de plantilla para generar Líneas de tarifa de forma

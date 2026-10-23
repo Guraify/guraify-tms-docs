@@ -50,3 +50,4 @@ ejemplo, «Id» para el nombre de un tipo) se indica en la tabla.
    A_33_avisos
    A_34_contacto
    A_35_parametros
+   A_36_canon-combustible

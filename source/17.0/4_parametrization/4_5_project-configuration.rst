@@ -52,6 +52,10 @@ El grupo **Administración** fija el alcance económico del Proyecto.
        de cierre operativo (la de la parada activa, por defecto), la de creación, la de carga
        (la más temprana de los Tramos) o la de descarga (la más tardía). Es la fecha con la que
        se elige la versión de la Tarifa (ver :doc:`4_4_economic-configuration`).
+   * - Política del canon (ventas) y (compras)
+     - Cómo se calcula el canon de combustible de las Órdenes y de los Viajes del Proyecto, por
+       delante de la política del cliente o del transportista
+       (:doc:`/17.0/8_economic-administration/8_9_fuel-surcharge`). Vacías, se aplican las suyas.
 
 4.5.2 Entrada en hub y recogida
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
