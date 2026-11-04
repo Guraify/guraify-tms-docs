@@ -492,6 +492,13 @@ para quien lo necesite.
       Parada se mide contra ella con la tolerancia que fija el Proyecto. Campos de
       ``project.project`` y ``tms.stop``.
 
+   Alarma
+      Excepción para el operador: un Viaje sin empezar, un ETA que pasó sin evento, un vehículo
+      parado, una temperatura fuera de rango. Se ve, se silencia o se resuelve. **Diseñada, no
+      construida** (noviembre de 2026): en Odoo existen sus umbrales (en la :term:`Política
+      operativa`) y los eventos que la dispararán; el modelo es de la torre de control. Capítulo
+      12.5. (No es un :term:`Aviso`, que va al Destinatario.)
+
    Aviso
       Mensaje automático, por correo, SMS o WhatsApp, al Destinatario (o al cliente) de una entrega
       cuando pasa algo en ella: se planifica, es la siguiente, se entrega, falla. Lo decide un

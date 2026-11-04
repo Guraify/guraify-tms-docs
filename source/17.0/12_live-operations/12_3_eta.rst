@@ -1,0 +1,119 @@
+12.3 Lo que Odoo calcula: el ETA
+--------------------------------
+
+.. admonition:: Ruta en Odoo
+   :class: tip
+
+   TMS › Configuración › Ajustes › bloque **Operación** › **Políticas operativas** · Proyecto ›
+   pestaña **Operación** · Viaje › pestaña **ETA y ruta** · Parada › pestañas **Puntualidad** e
+   **Histórico de ETA**
+
+El :term:`ETA` es la hora prevista de llegada a cada Parada. El TMS guarda **dos** por Parada, y
+confundirlas es el error más común al leerlas:
+
+- El **prometido** (en la interfaz, *Prometido*) es el de la planificación: lo fija el primer
+  cálculo de ruta del Viaje y **ningún recálculo lo mueve**. Es la hora que se dio al cliente y
+  la vara con la que se mide la puntualidad.
+- El **vigente** (*Actual*) es el del último recálculo. Cambia mientras el Viaje está en la
+  calle. La diferencia entre los dos es la **desviación** (en minutos, positiva si va tarde).
+
+Cada recálculo se apunta además en el **Histórico de ETA** de la Parada, con su hora, su origen,
+el retraso que PTV atribuye al tráfico y, cuando la haya, la posición desde la que se calculó. Se
+conserva 180 días. Es el dato que permite dibujar la deriva de un Viaje y el que la torre leerá
+para su línea de tiempo.
+
+12.3.1 Cuándo se recalcula
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Lo decide la :term:`Política operativa` de la compañía o, si la tiene, la del Proyecto del Viaje
+(:doc:`4.3.9 </17.0/4_parametrization/4_3_planning-configuration>`). Cinco modos:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Modo
+     - Cuándo se recalcula
+   * - **Al cerrar una parada** (por defecto)
+     - Cada vez que una Parada del Viaje se cierra con un resultado, desde la app o desde la
+       oficina. También cuando el Viaje pierde o gana una Parada ya en marcha (Encontrar ruta,
+       repartir un Viaje) y al restaurar un orden anterior.
+   * - **Cada N minutos**
+     - A intervalos fijos (15 por defecto) mientras el Viaje esté en curso, aunque no pase nada.
+   * - **Al cerrar una parada y cada N minutos**
+     - Las dos cosas.
+   * - **Al desviarse del plan**
+     - Cuando llega una posición del vehículo a más de la **desviación de ruta** (en km) de la
+       siguiente Parada. Sin posiciones, nunca.
+   * - **Desactivado**
+     - Nunca. Las Paradas se quedan con el ETA de la planificación.
+
+A los cinco se suma **Recalcular ETA ahora**, el botón de la pestaña ETA y ruta, que lo pide en
+el momento. Y, sea cual sea el modo, dos **frenos** limitan el gasto en PTV, porque cada
+recálculo es una llamada: el **intervalo mínimo** entre dos recálculos del mismo Viaje (5 minutos
+por defecto) y el **tope diario** de recálculos por Viaje (sin tope por defecto). Un recálculo que
+cae dentro del freno no se hace, y el botón lo dice.
+
+Nada de esto llama a PTV al instante. El evento deja la marca en el Viaje con su motivo, y una
+**tarea programada, cada minuto**, recorre los Viajes marcados y hace la llamada. Un Viaje que
+falla no para a los demás. Desde el cierre de una Parada hasta ver el ETA nuevo pasan, por tanto,
+entre unos segundos y un minuto.
+
+12.3.2 Cómo se calcula
+~~~~~~~~~~~~~~~~~~~~~~
+
+Hay dos niveles, y el sistema usa siempre el más barato que sirva:
+
+#. **Recálculo ligero.** PTV conserva doce horas el cálculo de ruta del Viaje. Mientras sirve,
+   Odoo le pide solo la hora de llegada a las Paradas pendientes **desde un punto de partida**:
+   la posición real del vehículo, si la conoce, o la última Parada cerrada, contando el tiempo de
+   servicio que se pasó en ella. Es una llamada pequeña y no cambia el trazado.
+#. **Recálculo completo.** Cuando el cálculo guardado no sirve (el Viaje nunca se enrutó, han
+   pasado las doce horas, la secuencia cambió o PTV lo rechaza), Odoo repite el cálculo de ruta
+   sobre las Paradas pendientes, con el vehículo real y las zonas de bajas emisiones. Deja un
+   cálculo fresco, de modo que el siguiente recálculo vuelve a ser ligero, y actualiza de paso el
+   **enriquecimiento** del Viaje: peajes, emisiones, consumo, violaciones y el trazado restante.
+
+**Hoy el punto de partida es siempre la última Parada cerrada**, porque no llegan posiciones
+(12.2.3). Si el conductor va con retraso entre dos Paradas, el ETA no lo recoge hasta que cierra
+la siguiente. Cuando lleguen posiciones, el mismo recálculo partirá de ellas sin cambiar nada
+más.
+
+Si PTV falla, **no se borra ninguna hora**: las Paradas pendientes se quedan con el ETA anterior
+y la marca **Caducado**, y el Viaje guarda el error del último intento. El siguiente recálculo
+la quita.
+
+12.3.3 Dónde se lee
+~~~~~~~~~~~~~~~~~~~
+
+- En el **Viaje**, la pestaña **ETA y ruta**: cuándo fue el último recálculo, cuántos van hoy, si
+  hay uno pedido y por qué, el error si lo hubo, el identificador de la ruta en PTV y su
+  antigüedad, la última posición conocida, y el enriquecimiento (peajes, coste, violaciones,
+  emisiones). La pestaña **Mapa** dibuja el trazado planificado, el restante y las Paradas con su
+  estado y su ETA. Detalle en :doc:`5.4.4 </17.0/5_operational-flows/5_4_app-execution>`.
+- En la **Parada**, la pestaña **Puntualidad**: la hora planificada, el ETA vigente y la hora
+  ejecutada, y el grupo **ETA: promesa y desviación** con el prometido, el actual, la desviación,
+  el **origen** del último recálculo (plan, recálculo a mano, cierre de una Parada, intervalo,
+  desvío de posición, telemetría), el retraso por tráfico y las marcas *Sin ruta válida* y
+  *Caducado*. Y la pestaña **Histórico de ETA**.
+- Para un sistema externo, el historial por Parada (``tms.stop.eta.history``), los campos de
+  ETA de la Parada y los de recálculo del Viaje están en la tabla de
+  :ref:`17.0/1_introduction/1_4_technological-architecture:1.4.2.3 Referencia técnica`. El aviso
+  **ETA dentro de N minutos** del capítulo 11 lee el vigente, nunca uno caducado.
+
+12.3.4 Configurarlo, paso a paso
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. **Token de PTV** en la compañía (:doc:`1.4.2 </17.0/1_introduction/1_4_technological-architecture>`).
+   Sin él no hay cálculo de ruta ni ETA.
+#. **Política operativa de la compañía**, en Ajustes › TMS › Operación: el modo (empezar por *Al
+   cerrar una parada*), el intervalo mínimo y el tope diario. Con *Cada N minutos* conviene poner
+   tope: un Viaje de diez horas a 15 minutos son cuarenta llamadas.
+#. **Política por Proyecto**, solo donde haga falta otra cadencia (un cliente que exige el ETA al
+   minuto, otro al que no se le avisa nunca): en la pestaña Operación del Proyecto.
+#. **Comprobar que la tarea «TMS: recompute ETA of running trips» está activa.** En una copia de
+   producción los crons vienen apagados; sin ella, el botón marca el Viaje y nada ocurre.
+#. **Ver un Viaje en curso** cerrar una Parada y, al minuto, la pestaña ETA y ruta con el recálculo
+   y la Parada siguiente con su desviación.
+
+Campos de la política en :doc:`/17.0/annexes/A_31_politica-operativa`.

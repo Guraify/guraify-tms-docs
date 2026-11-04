@@ -13,8 +13,10 @@ separado; el 3 recorre la aplicación tal y como se ve en pantalla; el 4 es la p
 maestro a maestro, con lo que decide el cliente en cada uno; el 5 sigue el flujo de una
 operación de principio a fin; el 6 cubre la gestión de recursos (odómetro y mantenimiento); el
 8 cierra con el modelo económico y su control. El 9 y el 11 describen dos módulos opcionales: el
-documento de control del transporte (DeCA) y los avisos al Destinatario. El anexo A recoge el
-catálogo de campos de cada pantalla, para consultarlo cuando haga falta.
+documento de control del transporte (DeCA) y los avisos al Destinatario. El 12 pone en orden de
+tiempo lo que pasa con un Viaje en la calle (eventos, ETA, avisos, alarmas) y lo que queda
+preparado para la torre de control. El anexo A recoge el catálogo de campos de cada pantalla,
+para consultarlo cuando haga falta.
 
 La numeración es la misma en toda la documentación, y por eso aquí faltan dos capítulos, que
 tienen recorrido propio porque van dirigidos a otro lector:
@@ -36,4 +38,5 @@ tienen recorrido propio porque van dirigidos a otro lector:
    8_economic-administration/index
    9_deca/index
    11_notifications/index
+   12_live-operations/index
    annexes/index
