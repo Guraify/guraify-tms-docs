@@ -240,8 +240,9 @@ En la pestaña **ETA y ruta** del Viaje:
 En cada **Parada**, la pestaña **Puntualidad** enfrenta la hora planificada, la ETA en vivo y la
 hora ejecutada, y el grupo **ETA: promesa y desviación** distingue dos ETA:
 
-- El **Prometido** es el de la planificación. Lo fija el primer cálculo de ruta y ningún recálculo
-  lo mueve: es la hora que se dio al cliente.
+- El **Prometido** es el de la planificación. Lo escribe cada cálculo de ruta mientras el Viaje
+  no está despachado y, desde el despacho, ningún cálculo lo mueve: es la hora que se dio al
+  cliente.
 - El **Actual** es el último recálculo. La **Desviación (min)** es la diferencia entre los dos
   (positiva, más tarde de lo prometido);
   **Origen** dice qué produjo el actual (el plan, un recálculo a mano, el cierre de una Parada, el

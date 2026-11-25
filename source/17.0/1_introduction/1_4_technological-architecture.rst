@@ -117,23 +117,24 @@ planificación intervienen tres servicios, con tres niveles de uso progresivos:
        estado de ventana y la marca de las zonas de bajas emisiones que cruza.
    * - **Secuenciación**
      - Con el botón **Secuenciar Viaje** del Viaje (abre un diálogo y corre en segundo plano);
-       al cerrar un Manifiesto sin secuencia si el Proyecto tiene activado **Secuenciar Viaje**;
-       y, sin que nadie la pida, en el Viaje que pierde una Parada antes de empezar y en cada
-       candidata de **Encontrar ruta**.
+       sola, al cerrar un Manifiesto y al validar una Orden si el Proyecto tiene activado
+       **Secuenciar Viaje**; y en cada candidata de **Encontrar ruta**.
      - Las Paradas como transportes con cantidades, tiempo de servicio y prioridad; horarios
-       de apertura de Hubs y Clientes, ampliados con la **tolerancia** si se aplica; perfil,
-       inicio, fin y distancia máxima del vehículo; disponibilidad del conductor; el orden
-       actual, si se pide mantenerlo.
-     - El nuevo orden de las Paradas y sus horas de llegada y salida; lo que no cabe queda sin
-       planificar y marcado. Después se relanza el cálculo de ruta para refrescar el trazado, y
-       **Restaurar orden anterior** deshace la última secuenciación.
+       de apertura de Hubs y las franjas de los Clientes, abiertas hasta el :term:`nivel <Nivel de
+       pasada>` de cada :term:`Pasada`; perfil, inicio, fin y distancia máxima del vehículo; la
+       jornada del conductor; el orden actual, si se pide mantenerlo.
+     - El nuevo orden de las Paradas y sus horas de llegada y salida, en hasta tres pasadas; lo
+       que no cabe ni en la más abierta queda sin planificar y marcado. Después se relanza el
+       cálculo de ruta para refrescar el trazado, y **Restaurar orden anterior** deshace la última
+       secuenciación.
    * - **Optimización completa**
      - Desde el asistente Asignar en modo Optimización o desde el Optimizador de Paradas, sobre
        las Paradas pendientes de una fecha; también en **Romper estructura** de Encontrar ruta.
      - Vehículos con capacidades, equipamiento, costes, zonas permitidas, inicio, fin y distancia
        máxima; conductores con disponibilidad y jornada; transportes con cantidades, tiempos de
-       servicio, prioridad, equipo exigido y excluido, zona operativa y ZBE; Hubs con horarios;
-       el **preset** elegido y lo que se permite violar.
+       servicio, prioridad, equipo exigido y excluido, zona operativa y ZBE, con la franja al
+       nivel de la pasada 1; Hubs con horarios; el **preset** elegido y lo que se permite
+       violar.
      - Un **plan** que espera a **Aplicar plan**: Viajes con sus Paradas asignadas y
        secuenciadas, vehículo y conductor, horas por Parada, estado de ventana y violaciones, y
        la lista de lo que no se ha podido planificar. **Revertir** lo deshace.
@@ -196,11 +197,14 @@ que la conoce:
      - La Parada está en una zona de bajas emisiones donde el vehículo no puede entrar, o su
        tramo de ruta pasa por una (y puede).
    * - ``DISTANCE`` · ``CAPACITY`` · ``WORKDAY``
-     - Tras «Secuenciar todo»: al llegar a esa Parada la ruta ya supera los kilómetros máximos
-       del vehículo, su capacidad, o la jornada o la conducción máximas.
+     - La Parada entró en una pasada **Fin abierto sin límites**: al llegar a ella la ruta ya
+       supera los kilómetros máximos del vehículo, su capacidad, o la jornada o la conducción
+       máximas.
 
-La Parada que el servicio no puede planificar se queda en su Viaje **sin sitio en la ruta** y el
-diálogo lo dice; nada se relanza a escondidas con las ventanas ampliadas.
+Cada servicio trabaja por :term:`pasadas <Pasada>`: las franjas se piden primero al nivel de la
+pasada 1 del Planning y, solo si quedan Paradas fuera, a los niveles de la 2 y la 3; cada pasada
+queda anotada en la ejecución. La Parada que no cabe ni en la pasada más abierta se queda en su
+Viaje **sin sitio en la ruta** y el diálogo lo dice.
 
 1.4.2.1 Dos motores de optimización
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -231,12 +235,30 @@ mismo código. Lo que cambia es lo que el motor tiene en cuenta:
    * - Dato
      - PTV Developer
      - PTV OptiFlow
-   * - Capacidades, equipamiento, zonas, ZBE, ventanas, prioridades, preset
+   * - Capacidades, equipamiento, zonas, ZBE, ventanas, preset
      - Sí
      - Sí
+   * - Respuesta
+     - En el momento (la barra de progreso es una estimación)
+     - En cola: busca durante el tiempo que se le da (120 s por defecto)
    * - Costes del vehículo (fijo, por hora, por kilómetro, por Parada)
      - No
+     - Sí: decide por coste
+   * - Límites de jornada, km, Paradas y carga
+     - Duros: lo que no cabe queda sin planificar
+     - Pueden ser blandos: se superan pagando un coste (preset)
+   * - Una capacidad a 0
+     - «No cabe nada»
+     - «Sin límite»
+   * - Zonas operativas en modo Preferido
+     - Las trata como Estricto
+     - Las respeta salvo que saltárselas compense
+   * - Cargas incompatibles entre sí
+     - No las mira
+     - Las separa
+   * - Prioridad del Destinatario
      - Sí
+     - No
    * - Duración y conducción máximas, compacidad, equilibrio entre Viajes, factor de velocidad y
        tráfico del vehículo (:doc:`/17.0/annexes/A_05_categorias-vehiculo`)
      - No
@@ -244,8 +266,8 @@ mismo código. Lo que cambia es lo que el motor tiene en cuenta:
    * - Pausas explícitas y regla de jornada del conductor
      - Solo el ajuste de PTV de la franja o la categoría
      - Sí, con la regla del conductor primero (:ref:`horas-conduccion`)
-   * - Factor de velocidad del conductor
-     - No
+   * - Factor de tiempo de servicio del conductor (en las Paradas de cliente, nunca en el Hub)
+     - Sí
      - Sí
    * - Coste de dejar un Tramo sin planificar (pestaña Operación del Proyecto)
      - No
@@ -361,8 +383,9 @@ tiene campo propio se guarda tal cual en el Viaje para su análisis posterior.
        vez (ajuste de la compañía, 6 por defecto)
    * - Optimización
      - ``tms.optimization.run``
-     - Una fila por optimización lanzada, con el motor, el preset, las casillas, el plan, las
-       Paradas excluidas y el resultado; «Aplicar plan» y «Revertir» actúan sobre ella. Si se
+     - Una fila por optimización lanzada, con el motor, el preset, los niveles de las tres
+       pasadas, lo que se permite violar, el plan, las Paradas excluidas y el resultado;
+       «Aplicar plan», «Aplicar pasadas» y «Revertir» actúan sobre ella. Si se
        cierra el navegador, la tarea programada de sondeo la sigue cada minuto
    * - Paradas sin ruta de una optimización
      - ``tms.optimization.run.unplanned``
@@ -384,6 +407,12 @@ tiene campo propio se guarda tal cual en el Viaje para su análisis posterior.
    * - Preset de optimización
      - ``tms.ptv.preset``
      - Lo que el motor persigue y lo que puede violar (:ref:`presets-optimizacion`)
+   * - Margen y pasadas del Planning
+     - ``tms.planning``: ``tms_tw_tolerance_after``, ``tms_tw_end_margin_min``,
+       ``tms_pass_1_level``, ``tms_pass_2_level``, ``tms_pass_3_level``
+     - La tolerancia, el margen sobre el fin y el nivel de cada pasada con que secuencian,
+       optimizan y buscan ruta los Viajes del Planning; los asistentes los proponen y se pueden
+       cambiar en cada lanzamiento
    * - Estado de ventana y marcas de la Parada
      - ``tms.stop``: ``tms_tw_status``, ``tms_tw_deviation_min``, ``tms_violation_codes``
      - Escritos por el cálculo que planifica la Parada, siempre contra la ventana original

@@ -393,10 +393,30 @@ para quien lo necesite.
 
    Secuenciación
       Servicio de PTV que ordena las Paradas de un Viaje ya formado respetando franjas horarias,
-      tiempos de servicio y capacidad. Se lanza con el botón **Secuenciar Viaje** (en segundo plano,
-      con la opción **Secuenciar todo**), al cerrar un Manifiesto si el Proyecto tiene activado
-      **Secuenciar Viaje**, y por sí sola en el Viaje que pierde una Parada antes de empezar.
-      **Restaurar orden anterior** la deshace. (No se dice *sequence* ni *autosecuenciación*.)
+      tiempos de servicio, capacidad, jornada y horario del Hub. Se lanza con el botón **Secuenciar
+      Viaje** (en segundo plano, por :term:`pasadas <Pasada>`) y, sola, al cerrar un Manifiesto y al
+      validar una Orden si el Proyecto tiene activado **Secuenciar Viaje**. El Viaje que pierde una
+      Parada no se vuelve a secuenciar: solo se recalcula su ruta. **Restaurar orden anterior** la
+      deshace. Capítulo 13.5. (No se dice *sequence* ni *autosecuenciación*.)
+
+   Pasada
+      Una llamada al motor de secuenciación o de optimización con las franjas de las Paradas
+      abiertas hasta un :term:`nivel <Nivel de pasada>`. El Planning fija hasta tres, encadenadas:
+      la primera envía todas las Paradas a su nivel; cada siguiente solo se lanza si la anterior
+      dejó Paradas fuera, y solo esas reciben el nivel nuevo. De serie, Con margen, Con tolerancia
+      y Fin abierto sin límites. Capítulo 13.3. Campos ``tms_pass_1_level`` a ``tms_pass_3_level``.
+
+   Nivel de pasada
+      Cuánto se abre el fin de la franja de una Parada en una :term:`Pasada`: **Con margen** (el fin
+      real menos el margen), **Real**, **Con tolerancia** (más la tolerancia, ×1, ×2 o ×4), **Fin
+      abierto** (sin fin, con la jornada y los límites del vehículo) o **Fin abierto sin límites**;
+      **Sin pasada** no lanza la pasada. El inicio de la franja no se toca nunca. En la interfaz,
+      «Nivel».
+
+   Margen sobre el fin
+      Minutos que el Planning **quita** al fin de la franja de cada Parada en el nivel Con margen,
+      para planificar con colchón antes de que cierre; nunca deja una franja de menos de 30 minutos.
+      Campo ``tms_tw_end_margin_min``. (En la interfaz, «Margen sobre el fin (min)».)
 
    Optimización completa
       Servicio de PTV que, a partir de las Paradas pendientes de una fecha, propone qué Viajes
@@ -407,21 +427,27 @@ para quien lo necesite.
       puede **Revertir**. (No se dice *por turno*.)
 
    Preset de optimización
-      Conjunto de ajustes que dice para qué se optimiza y qué se puede violar: Máxima calidad,
-      Máxima rentabilidad, Balancear vehículos o Sacar todo como sea, de serie. Rellena las
-      casillas del asistente (tolerancia, restricciones de vía, jornada, zonas operativas), que el
-      planificador puede cambiar. Capítulo 4.3.7. Modelo ``tms.ptv.preset``. (En la interfaz,
-      «Presets de optimización».)
+      Conjunto de ajustes que dice **para qué** se optimiza: Máxima calidad, Máxima rentabilidad,
+      Balancear vehículos o Sacar todo como sea, de serie. Fija el motor, cuánto busca, la forma de
+      las rutas, los costes, los límites blandos y lo que se permite violar; no decide la
+      tolerancia ni las franjas, que son de las :term:`pasadas <Pasada>`. Se elige en cada
+      lanzamiento. Capítulo 4.3.7. Modelo ``tms.ptv.preset``. (En la interfaz, «Presets de
+      optimización». No es el :term:`Perfil de jornada`.)
 
    Tolerancia de ventana
-      Minutos por cada lado con que se amplían las franjas horarias de las Paradas al enviarlas a
-      PTV, fijados en el Planning o en la zona operativa. Una Parada que solo cabe gracias a ellos
-      queda **En tolerancia**, no Fuera de ventana. Capítulo 4.3.1.
+      Minutos que se admite llegar **después** del fin de la franja de una Parada, fijados en el
+      Planning («Tolerancia después») o, si este tiene 0, en la zona operativa. El
+      :term:`nivel de la pasada <Nivel de pasada>` decide si se usan al calcular; el veredicto es
+      siempre el mismo: una Parada servida después del fin pero dentro de esos minutos queda **En
+      tolerancia**; más tarde, Fuera de ventana. El inicio de la franja no tiene tolerancia.
+      Capítulo 4.3.1.
 
    Estado de ventana
       Cómo queda la hora prevista de una Parada respecto a su franja original tras un cálculo de
       PTV: En ventana, En tolerancia, Fuera de ventana (con la desviación en minutos) o Sin ventana.
-      Llegar antes de que abra no es incumplir. Junto a él, las **marcas** (EQUIPMENT, GEO_SUSPECT,
+      Llegar antes de que abra no es incumplir. Se mide contra la franja real, sea cual sea la
+      :term:`Pasada` que colocó la Parada: una que entró gracias a una pasada abierta sale Fuera de
+      ventana. Junto a él, las **marcas** (EQUIPMENT, GEO_SUSPECT,
       ZONE, LEZ, DISTANCE, CAPACITY, WORKDAY) dicen qué restricción incumple o esquiva la Parada.
       Capítulo 1.4.2. Campos ``tms_tw_status`` y ``tms_violation_codes`` de ``tms.stop``.
 

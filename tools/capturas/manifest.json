@@ -1174,7 +1174,7 @@
    "instance": "agent",
    "action": "tms.tms_ptv_preset_action",
    "view": "list",
-   "note": "Los cuatro presets de serie"
+   "note": "Los cuatro presets de serie (la captura anterior enseñaba las casillas de tolerancia, retiradas)"
   },
   {
    "id": "4_3_08",
@@ -1324,6 +1324,15 @@
    "view": "form",
    "note": "Ficha de una política operativa (mejor la de la compañía, sin Proyecto)",
    "manual": "Si no existe ninguna, crear la de la compañía con los valores por defecto (solo configuración, no envía nada)"
+  },
+  {
+   "id": "4_3_11",
+   "file": "4_3_planning-configuration_11_margen-pasadas.png",
+   "folder": "4_parametrization",
+   "instance": "agent",
+   "model": "tms.planning",
+   "view": "form",
+   "note": "Grupo Margen y pasadas del Planning"
   },
   {
    "id": "4_5_05",
@@ -1484,7 +1493,7 @@
     }
    ],
    "clip": "modal",
-   "note": "TR010891 (30 paradas): el diálogo Secuenciar viajes; no pulsar Secuenciar (llama a PTV)",
+   "note": "REPETIR: la captura actual enseña el diálogo antiguo (Secuenciar todo, tolerancia). El nuevo lleva Mantener orden relativo, Inicio de carga y Pasadas 1/2/3",
    "record": 60208
   },
   {
@@ -1817,6 +1826,117 @@
    ],
    "note": "Pestaña Avisos de una Orden con sus mensajes",
    "manual": "LLEVA DATOS REALES (contacto, móvil): anonimizar antes de publicar. Si no hay ninguna Orden con avisos en la base local, dejarla para la demo"
+  },
+  {
+   "id": "13_2_01",
+   "file": "13_2_setup_01_plannings.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Lista Plannings de Parámetros del optimizador con las columnas de pasadas",
+   "model": "tms.planning",
+   "view": "list"
+  },
+  {
+   "id": "13_3_01",
+   "file": "13_3_passes_01_puntualidad.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Pestaña Puntualidad de una Parada secuenciada",
+   "model": "tms.stop",
+   "view": "form",
+   "domain": [
+    [
+     "tms_tw_status",
+     "!=",
+     false
+    ]
+   ],
+   "steps": [
+    {
+     "tab": "Punctuality"
+    }
+   ]
+  },
+  {
+   "id": "13_5_01",
+   "file": "13_5_sequencing_01_dialogo.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Diálogo Secuenciar viajes (misma pantalla que 5_2_06)",
+   "manual": "Viaje planificado › Secuenciar viaje; vale la captura repetida de 5_2_06"
+  },
+  {
+   "id": "13_5_02",
+   "file": "13_5_sequencing_02_pasadas.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Secuenciación terminada, pestaña Pasadas",
+   "model": "tms.sequence.run",
+   "view": "form",
+   "domain": [
+    [
+     "state",
+     "=",
+     "done"
+    ]
+   ],
+   "steps": [
+    {
+     "tab": "Passes"
+    }
+   ]
+  },
+  {
+   "id": "13_6_01",
+   "file": "13_6_optimization_01_bloque.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Bloque Optimización del asistente Asignar",
+   "manual": "Lista de Paradas › Acción › Manage › Optimización, sin Ejecutar"
+  },
+  {
+   "id": "13_6_02",
+   "file": "13_6_optimization_02_plan.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Diálogo del plan listo con Aplicar plan",
+   "manual": "Tras Ejecutar una optimización en la instancia local; no pulsar Aplicar plan"
+  },
+  {
+   "id": "13_6_03",
+   "file": "13_6_optimization_03_pasadas.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Tabla de las pasadas 2 y 3 con Aplicar pasadas",
+   "manual": "Tras Aplicar plan con Paradas sin planificar por el optimizador; no pulsar Aplicar pasadas"
+  },
+  {
+   "id": "13_7_01",
+   "file": "13_7_find-route_01_nivel.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Ejecución de Encontrar ruta con la columna Nivel",
+   "model": "tms.find.route",
+   "view": "form",
+   "domain": [
+    [
+     "state",
+     "in",
+     [
+      "proposed",
+      "applied"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "13_8_01",
+   "file": "13_8_scenarios_01_ventana.png",
+   "folder": "13_optimization-course",
+   "instance": "agent",
+   "note": "Ventana de Escenario con Preset y Nivel",
+   "model": "tms.optimization.scenario.window",
+   "view": "form"
   }
  ]
 }

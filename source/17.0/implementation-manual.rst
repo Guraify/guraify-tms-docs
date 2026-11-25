@@ -15,7 +15,9 @@ operación de principio a fin; el 6 cubre la gestión de recursos (odómetro y m
 8 cierra con el modelo económico y su control. El 9 y el 11 describen dos módulos opcionales: el
 documento de control del transporte (DeCA) y los avisos al Destinatario. El 12 pone en orden de
 tiempo lo que pasa con un Viaje en la calle (eventos, ETA, avisos, alarmas) y lo que queda
-preparado para la torre de control. El anexo A recoge el catálogo de campos de cada pantalla,
+preparado para la torre de control. El 13 es un curso: cómo configurar y usar la planificación
+con PTV (cálculo de ruta, secuenciación, optimización, Encontrar ruta y Escenarios), con la franja
+de la Parada y las pasadas como hilo. El anexo A recoge el catálogo de campos de cada pantalla,
 para consultarlo cuando haga falta.
 
 La numeración es la misma en toda la documentación, y por eso aquí faltan dos capítulos, que
@@ -39,4 +41,5 @@ tienen recorrido propio porque van dirigidos a otro lector:
    9_deca/index
    11_notifications/index
    12_live-operations/index
+   13_optimization-course/index
    annexes/index

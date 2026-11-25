@@ -39,11 +39,20 @@ hay que elegir uno y nadie ha elegido).
      - Número
      - Segundos que se añaden a cada recogida y a cada entrega cuando se envía el Planning al
        optimizador, además del tiempo de servicio propio de la Parada.
-   * - Aplicar tolerancia / Tolerancia antes (min) / Tolerancia después (min)
-     - Sí/No / Número
-     - Si las franjas horarias se envían a PTV ampliadas, y cuántos minutos por cada lado. Lo que el
-       asistente propone al optimizar y lo que usan Secuenciar Viaje y el cálculo de ruta. Marcada sin
-       minutos, cada Parada toma los de su zona operativa.
+   * - Tolerancia después (min)
+     - Número
+     - Minutos que se admite llegar después del fin de la franja de una Parada. A 0, los de la zona
+       operativa de cada Parada (``tms_tw_tolerance_after``).
+   * - Margen sobre el fin (min)
+     - Número
+     - Minutos que se quitan al fin de la franja en el nivel Con margen; nunca deja una franja de
+       menos de 30 minutos (``tms_tw_end_margin_min``).
+   * - Pasada 1 / Pasada 2 / Pasada 3
+     - Selección
+     - El nivel de cada pasada: Con margen, Real, Con tolerancia, Con tolerancia × 2, Con tolerancia
+       × 4, Fin abierto, Fin abierto sin límites; la 2 y la 3 admiten Sin pasada. De serie, Con
+       margen / Con tolerancia / Fin abierto sin límites (``tms_pass_1_level`` a
+       ``tms_pass_3_level``). Grupo **Margen y pasadas**.
    * - Modo División Viaje
      - Selección
      - Cómo se reparten los importes de un Viaje entre sus Paradas: Volumen, Lineal, Metros, Bulto,

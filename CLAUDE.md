@@ -143,7 +143,9 @@ tms-docs/
 
 Capítulos actuales en `source/17.0/`: `0_product-overview` (Conocer, sin numerar), `1_introduction`, `2_conceptual-model` (cuatro páginas desde D12),
 `3_functional-architecture`, `4_parametrization`, `5_operational-flows`,
-`6_resources`, `7_edi-integrations`, `8_economic-administration`, `10_manual_app` y el anexo `annexes/` (A.1 a A.28).
+`6_resources`, `7_edi-integrations`, `8_economic-administration`, `9_deca`, `10_manual_app`, `11_notifications`,
+`12_live-operations` (la operación en vivo: eventos, ETA, avisos, alarmas, torre), `13_optimization-course` (curso de
+optimización con PTV) y el anexo `annexes/` (A.1 a A.36).
 El cap. 3 tiene la página `3_2_6_legs-and-stops.rst` (Tramos y Paradas) al final del toctree de 3.2 aunque
 el índice de 3.2 presente las entidades en orden lógico.
 
@@ -175,7 +177,7 @@ se usen en 10.3 a 10.7. `/docs/index.html` es una redirección estática en `sou
 - Prosa redactada, no apuntes: párrafos completos, nada de listas de una palabra.
 - **Cada cosa se explica una vez** y el resto enlaza (decisión del cierre editorial D12, 2026-09-10). Dónde vive
   cada copia única: ciclo y tríada Orden/Viaje/margen en 0.3 (Conocer) y 2.1 (implantación, detalle en 8.1);
-  tres niveles de PTV y las marcas de la Parada en 1.4.2; qué restringe a qué (equipo, zonas, ZBE, capacidad) en 4.2.6; presets en 4.3.7; los botones del Viaje (Secuenciar, Restaurar) en 5.2.3; Encontrar ruta en 5.2.5; normalización de direcciones en la tabla de 3.2.3; Bloquear/Desbloquear de la
+  tres niveles de PTV y las marcas de la Parada en 1.4.2; qué restringe a qué (equipo, zonas, ZBE, capacidad) en 4.2.6; presets en 4.3.7; los botones del Viaje (Secuenciar, Restaurar) en 5.2.3; Encontrar ruta en 5.2.6; Escenarios en 5.2.5; la franja de la Parada, los niveles y las pasadas en 13.3 (el cap. 13 es el curso y enlaza a las copias únicas); normalización de direcciones en la tabla de 3.2.3; Bloquear/Desbloquear de la
   Orden en 3.2.1; la matriz de estados de los cuatro niveles y la escalera del Viaje en 3.2.7; el despacho en
   5.4.1; los botones del Viaje (Validar, Rechazar, reversiones, Cancelar) y el permiso de validador en 3.2.2.4;
   la cadena de cierre y la revisión previa a facturar en 5.5; Tramos, Paradas y sus estados en 3.2.6, y la forma del arrastre (agencia, hub propio, recogida) en 3.2.6.3; el asistente Asignar y su regla de movilidad en 5.2.3; el historial conductor ↔ vehículo en 5.3.3; Bandeja de entrada API en 3.2.4; la cola de importación y el contacto por dirección y nombre en 3.2.3; precio por tipo de bulto en 4.4.4; entrega parcial, ciclo del Bulto y Registrar trazabilidad en 5.4.3; etiquetas en 5.9; el DeCA entero en el cap. 9 (lo que añade a la hoja de ruta, en 9.5.4; la hoja de ruta en sí, en 5.4.1); los avisos al Destinatario (correo, SMS con Esendex, WhatsApp) enteros en el cap. 11, con el anexo A.33; los dos motores de optimización en 1.4.2.1 y la política operativa en 4.3.9; contactos TMS en 4.1.8 y el alta del conductor en la app en 4.1.9; telemática, acceso externo (portal y audiencias) e indicadores y tableros para el integrador en 7.8–7.10; los parámetros del sistema en el anexo A.35; flota propia sin orden de

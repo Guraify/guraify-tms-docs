@@ -111,7 +111,7 @@ Para que la optimización produzca Viajes viables deben cumplirse algunas condic
      - Pesos, volúmenes, equipamientos, distancia máxima, costes y zonas permitidas
        parametrizados en las categorías de vehículo
        (:doc:`/17.0/4_parametrization/4_2_logistic-configuration`); el preset de optimización
-       elegido y la tolerancia de ventanas del Planning
+       elegido y la tolerancia, el margen y los niveles de pasada del Planning
        (:doc:`/17.0/4_parametrization/4_3_planning-configuration`).
    * - Distintivos y modelos de referencia
      - Antes de dar de alta la primera zona de bajas emisiones, cada modelo de vehículo necesita

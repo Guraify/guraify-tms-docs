@@ -16,9 +16,10 @@ hay que elegir uno y nadie ha elegido). En este maestro, el **Defecto** es el pe
 OptiFlow cuando ni el conductor, ni la categoría del vehículo, ni la franja traen uno.
 
 El conductor (el contacto marcado como conductor, pestaña Propiedades TMS) puede llevar su propio
-perfil en **Horas de Conducción** y un **Factor de velocidad del conductor** (1 por defecto) que
-multiplica el del vehículo; los dos los lee PTV OptiFlow, y el factor también el cálculo de ruta
-(``res.partner``: ``tms_driver_working_hours_id``, ``tms_speed_factor``).
+perfil en **Horas de Conducción** y un **Factor de tiempo de servicio** (1 por defecto, de 0,75 a
+1,25) que escala el tiempo de servicio en las Paradas de cliente, nunca en el Hub; el perfil lo
+leen todos los cálculos (salvo en una pasada Fin abierto sin límites) y el factor, los cuatro
+motores (``res.partner``: ``tms_driver_working_hours_id``, ``tms_service_time_factor``).
 
 A.12.1 Perfil de jornada
 ------------------------

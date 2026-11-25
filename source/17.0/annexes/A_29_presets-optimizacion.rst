@@ -33,11 +33,11 @@ las etiquetas de la interfaz están en inglés en parte.
    * - Compañía
      - Relación con Compañía
      - A qué compañía pertenece.
-   * - Casillas marcadas por defecto: Aplicar tolerancia, Permitir violar restricciones de vía,
-       Permitir violar jornada, km, paradas y carga, Respetar zonas operativas
+   * - Permitir violar restricciones de vía / Respetar zonas operativas (valores por defecto)
      - Sí/No y selección (No, Estricto, Preferido)
-     - Lo que el asistente marca al elegir el preset. El planificador puede cambiarlas en cada
-       lanzamiento; lo que se ejecuta son las casillas de la ejecución.
+     - Lo que el asistente propone al elegir el preset. El planificador puede cambiarlas en cada
+       lanzamiento; lo que se ejecuta son las casillas de la ejecución. La tolerancia y las franjas
+       no son del preset: las deciden las pasadas del Planning.
    * - Coste de salir de la zona
      - Importe
      - Con «Respetar zonas operativas» en Preferido, lo que cuesta asignar una Parada a un vehículo
@@ -77,9 +77,9 @@ las etiquetas de la interfaz están en inglés en parte.
        de «Máxima rentabilidad».
    * - Límites blandos y sus costes (hora extra, km extra, parada extra, unidad de carga extra)
      - Sí/No e importes
-     - El preset está pensado para correr con la casilla de jornada marcada: jornada, km, Paradas
-       y carga pasan de límites a costes por exceso con estos importes. La conducción máxima sigue
-       siendo un límite duro.
+     - Con los límites blandos, el asistente marca de antemano «Permitir violar jornada, km,
+       paradas y carga»: jornada, km, Paradas y carga pasan de límites a costes por exceso con
+       estos importes. La conducción máxima sigue siendo un límite duro.
    * - Calidad / Optimización premium / Ajustes del objetivo / Considerar prioridades
      - Selección y Sí/No
      - Para PTV Developer: calidad de la búsqueda (estándar o alta), si se pide la

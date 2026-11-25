@@ -11,8 +11,9 @@
 El :term:`ETA` es la hora prevista de llegada a cada Parada. El TMS guarda **dos** por Parada, y
 confundirlas es el error más común al leerlas:
 
-- El **prometido** (en la interfaz, *Prometido*) es el de la planificación: lo fija el primer
-  cálculo de ruta del Viaje y **ningún recálculo lo mueve**. Es la hora que se dio al cliente y
+- El **prometido** (en la interfaz, *Prometido*) es el de la planificación: lo escribe cada
+  cálculo de ruta mientras el Viaje no está despachado y, **desde el despacho, nada lo mueve**
+  (revertir el despacho lo libera). Es la hora que se dio al cliente y
   la vara con la que se mide la puntualidad.
 - El **vigente** (*Actual*) es el del último recálculo. Cambia mientras el Viaje está en la
   calle. La diferencia entre los dos es la **desviación** (en minutos, positiva si va tarde).

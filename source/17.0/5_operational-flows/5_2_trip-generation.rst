@@ -138,17 +138,19 @@ sus Reembolsos, disponibles para la liquidación. Al terminar, **Abrir viaje** l
 Sobre el Viaje resultante, los botones de la pestaña de Paradas ajustan el recorrido cuando hace
 falta:
 
-- **Secuenciar Viaje** abre el diálogo de :term:`secuenciación <Secuenciación>` y la lanza **en
-  segundo plano**: el formulario vuelve en un segundo, un aviso dice que se está secuenciando y
-  el diálogo de progreso enseña el resultado. El diálogo ofrece **Mantener orden relativo** (PTV
-  solo inserta lo que aún no tiene sitio, sin mover lo demás), la **tolerancia** de ventanas del
-  Planning, que se puede cambiar, y **Secuenciar todo**: si la primera llamada deja Paradas fuera,
-  una segunda, y última, vuelve a pedir el Viaje sin las ventanas de esas Paradas ni la distancia
-  máxima del vehículo; lo que entra así queda marcado con lo que incumple (``DISTANCE``,
-  ``CAPACITY`` o ``WORKDAY``, ver :doc:`/17.0/1_introduction/1_4_technological-architecture`).
-  Secuenciar todo no arregla el Viaje: enseña lo que no cabe; la tolerancia es la primera
-  herramienta y esto la última. Lo que PTV no puede planificar se queda en el Viaje sin sitio en
-  la ruta y el diálogo lo dice.
+- **Secuenciar Viaje** abre el diálogo **Secuenciar viajes** y lanza la :term:`secuenciación
+  <Secuenciación>` **en segundo plano**: el Viaje entra en cola, el formulario vuelve en un
+  segundo, un aviso dice que se está secuenciando y el diálogo de progreso enseña el resultado.
+  El diálogo ofrece **Mantener orden relativo** (PTV solo intercala lo que aún no tiene sitio,
+  sin mover lo demás), el **Inicio de carga** (solo con un Viaje: la ruta sale entre esa hora y
+  quince minutos después, y se guarda en el Viaje) y las tres **Pasadas** con el nivel que trae el
+  Planning, que se pueden cambiar para este lanzamiento: si la primera pasada deja Paradas fuera,
+  la segunda y la tercera vuelven a pedir el Viaje con la franja de **esas** Paradas más abierta
+  (:doc:`13.3 </17.0/13_optimization-course/13_3_passes>`). Lo que entra en una pasada Fin
+  abierto sin límites queda marcado con lo que incumple (``DISTANCE``, ``CAPACITY`` o
+  ``WORKDAY``, ver :doc:`/17.0/1_introduction/1_4_technological-architecture`); lo que no cabe
+  ni así se queda en el Viaje sin sitio en la ruta y el diálogo lo dice. La ejecución guarda
+  **Qué hizo cada pasada**.
 - **Restaurar orden anterior** deshace la última secuenciación (orden, horas, distancias y
   estados de ventana), mientras el Viaje tenga las mismas Paradas.
 - **Enrutar Viaje** lanza el :term:`cálculo de ruta <Cálculo de ruta>` con el orden actual
@@ -165,8 +167,7 @@ compañía.
 .. figure:: /_static/img/5_operational-flows/5_2_trip-generation_06_secuenciar.png
    :alt: Diálogo Secuenciar viajes
 
-   El diálogo de Secuenciar Viaje: Secuenciar todo, Mantener orden relativo, tolerancia y qué se
-   puede violar.
+   El diálogo Secuenciar viajes: Mantener orden relativo, Inicio de carga y las tres pasadas.
 
 .. figure:: /_static/img/5_operational-flows/5_2_trip-generation_02_asignar-nuevo.png
    :alt: Asistente Asignar en modo Nuevo con el mapa de las Paradas
@@ -201,12 +202,14 @@ llenarlos. Se lanza desde el asistente Asignar en modo **Optimización**, o desd
    cada una aporta conductor, vehículo y transportista. En el **modo por categoría de
    vehículo** («Por Categoría») se indica cuántos vehículos de cada categoría hay disponibles,
    con su hub y su ventana de salida, sin decir cuáles.
-#. **Elegir el preset y lo que se puede violar.** El :term:`Preset de optimización` dice para
-   qué se optimiza (:ref:`presets-optimizacion`) y rellena las casillas: **Aplicar tolerancia**
-   (con los minutos del Planning, cambiables en **Avanzado**), **Permitir violar restricciones
-   de vía**, **Permitir violar jornada, km, paradas y carga** y **Respetar zonas operativas**
-   (No, Estricto o Preferido). El planificador puede cambiarlas; lo que se ejecuta son las
-   casillas, no el preset. El asistente avisa de antemano de las Paradas que **no se enviarán**
+#. **Elegir el preset, las pasadas y lo que se puede violar.** El :term:`Preset de
+   optimización` dice para qué se optimiza (:ref:`presets-optimizacion`) y propone **Permitir
+   violar restricciones de vía** (solo OptiFlow), **Permitir violar jornada, km, paradas y
+   carga** y **Respetar zonas operativas** (No, Estricto o Preferido); el planificador puede
+   cambiarlas, y lo que se ejecuta son las casillas, no el preset. Las tres **Pasadas** vienen
+   del Planning y se cambian aquí para este lanzamiento (:doc:`13.3
+   </17.0/13_optimization-course/13_3_passes>`); **Avanzado** lleva la **Tolerancia después**
+   (0, la de cada zona) y **Evitar cruces** (solo Developer). El asistente avisa de antemano de las Paradas que **no se enviarán**
    al optimizador y por qué (coordenadas sospechosas, conflicto de equipamiento, sin Tramo,
    Tramo y Parada sin hub: los motivos de 5.2.4.1), cada una con su enlace: se abre encima del
    asistente, se corrige y, al guardarla, el aviso se rehace. Con Paradas fuera, **Ejecutar**
@@ -223,10 +226,20 @@ llenarlos. Se lanza desde el asistente Asignar en modo **Optimización**, o desd
    diálogo enseña las Paradas por estado de ventana, las excluidas y las violaciones, y espera a
    **Aplicar plan**. Al aplicarlo se
    crean los **Viajes planificados** con sus Paradas asignadas y secuenciadas, sus horas
-   estimadas y su trazado; cada Viaje que pierde Paradas en el plan se vuelve a secuenciar. Si se
-   cierra el diálogo sin aplicar, no se crea nada: el plan queda en su ejecución (menú Planning
-   › Ejecuciones de optimización) y se puede aplicar desde allí. **Revertir** deshace el plan entero,
-   salvo que haya borrado un Viaje que se vació al aplicarlo.
+   estimadas y su trazado; un Viaje que pierde Paradas en el plan cierra el hueco y recalcula su
+   ruta, y el que se queda vacío se borra. Si se cierra el diálogo sin aplicar, no se crea nada:
+   el plan queda en su ejecución (menú Planning › Ejecuciones de optimización) y se puede aplicar
+   desde allí. **Revertir** deshace el plan entero, salvo que haya borrado un Viaje que se vació
+   al aplicarlo.
+#. **Las pasadas 2 y 3.** La optimización es la pasada 1. Si el motor dejó Paradas sin planificar,
+   tras Aplicar plan el diálogo sigue abierto, **Pasadas 2 y 3: Evaluando**, y para cada una busca
+   hueco en los Viajes recién creados, sin cambiar su estructura, a los niveles de las pasadas 2
+   y 3; sale una tabla Parada / Viaje / Pasada / Nivel / Franja real, y la que no encuentra hueco
+   dice **Sin ruta** con el motivo. Nada se mueve hasta pulsar **Aplicar pasadas**; si se cierra
+   sin pulsarlo, esas Paradas siguen sin Viaje y la propuesta espera en la ejecución. Las
+   «excluidas por nosotros» (5.2.4.1) no entran: hay que corregir su dato. Las sobrantes se
+   evalúan una a una: si dos eligen el mismo Viaje y no caben juntas, las dos quedan sin ruta, y
+   se resuelven con Encontrar ruta (5.2.6).
 #. **Revisar la propuesta** sobre el mapa: mover Paradas entre Viajes, reordenarlas, quitar las
    que no procedan. En el modo por categoría, asignar después conductor y vehículo a cada
    Viaje (:doc:`5_3_resource-assignment`).
@@ -383,8 +396,9 @@ tiene el suyo:
   vehículos de cada categoría, con su hub y su ventana de salida, en la pestaña **Vehículos**) o
   por franja («Por Turno»: las franjas del Plan de disponibilidad). OptiFlow lleva además la
   **Duración de la optimización**, 120 segundos por defecto: con más tiempo da más vueltas al
-  problema. La ventana no lleva preset ni las casillas de lo que se puede violar (5.2.4): la
-  petición sale con los valores de siempre de cada motor.
+  problema. La ventana lleva, como el asistente, el **Preset** y lo que se puede violar (5.2.4)
+  y, en vez de las tres pasadas, un solo **Nivel** de franja: una ventana se calcula en una
+  pasada a ese nivel (:doc:`13.3 </17.0/13_optimization-course/13_3_passes>`).
 - **Manual** no calcula: su plan es el día tal como está. **Tomar foto del plan actual** lo copia:
   una ruta por Viaje de origen, con su Viaje, y las Paradas sin Viaje como no planificadas. Es el
   punto de partida contra el que se miden las demás.
@@ -493,10 +507,11 @@ Orden y a qué coste**, enseña las diferencias y deja que el planificador confi
 (de cada una, sus Paradas sin Viaje); desde un Viaje, con **Repartir este viaje** (sus Paradas
 pendientes son las Órdenes a colocar y el propio Viaje queda fuera de las candidatas); o desde el
 modo Existente del asistente Asignar, con **Buscar la mejor ruta**. El asistente pide la fecha,
-el Planning, las rutas candidatas (por defecto, los Viajes no iniciados de ese día; se puede
-añadir uno iniciado, y entonces la Orden nueva solo puede ir detrás de lo ya reportado), el
-modo, el preset, la tolerancia y lo que se puede violar. **Una ruta despachada no puede ser
-candidata**: aplicar la despacharía de verdad.
+el Planning, las rutas candidatas (por defecto, los Viajes de ese Planning y ese día que no han
+empezado; se puede añadir uno iniciado, y entonces la Orden nueva solo puede ir detrás de lo ya
+reportado; un Viaje terminado o un arrastre a agencia no se ofrecen), el modo, el preset, las
+**Pasadas** (la 1 y, en Mantener estructura, la 2 y la 3), la tolerancia y lo que se puede
+violar.
 
 **Mantener estructura** (el modo por defecto) conserva las rutas tal como están y mete la Orden
 donde menos moleste:
@@ -509,13 +524,15 @@ donde menos moleste:
    si se marca **Permitir reordenar dentro de la ruta**). Evaluar no escribe nada: los Viajes y
    las Paradas quedan como estaban. La ruta actual también se le pregunta a PTV, para que las
    diferencias salgan del mismo motor.
-#. Una candidata **no se propone** si PTV deja la Orden fuera o si para meterla tendría que
-   sacar una Parada que ya estaba planificada: nada planificado se desplanifica.
+#. Una candidata **no se propone** si PTV deja la Orden fuera en ninguna de las pasadas o si
+   para meterla tendría que sacar una Parada que ya estaba planificada: nada planificado se
+   desplanifica.
 #. La pestaña **Candidatas** enseña, por Orden y ruta, el desvío, los kilómetros y minutos de
    más, la nueva hora de fin, la espera añadida, las Paradas que pasan a tolerancia o fuera de
    ventana, la capacidad que queda y la diferencia de coste con los costes de la categoría del
-   vehículo. La **mejor** queda marcada y confirmada: la de menor coste y, a igualdad, la que
-   menos Paradas saca de ventana. El planificador puede **Elegir** otra viable o desmarcar
+   vehículo, y el **Nivel** de pasada al que cabe. La **mejor** queda marcada y confirmada: la
+   que cabe al nivel más estricto y, a igualdad, la de menor coste y la que menos Paradas saca de
+   ventana. El planificador puede **Elegir** otra viable o desmarcar
    **Confirmar** en una Orden. Una Orden sin candidata viable queda **Sin ruta**, con el motivo
    (equipamiento, zona, ZBE, capacidad, ventana o límites de la ruta) y cuántas rutas cayeron por
    cada uno.

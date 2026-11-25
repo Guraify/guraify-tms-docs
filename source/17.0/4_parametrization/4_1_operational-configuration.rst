@@ -397,7 +397,9 @@ la ficha del contacto decide:
    * - **Horarios TMS**: MAÑANA y TARDE
      - El horario por defecto de mañana y de tarde y, día a día, si abre y de qué hora a qué hora.
        Son las ventanas que PTV respeta para hubs y clientes al secuenciar y optimizar, y las
-       horas por defecto de carga y descarga.
+       horas por defecto de carga y descarga. Las cinco reglas de lectura de un Hub (qué
+       significa la casilla de un día, qué pasa sin horario o con media jornada) están en
+       :doc:`13.2.3 </17.0/13_optimization-course/13_2_setup>`.
 
 La pestaña Propiedades TMS tiene además el grupo **TACÓGRAFO** de los conductores, que solo se
 lee (lo rellena la telemática), el grupo **AVISOS** (:doc:`/17.0/11_notifications/11_4_recipient`),
@@ -433,7 +435,7 @@ un **rol de la app** en ese usuario.
 **1. El contacto conductor.** Un contacto con **Es Conductor** marcado y su **Transportista**
 (obligatorio: la propia compañía si es flota propia). El campo Conductor del Viaje solo ofrece
 contactos marcados así. En el conductor se ponen también, si hacen falta, sus **Horas de
-Conducción** y su **Factor de velocidad del conductor**
+Conducción** y su **Factor de tiempo de servicio**
 (:ref:`17.0/4_parametrization/4_3_planning-configuration:4.3.6 Horas de conducción`); el botón
 **Historial de vehículos** enseña con qué vehículos ha hecho sus Viajes.
 

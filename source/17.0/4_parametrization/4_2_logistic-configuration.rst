@@ -269,7 +269,8 @@ cuando una Parada «no entra» en ningún Viaje.
    * - Peso, volumen, bultos, palés, cantidad y metros
      - Sus seis capacidades
      - Siempre (en Encontrar ruta, contra la capacidad que le queda a la ruta)
-     - La Parada queda fuera del plan; «Secuenciar todo» la marca ``CAPACITY``
+     - La Parada queda fuera del plan; si entra en una pasada Fin abierto sin límites, queda
+       marcada ``CAPACITY``
    * - Zona operativa de la Parada (el área de la red en que cae)
      - Sus zonas operativas permitidas
      - Solo con **Respetar zonas operativas** (Estricto o Preferido); sin zonas permitidas, el
@@ -283,9 +284,9 @@ cuando una Parada «no entra» en ningún Viaje.
      - Fuera del plan; secuenciación y cálculo de ruta marcan ``LEZ``
    * - Franja horaria de la Parada
      - Jornada y horario de salida del vehículo y del conductor
-     - Siempre, ampliada con la tolerancia si se aplica
-     - Fuera del plan o, con «Sacar todo como sea», dentro con la ventana violada y el estado
-       *Fuera de ventana*
+     - Siempre, abierta hasta el nivel de la pasada (margen, real, tolerancia, fin abierto)
+     - Fuera del plan en la pasada 1 y, si una pasada más abierta la coloca, dentro con el estado
+       *En tolerancia* o *Fuera de ventana* según la franja real
    * - Coordenadas de la Parada
      - Hub de salida
      - Control previo: país distinto o más lejos que la distancia máxima

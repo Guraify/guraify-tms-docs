@@ -73,6 +73,7 @@ Estados: ⬜ pendiente · 🔶 en curso · ✅ hecha.
 | D31 | ✅ | **Escenarios de optimización y puesta al día de D30** | Aviso de Paco del 14/10: P7b y P7c listos. Escenarios (`tms.optimization.scenario` y sus ventanas) en 5.2 (sección nueva): fuente, universo y caducidad, ventanas por motor, Optimizar, Foto del plan actual, comparativa (paradas planificadas, no enviadas y dejadas por el motor, coste con una regla para todos los motores, CO2 del ruteo en seco), Rutear plan (en seco), Aplicar y lo que pasa con las demás ventanas, modo evaluación; quita la línea «en prueba» de 3.1.1.2 y 1.4.6. Además, lo que cambió `261014_V03` en lo de D30: al lanzar, el Tramo sin hub toma el de su Parada (y se escribe), el asistente avisa antes de lanzar de qué no se enviará y pide confirmación, un rechazo del proveedor deja la ejecución Fallida con su motivo. P7c (aplicar por diferencias, `261019_V06`, probada en el navegador el 19/10) entra también: la ruta conserva su Viaje, el Viaje sin ruta se borra, revertir reabre el escenario, comparativa con descartadas y Plan actual. **Hecho 19/10** (`261019_V02`): 5.2.5 Escenarios (Encontrar ruta pasa a 5.2.6), D30 al día en 5.2.4, 5.2.4.1 y 3.3.2.3, 3.1.1.2, 1.4.6, 1.4.2.3 y glosario; falta la captura `5_2_11` |
 | D32 | ✅ | **Canon de combustible (`tms_fuel_surcharge`)** | Aviso de Paco del 23/10: F1–F5 probadas en el navegador, se documenta todo. Sección nueva **8.9** (cómo se calcula, precios y coeficientes, políticas y su resolución, la línea orden a orden, una vez por factura, diagnósticos, puesta en marcha según el §9 del handoff `fuel_surcharge.md`), anexo **A.36**, tres entradas del glosario, enganches en 4.1 (contactos), 4.2.5 (vehículo de obras), 4.4.3 (fecha de referencia y política de la Tarifa), 4.4.5 (producto base), 4.5.1 (políticas del Proyecto), 5.6 y 5.7. **Hecho 23/10** (`261023_V01`); faltan las capturas `8_9_01` y `8_9_02` |
 | D33 | ✅ | **Cap. 12 La operación en vivo** | Petición de Paco del 4/11 (está desarrollando la torre y necesita entender cómo funciona y se configura en Odoo). Capítulo nuevo que pone en orden de tiempo lo que ya está repartido: 12.1 recorrido de un Viaje en la calle (tabla momento / qué hace Odoo / dónde se configura / dónde se ve), 12.2 eventos de la app y señales de telemática, 12.3 el ETA (prometido y vigente, modos, frenos, dos niveles, configuración paso a paso), 12.4 avisos desde el ángulo de la torre, 12.5 alarmas (umbrales de la política; el modelo de alarmas es diseño, spec `02_SPEC_api_connect.md` §6), 12.6 lo que la torre lee de Odoo. **Hecho 4/11** (`261104_V02`), sin capturas (el capítulo enlaza a las de 5.4, 4.3 y 11). 12.5 y 12.6 documentan diseño: reescribir cuando exista `tms_connect` |
+| D34 | ✅ | **Cap. 13 Cómo optimizar y puesta al día de las pasadas** | Encargo de Paco del 25/11 a partir de `specs/assign_wizard/05_GUIA_optimizacion_operativa.md` (tms 17.0.1.0.22, PTV-15…PTV-18). Glosario (Pasada, Nivel de pasada, Margen sobre el fin; Secuenciación, Preset y Tolerancia corregidos); las páginas que describían «Aplicar tolerancia», «Tolerancia antes», «Secuenciar todo» y las casillas del Preset puestas al día (1.4.2, 1.4.2.1, 1.4.2.3, 3.3, 4.2.6, 4.3.1, 4.3.3, 4.3.6, 4.3.7, 5.2.3–5.2.6, A.07, A.09, A.29, 12.3); 5.2.6 según el código (candidatas de Encontrar ruta: todo Viaje del día no terminado); cap. 13 en diez páginas como curso que enlaza a las copias únicas. **Hecho 25/11** (`261125_V01`). Capturas: nueve nuevas del cap. 13 y `4_3_11`; `5_2_06` a repetir. Lo no comprobado de la guía (§12) no se afirma |
 
 Orden: D3 y D4 primero (lo demás las usa). D5 a D11 y D14 en cualquier orden. D12 y D13 al final.
 Numeración cerrada el 2026-09-10: el cap. 6 es Gestión de Recursos (D14) y Administración y Control Económico será el cap. 8 (D10).
@@ -109,6 +110,21 @@ En `tms_int/i18n/es.po`: Definición de fichero (antes Fichero EDI / Definición
 En `tms_odoo_app` (rama `fix/app-diagnostics-and-auth`, sin commit): `es_ES.json` failed = Fallido, company_domain = tuempresa.com, find-parcels = Encontrar bultos, título del Panel sin ruta = «No tienes ninguna ruta asignada»; títulos «Mapa» y «Bultos»; «ELIGE UNA OPCIÓN»; textos de confirmación de cancelación en español y sin «expedición».
 
 Para que se vean en Odoo: actualizar `tms` y `tms_int` con `--i18n-overwrite` (o cargar el `.po` desde Ajustes › Traducciones). La doc ya usa estas etiquetas.
+
+### Etiquetas de la optimización que chocan con el glosario o salen en inglés (levantadas en D34, 25-nov-2026)
+
+La doc cita las etiquetas como salen; estas son las que habría que corregir en `tms/i18n/es.po` o en las vistas:
+
+| Dónde | Texto actual | Propuesto |
+|---|---|---|
+| Botón de la lista de Órdenes y acción de la lista de Paradas | «Manage» (sin traducir) | «Gestionar» |
+| Botón del Escenario (`Load Stops`) | «Paradas de carga» | «Cargar paradas» |
+| Botón de confirmar del diálogo Secuenciar viajes (`Sequence`) | «Secuencia» | «Secuenciar» |
+| Fin de la franja de la Parada (`End Time`) | «Tiempo Fin» | «Hora Fin» |
+| Tiempo fijo de entrega del Planning | «Tiempo de Servicio (sec)» | «Tiempo Entrega (seg)» (es el de la entrega, como «Tiempo Recogida») |
+| Menú del Plan de disponibilidad | «Plan Disponibilidad Conductores» | «Plan de disponibilidad de conductores» |
+| Campo del asistente Asignar (`slot_ids`) | «Turnos» | «Franjas» (el glosario dice modo por franja) |
+| Fases del diálogo de progreso del motor y varias ayudas del Preset | en inglés | traducir |
 
 ### Etiquetas de `tms_resources` y `tms_maintenance` para su futuro `es.po` (levantadas en D12)
 

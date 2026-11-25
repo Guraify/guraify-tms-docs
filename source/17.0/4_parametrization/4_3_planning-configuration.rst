@@ -53,13 +53,24 @@ Paradas, en qué franjas del Plan de disponibilidad son compatibles, en qué pre
        cantidad, metros lineales, o cada uno combinado con los kilómetros. Es la
        :term:`División de costes`, que se explica en
        :doc:`/17.0/8_economic-administration/8_3_cost-split`.
-   * - Aplicar tolerancia y minutos antes / después
-     - Si las franjas horarias de las Paradas se envían a PTV **ampliadas** unos minutos por
-       cada lado (:term:`Tolerancia de ventana`), y cuántos. Es lo que propone el asistente al
-       optimizar y lo que usan Secuenciar Viaje y el cálculo de ruta de los Viajes de este
-       Planning. Con la casilla marcada y sin minutos, cada Parada toma los de su zona
-       operativa. Una Parada que solo cabe gracias a la tolerancia queda *En tolerancia*, no
-       *Fuera de ventana*.
+   * - Tolerancia después (min)
+     - Los minutos que se admite llegar **después** del fin de la franja de una Parada
+       (:term:`Tolerancia de ventana`). A 0, cada Parada toma los de su zona operativa. Una
+       Parada servida dentro de esos minutos queda *En tolerancia*; más tarde, *Fuera de
+       ventana*. El inicio de la franja no se toca nunca.
+   * - Margen sobre el fin (min)
+     - Los minutos que se **quitan** al fin de la franja en el nivel Con margen
+       (:term:`Margen sobre el fin`), para que la ruta se planifique con colchón antes de que
+       cierre. Nunca deja una franja de menos de 30 minutos.
+   * - Pasada 1 / Pasada 2 / Pasada 3 (grupo **Margen y pasadas**)
+     - El :term:`nivel <Nivel de pasada>` de cada :term:`Pasada` con que se secuencian, optimizan
+       y buscan ruta los Viajes del Planning: Con margen, Real, Con tolerancia (×1, ×2, ×4), Fin
+       abierto o Fin abierto sin límites; la 2 y la 3 admiten Sin pasada. De serie, Con margen ›
+       Con tolerancia › Fin abierto sin límites: lo que no cabe a su hora entra tarde y marcado,
+       y nada se queda sin planificar por horario. Con tolerancia y margen a 0, las pasadas 1 y 2
+       piden lo mismo y la segunda se salta. Los asistentes proponen estos niveles y se cambian
+       en cada lanzamiento. Cómo encadenan y cómo elegirlos: :doc:`13.3
+       </17.0/13_optimization-course/13_3_passes>`.
    * - Proveedor de optimización
      - Qué motor optimiza las Paradas de este Planning: PTV Developer o PTV OptiFlow. Vacío,
        el de la compañía (ver :ref:`proveedores-geo`). Sirve para pasar un tipo de operación a
@@ -74,6 +85,13 @@ reparto, recogida o urgente tengan precios distintos. Y en las **importaciones**
 puede traer el Planning de cada Viaje. Su plan de transporte aporta además las **zonas
 operativas** que los motores comparan con las permitidas a cada vehículo (ver
 :ref:`que-restringe`). Campos en :doc:`/17.0/annexes/A_07_planning`.
+
+.. CAPTURA: 4_3_11 — descomentar el figure cuando esté la imagen
+   .. figure:: /_static/img/4_parametrization/4_3_planning-configuration_11_margen-pasadas.png
+      :alt: Grupo Margen y pasadas de un Planning
+
+      El grupo Margen y pasadas del Planning: tolerancia después, margen sobre el fin y el nivel
+      de las tres pasadas.
 
 4.3.2 Planes de transporte
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,10 +158,10 @@ configurarlas:
        se cambia.
    * - Agencia y hub
      - Lo que heredan los tramos cuya dirección cae en el área.
-   * - Tolerancia antes / después (min)
+   * - Tolerancia después (min)
      - Los minutos de :term:`tolerancia <Tolerancia de ventana>` propios de esta zona operativa,
-       que se aplican a sus Paradas cuando el Planning pide tolerancia sin fijar los suyos. Una
-       zona de polígonos industriales puede admitir más margen que un centro urbano.
+       que valen para sus Paradas cuando el Planning tiene la suya a 0. Una zona de polígonos
+       industriales puede admitir más que un centro urbano.
    * - Distintivo DGT mínimo (solo Bajas emisiones)
      - El distintivo (B, C, ECO o 0 emisiones) que un vehículo necesita para entrar en esta
        :term:`ZBE <Zona de bajas emisiones>`. Un vehículo entra si el distintivo de su modelo lo
@@ -282,9 +300,10 @@ el reglamento europeo de serie.
 
 El perfil del conductor y su **factor de velocidad** se ponen en la ficha del conductor (el
 contacto marcado como conductor, pestaña Propiedades TMS): **Horas de Conducción** para quien
-tiene una jornada distinta de la de su vehículo, y **Factor de velocidad del conductor** para
-quien va más lento o más rápido que la media (1 es la media). El factor del conductor multiplica
-el del vehículo en el cálculo de ruta y en OptiFlow. Una regulación mal elegida produce Viajes
+tiene una jornada distinta de la de su vehículo, y **Factor de tiempo de servicio** para quien
+tarda más o menos que la media en cada Parada (1 es la media; un conductor nuevo tarda más). El
+factor escala el tiempo de servicio en las Paradas de cliente, nunca en el Hub, en todos los
+cálculos; la velocidad es solo del vehículo. Una regulación mal elegida produce Viajes
 válidos en el papel e imposibles dentro de la jornada permitida. Campos en
 :doc:`/17.0/annexes/A_12_horas-conduccion`.
 
@@ -301,13 +320,14 @@ válidos en el papel e imposibles dentro de la jornada permitida. Campos en
 .. figure:: /_static/img/4_parametrization/4_3_planning-configuration_07_presets.png
    :alt: Lista de Presets de optimización
 
-   Los cuatro presets de serie, con las casillas que marcan por defecto.
+   Los cuatro presets de serie.
 
 Un :term:`Preset de optimización` (``tms.ptv.preset``) dice **para qué se optimiza**: qué
-persigue el motor cuando construye los Viajes y qué está dispuesto a sacrificar. Antes el TMS
-enviaba siempre lo mismo; ahora el planificador elige el preset al lanzar la optimización
-(asistente Asignar en modo Optimización, Encontrar ruta) y el preset rellena las casillas de lo
-que se permite violar, que el planificador puede cambiar en ese momento. Vienen cuatro de serie:
+persigue el motor cuando construye los Viajes y qué está dispuesto a sacrificar. El planificador
+lo elige en cada lanzamiento (asistente Asignar en modo Optimización, Encontrar ruta, ventana de
+un Escenario); no se fija en el Planning ni en el vehículo. Lo que no decide un preset son las
+franjas: cuánto se abre la franja de una Parada lo dicen las :term:`pasadas <Pasada>` del
+Planning. Vienen cuatro de serie:
 
 .. list-table::
    :header-rows: 1
@@ -328,17 +348,18 @@ que se permite violar, que el planificador puede cambiar en ese momento. Vienen 
        más y con un coste por dejar uno parado. En la práctica consigue que salgan todos los
        vehículos, pero no iguala las rutas.
    * - **Sacar todo como sea**
-     - Planifica todas las Órdenes cueste lo que cueste: aplica la tolerancia de ventanas y
-       convierte jornada, kilómetros, Paradas y carga en costes en vez de límites. Solo la
-       conducción máxima sigue siendo un límite duro, porque es ley. Es la última herramienta,
-       no la primera: enseña lo que no cabe.
+     - Planifica todas las Órdenes cueste lo que cueste: convierte jornada, kilómetros, Paradas y
+       carga en costes en vez de límites (marca de antemano «Permitir violar jornada, km,
+       paradas y carga»). Solo la conducción máxima sigue siendo un límite duro, porque es ley.
+       Es la última herramienta, no la primera: enseña lo que no cabe.
 
 Cada preset fija, además, el **motor** al que se aplica, la duración de la búsqueda, la
 compacidad, la preferencia por equilibrar, el uso de los costes del vehículo o de los suyos
-propios, los límites blandos y su coste, y las **casillas que marca por defecto**: aplicar
-tolerancia, permitir violar restricciones de vía, permitir violar jornada, km, Paradas y carga,
-respetar zonas operativas (y el coste de no respetarlas en modo Preferido). Un preset es por
-compañía; crear uno nuevo es copiar el que más se parece y ajustar. Campos en
+propios, los límites blandos y su coste, la calidad y la optimización premium en Developer, y
+el valor por defecto de **Permitir violar restricciones de vía** y de **Respetar zonas
+operativas** (con el coste de no respetarlas en modo Preferido); el planificador puede cambiar
+esas dos casillas en cada lanzamiento. Un preset es por compañía; crear uno nuevo es copiar el
+que más se parece y ajustar. Campos en
 :doc:`/17.0/annexes/A_29_presets-optimizacion`.
 
 .. _proveedores-geo:

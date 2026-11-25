@@ -60,7 +60,7 @@ A.34.2 Pestaña Propiedades TMS
    * - Transportista
      - Relación
      - El transportista del conductor; obligatorio en los conductores (``tms_carrier_id``).
-   * - Horas de Conducción · Factor de velocidad del conductor
+   * - Horas de Conducción · Factor de tiempo de servicio
      - Relación · Número
      - Solo en los conductores; ver A.12.
    * - Transportista de flota propia
