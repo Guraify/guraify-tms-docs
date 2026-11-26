@@ -175,11 +175,11 @@ Conductores, Categorías de Carga, Destinatarios, Hubs, Plannings, Proyectos y Z
 No dejan crear ni borrar; la ayuda de cada columna sale al pasar el ratón por la cabecera. Es la
 pantalla del repaso antes de la primera optimización y de la revisión periódica.
 
-.. CAPTURA: 13_2_01 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_2_setup_01_plannings.png
-      :alt: Lista de Plannings de Parámetros del optimizador con las columnas de pasadas
+.. figure:: /_static/img/13_optimization-course/13_2_setup_01_plannings.png
+   :alt: Ficha de un Planning de Parámetros del optimizador con el grupo Margen y pasadas
 
-      Parámetros del optimizador › Plannings: tolerancia, margen y las tres pasadas de cada uno.
+   Parámetros del optimizador › Plannings: la ficha de un Planning, con su tolerancia, su margen
+   y sus tres pasadas.
 
 13.2.15 Política operativa (ETA)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

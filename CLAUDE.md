@@ -195,15 +195,17 @@ se usen en 10.3 a 10.7. `/docs/index.html` es una redirección estática en `sou
 - Ruta: `source/_static/img/<slug-capítulo>/<sección>_<slug>_<NN>_<slug-captura>.png`, en
   minúsculas, sin espacios ni acentos. En el `.rst`, ruta absoluta `/_static/img/...` dentro
   de un `.. figure::` con `:alt:` y pie.
-- Las capturas de Odoo se generan con `tools/capturas/capturas.py` (ver su README) y María las anonimiza antes de
-  entregarlas; las de la app se hacen en el teléfono. Odoo en inglés (decisión del 12-jun-2026).
+- Las capturas de Odoo se generan con `tools/capturas/capturas.py` (ver su README); desde el 26-nov-2026 el
+  script las anonimiza en la propia página con las reglas de `tools/capturas/.auth/anonymize.json` (fuera de
+  git) y, si algo se escapa, María las retoca antes de entregarlas; las de la app se hacen en el teléfono.
+  Odoo en inglés (decisión del 12-jun-2026).
 - Cuando falta la imagen se deja el marcador `.. CAPTURA: <id>` con el `figure` comentado
   (indentado bajo el marcador) y una fila en `CAPTURAS_PENDIENTES.md`. El comando `/capturas`
   activa los figures cuya imagen ya existe. Un `figure` sin imagen rompe el build con `-W`, así
   que nunca se deja activo (decisión de Paco, 2026-09-10).
 - **Requisitos de una captura válida** (guía completa en `CAPTURAS_PENDIENTES.md`): recortada
   a la ventana de Odoo o a la zona relevante (sin barra del Mac, dock ni pestañas), Odoo en
-  **español**, **sin datos reales** de clientes ni personas, ancho 1400–1600 px, PNG,
+  **inglés**, **sin datos reales** de clientes ni personas, ancho 1400–1600 px, PNG,
   idealmente < 400 KB.
 
 ---
@@ -220,7 +222,8 @@ ssh epartner "sudo -u pborrego -H /opt/tms-docs/guraify-tms-docs/deploy.sh"
 ```
 
 Eso es lo que hace `/publicar`. Antes de publicar: build local limpio, `CHANGELOG.md` al día,
-commit y push.
+commit y push. La rama de este repo es **`main`** (no `17.0`, que es la de `tms_suite`); el remoto
+es `https://github.com/Guraify/guraify-tms-docs.git` y el push lo hace Paco con `git push`.
 
 **Commits**: mensaje en español con la convención `AAMMDD_VNN` (`260908_V01`), y tag git
 con el mismo nombre en cada publicación. Claude prepara el commit y lo enseña; **Paco lo

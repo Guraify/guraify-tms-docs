@@ -189,6 +189,9 @@ def run_steps(page, steps, log):
         elif kind == "scroll":
             wait_present(page, arg)
             js_find(page, arg).evaluate("e => e.scrollIntoView({block: 'center'})")
+        elif kind == "scroll_start":
+            wait_present(page, arg)
+            js_find(page, arg).evaluate("e => e.scrollIntoView({block: 'start'})")
         elif kind == "fill":
             sel, value = arg
             js_fill(page, sel, value)
@@ -198,6 +201,19 @@ def run_steps(page, steps, log):
             page.wait_for_timeout(int(arg))
         elif kind == "goto":
             page.goto(arg)
+        elif kind == "rpc_action":
+            # Llama a un método de acción sobre unos registros (lo que hace Acción › X en una lista)
+            # y ejecuta en el cliente web la acción que devuelve: {"model", "method", "ids", "context"}.
+            page.evaluate(
+                """async (p) => {
+                     const r = await fetch('/web/dataset/call_kw/' + p.model + '/' + p.method, {
+                       method: 'POST', credentials: 'same-origin', headers: {'Content-Type': 'application/json'},
+                       body: JSON.stringify({jsonrpc: '2.0', method: 'call', params: {
+                         model: p.model, method: p.method, args: [p.ids], kwargs: {context: p.context || {}}}})});
+                     const j = await r.json();
+                     if (j.error) throw new Error((j.error.data && j.error.data.message) || JSON.stringify(j.error));
+                     await odoo.__WOWL_DEBUG__.root.env.services.action.doAction(j.result);
+                   }""", arg)
         else:
             raise RuntimeError(f"paso desconocido: {kind}")
         page.wait_for_timeout(700)
@@ -211,14 +227,57 @@ def capture(page, e, out_path, log):
         pass
     page.wait_for_timeout(MAP_MS if e.get("map") else IDLE_MS)
     run_steps(page, e.get("steps"), log)
-    if e.get("clip") == "modal":
+    prepare_page(page, e, log)
+    clip = e.get("clip")
+    if clip == "modal":
         wait_present(page, ".modal-dialog", 15000)
         page.wait_for_timeout(700)
-        box = page.evaluate("""() => { const m = Array.from(document.querySelectorAll('.modal-dialog')).pop();
+        box = page.evaluate("""() => { const d = Array.from(document.querySelectorAll('.modal-dialog')).pop();
+                                       const m = d.querySelector('.modal-content') || d;
                                        const r = m.getBoundingClientRect(); return {x: r.x, y: r.y, width: r.width, height: r.height}; }""")
+        shot(page, out_path, clip=box)
+    elif clip:
+        # Recorte a un elemento: `clip` es un selector (como los de los pasos) y `clip_up` sube N
+        # niveles desde él (p. ej. del título de un grupo al grupo entero). Deja 8 px de margen.
+        wait_present(page, clip, 15000)
+        page.wait_for_timeout(500)
+        box = js_find(page, clip).evaluate(
+            """(e, up) => { let n = e; for (let i = 0; i < up; i++) n = n.parentElement || n;
+                            n.scrollIntoView({block: 'center'}); const r = n.getBoundingClientRect();
+                            const x = Math.max(0, r.x - 8), y = Math.max(0, r.y - 8);
+                            return {x: x, y: y, width: r.width + 16, height: r.height + 16}; }""",
+            int(e.get("clip_up", 0)))
         shot(page, out_path, clip=box)
     else:
         shot(page, out_path)
+
+
+ANONYMIZE = AUTH_DIR / "anonymize.json"   # no se sube: lleva los datos reales que hay que sustituir
+
+REPLACE_JS = r"""(rules) => {
+  const apply = t => { for (const r of rules) t = t.replace(new RegExp(r[0], r[2] || 'g'), r[1]); return t; };
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const nodes = [];
+  while (w.nextNode()) nodes.push(w.currentNode);
+  let n = 0;
+  for (const t of nodes) { const v = apply(t.nodeValue); if (v !== t.nodeValue) { t.nodeValue = v; n++; } }
+  for (const i of document.querySelectorAll('input, textarea')) { const v = apply(i.value); if (v !== i.value) { i.value = v; n++; } }
+  return n;
+}"""
+
+
+def prepare_page(page, e, log):
+    """Justo antes de capturar: quita el banner de base neutralizada y sustituye en la página los
+    datos reales por valores inventados, según `.auth/anonymize.json` ({"*": [...], "<id>": [...]},
+    cada regla [expresión, sustitución, flags]). Así la captura sale ya anonimizada."""
+    page.evaluate("() => { const b = document.getElementById('oe_neutralize_banner'); if (b) (b.parentElement || b).remove(); }")
+    if not ANONYMIZE.exists():
+        return
+    rules = load_json(ANONYMIZE, "reglas de anonimización")
+    todo = list(rules.get("*", [])) + list(rules.get(e["id"], []))
+    if todo:
+        n = page.evaluate(REPLACE_JS, todo)
+        log(f"    anonimizado: {n} textos sustituidos")
+        page.wait_for_timeout(300)
 
 
 def shot(page, out_path, clip=None):

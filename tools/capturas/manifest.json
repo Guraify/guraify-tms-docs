@@ -657,7 +657,8 @@
     }
    ],
    "manual": "Hace falta el módulo tms_fuel_surcharge instalado y una política con la fórmula legal que tenga periodos calculados (una Orden tarificada con el interruptor encendido los escribe).",
-   "note": "Política del canon con la fórmula legal y su pestaña Periodos"
+   "note": "Política del canon con la fórmula legal y su pestaña Periodos",
+   "record": 3
   },
   {
    "id": "8_9_02",
@@ -683,7 +684,8 @@
     }
    ],
    "manual": "Una Orden tarificada con línea de canon (interruptor de la compañía encendido). Lleva datos reales: anonimizar.",
-   "note": "Pestaña Canon de combustible de una Orden"
+   "note": "Pestaña Canon de combustible de una Orden",
+   "record": 390278
   },
   {
    "id": "2_1_01",
@@ -1332,7 +1334,10 @@
    "instance": "agent",
    "model": "tms.planning",
    "view": "form",
-   "note": "Grupo Margen y pasadas del Planning"
+   "note": "Grupo Margen y pasadas del Planning",
+   "record": 1,
+   "clip": ".o_horizontal_separator:has-text('Margin and Passes')",
+   "clip_up": 1
   },
   {
    "id": "4_5_05",
@@ -1602,7 +1607,8 @@
     }
    ],
    "manual": "Un escenario en borrador con dos ventanas Listas (por ejemplo, la foto del plan actual y una de OptiFlow). NO pulsar Aplicar ni Revertir: aplicar crea o cambia Viajes en la base.",
-   "note": "Escenario con dos ventanas y la pestaña Comparativa con la columna Plan actual"
+   "note": "Escenario con dos ventanas y la pestaña Comparativa con la columna Plan actual",
+   "record": 886
   },
   {
    "id": "5_4_02",
@@ -1832,9 +1838,10 @@
    "file": "13_2_setup_01_plannings.png",
    "folder": "13_optimization-course",
    "instance": "agent",
-   "note": "Lista Plannings de Parámetros del optimizador con las columnas de pasadas",
+   "note": "Ficha de un Planning (Parámetros del optimizador › Plannings) con tolerancia, margen y las tres pasadas",
    "model": "tms.planning",
-   "view": "list"
+   "view": "form",
+   "record": 1
   },
   {
    "id": "13_3_01",
@@ -1854,8 +1861,15 @@
    "steps": [
     {
      "tab": "Punctuality"
+    },
+    {
+     "scroll_start": ".o_notebook"
+    },
+    {
+     "wait": 600
     }
-   ]
+   ],
+   "record": 578497
   },
   {
    "id": "13_5_01",
@@ -1884,7 +1898,8 @@
     {
      "tab": "Passes"
     }
-   ]
+   ],
+   "record": 2966
   },
   {
    "id": "13_6_01",
@@ -1892,7 +1907,41 @@
    "folder": "13_optimization-course",
    "instance": "agent",
    "note": "Bloque Optimización del asistente Asignar",
-   "manual": "Lista de Paradas › Acción › Manage › Optimización, sin Ejecutar"
+   "manual": "Equivale a Lista de Paradas › Acción › Manage sobre siete Paradas sin planificar del 8-oct. No pulsar Ejecutar.",
+   "action": "tms.stop_action",
+   "model": "tms.stop",
+   "view": "list",
+   "steps": [
+    {
+     "wait": 1500
+    },
+    {
+     "rpc_action": {
+      "model": "tms.stop",
+      "method": "action_tms_manage",
+      "ids": [
+       575636,
+       575637,
+       575638,
+       575639,
+       575640,
+       575641,
+       575642
+      ]
+     }
+    },
+    {
+     "wait": 2500
+    },
+    {
+     "click": ".modal span:has-text('Optimization')"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "clip": "modal",
+   "map": true
   },
   {
    "id": "13_6_02",
@@ -1900,7 +1949,19 @@
    "folder": "13_optimization-course",
    "instance": "agent",
    "note": "Diálogo del plan listo con Aplicar plan",
-   "manual": "Tras Ejecutar una optimización en la instancia local; no pulsar Aplicar plan"
+   "manual": "Ejecución 4934 (plan listo, sin aplicar) › Mostrar progreso. NO pulsar Aplicar plan.",
+   "model": "tms.optimization.run",
+   "view": "form",
+   "record": 4934,
+   "steps": [
+    {
+     "button": "Show Progress"
+    },
+    {
+     "wait": 3000
+    }
+   ],
+   "clip": "modal"
   },
   {
    "id": "13_6_03",
@@ -1908,7 +1969,7 @@
    "folder": "13_optimization-course",
    "instance": "agent",
    "note": "Tabla de las pasadas 2 y 3 con Aplicar pasadas",
-   "manual": "Tras Aplicar plan con Paradas sin planificar por el optimizador; no pulsar Aplicar pasadas"
+   "manual": "PENDIENTE: hace falta una Ejecución aplicada con Paradas sin planificar y pasadas en espera (Aplicar plan en la copia local lo prohíbe Paco). Capturar el diálogo con la tabla de pasadas y Aplicar pasadas, sin pulsarlo."
   },
   {
    "id": "13_7_01",
@@ -1927,7 +1988,8 @@
       "applied"
      ]
     ]
-   ]
+   ],
+   "record": 543
   },
   {
    "id": "13_8_01",
@@ -1936,7 +1998,8 @@
    "instance": "agent",
    "note": "Ventana de Escenario con Preset y Nivel",
    "model": "tms.optimization.scenario.window",
-   "view": "form"
+   "view": "form",
+   "record": 993
   }
  ]
 }

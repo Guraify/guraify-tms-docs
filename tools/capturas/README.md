@@ -17,8 +17,12 @@ anonimización sigue siendo un paso aparte, porque las capturas salen de producc
 3. **Revisar** `raw/`: las entradas marcadas «⚠ revisar a mano» en `--list` tienen pasos frágiles
    (menús desplegados, desplegables, filtros). Si una no muestra lo que debe, se ajusta su entrada
    en `manifest.json` (dominio, pasos) y se repite solo esa.
-4. **Anonimizar**: María pasa las de `raw/` por el agente de anonimización y deja el resultado, con
-   el mismo nombre, en `source/_static/img/<carpeta>/`.
+4. **Anonimizar**: desde el 26/11/2026 la captura puede salir ya anonimizada: si existe
+   `tools/capturas/.auth/anonymize.json` (fuera de git, porque lleva los datos reales), el script
+   sustituye en la propia página, justo antes de disparar, cada expresión regular por su valor
+   inventado (`{"*": [[regex, sustitución]], "<id>": [...]}`; `*` vale para todas). También quita el
+   banner rojo de base neutralizada. Lo que no cubra una regla sigue pasando por María: la de `raw/` se
+   revisa a ojo antes de copiarla, con el mismo nombre, a `source/_static/img/<carpeta>/`.
 5. **Activar**: `/capturas` en Claude Code activa las figuras cuya imagen ya existe, comprueba
    nombre, tamaño y peso, y actualiza `CAPTURAS_PENDIENTES.md`.
 
@@ -27,8 +31,11 @@ anonimización sigue siendo un paso aparte, porque las capturas salen de producc
 - `manifest.json`: una entrada por captura. `action` es el xmlid de la acción de ventana;
   `model` + `view` + `domain` eligen el registro (en `form`, el primero que cumpla el dominio,
   por id descendente; `record` fija un id concreto); `steps` son clics guionizados (`tab`,
-  `button`, `smart`, `click`, `hover`, `scroll`, `fill`, `wait`); `clip: modal` recorta el
-  diálogo; `map: true` espera a las teselas; `deferred: true` marca las antiguas aplazadas;
+  `button`, `smart`, `click`, `hover`, `scroll`, `scroll_start`, `fill`, `key`, `wait`, `goto` y
+  `rpc_action`, que llama a un método de acción sobre unos ids —lo que hace Acción › X en una
+  lista— y ejecuta la acción que devuelve); `clip: modal` recorta el diálogo (su `.modal-content`,
+  sin el fondo) y `clip: <selector>` recorta a ese elemento (`clip_up: N` sube N niveles, por
+  ejemplo del título de un grupo al grupo entero); `map: true` espera a las teselas; `deferred: true` marca las antiguas aplazadas;
   `manual` avisa de que hay que revisar el resultado.
 - `instances.json` (copiar de `instances.example.json`, no se sube): dirección de cada Odoo.
   `etransport` es la demo de Guraify (caps. 3, 4, 5, 7 y 8; datos inventados); `produccion` es
@@ -38,6 +45,10 @@ anonimización sigue siendo un paso aparte, porque las capturas salen de producc
   fichero en error) y `deca` la copia local con `tms_deca` instalado (cap. 9). Las dos locales
   las sirve el mismo Odoo (`--db_port=5432`): se elige la base al iniciar sesión con `--login`, y
   la sesión se guarda por instancia. **Llevan datos reales**: sus capturas pasan por María.
+  En la copia local hay un usuario de pruebas para esto, `docs.capturas@guraify.local` (interfaz en
+  inglés, los grupos del administrador; su contraseña, en `.auth/agent.credentials.json`, fuera de
+  git): si la sesión caduca, basta con autenticarse con él por HTTP y guardar la cookie en
+  `.auth/agent.json`, sin abrir Chrome.
 - **En las bases `Etransport_*` no se pulsa Despachar ni Enviar por API**: los endpoints de
   Axylog, MENSOS y SEUR son los reales. Los guiones de esta ronda no lo hacen; las entradas
   marcadas «revisar a mano» dicen qué preparar antes (un filtro, un Proyecto con validación…).

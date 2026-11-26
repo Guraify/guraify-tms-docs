@@ -86,12 +86,11 @@ puede traer el Planning de cada Viaje. Su plan de transporte aporta además las 
 operativas** que los motores comparan con las permitidas a cada vehículo (ver
 :ref:`que-restringe`). Campos en :doc:`/17.0/annexes/A_07_planning`.
 
-.. CAPTURA: 4_3_11 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/4_parametrization/4_3_planning-configuration_11_margen-pasadas.png
-      :alt: Grupo Margen y pasadas de un Planning
+.. figure:: /_static/img/4_parametrization/4_3_planning-configuration_11_margen-pasadas.png
+   :alt: Grupo Margen y pasadas de un Planning
 
-      El grupo Margen y pasadas del Planning: tolerancia después, margen sobre el fin y el nivel
-      de las tres pasadas.
+   El grupo Margen y pasadas del Planning: tolerancia después, margen sobre el fin y el nivel
+   de las tres pasadas.
 
 4.3.2 Planes de transporte
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

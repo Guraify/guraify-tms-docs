@@ -57,12 +57,11 @@ un recuadro amarillo lista las **Paradas no enviadas** y el motivo, y se pide co
 
 Se lanza con **Ejecutar**.
 
-.. CAPTURA: 13_6_01 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_6_optimization_01_bloque.png
-      :alt: Bloque Optimización del asistente Asignar con preset, pasadas y lo que se puede violar
+.. figure:: /_static/img/13_optimization-course/13_6_optimization_01_bloque.png
+   :alt: Bloque Optimización del asistente Asignar con preset, pasadas y lo que se puede violar
 
-      El bloque Optimización del asistente: Planning, tipo de asignación, preset, las tres pasadas
-      y lo que se puede violar.
+   El bloque Optimización del asistente: Planning, tipo de asignación, preset, las tres pasadas
+   y lo que se puede violar.
 
 13.6.4 Mientras calcula, el plan y las pasadas 2 y 3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,12 +87,11 @@ espera en la ejecución. Las «excluidas por nosotros» no entran: hay que corre
 conocido: las sobrantes se evalúan una a una; si dos eligen el mismo Viaje y no caben juntas,
 las dos se quedan sin ruta, y se resuelven con Encontrar ruta (13.7).
 
-.. CAPTURA: 13_6_02 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_6_optimization_02_plan.png
-      :alt: Diálogo del plan listo con Paradas por estado de ventana y el botón Aplicar plan
+.. figure:: /_static/img/13_optimization-course/13_6_optimization_02_plan.png
+   :alt: Diálogo del plan listo con Paradas por estado de ventana y el botón Aplicar plan
 
-      El plan listo: rutas, Paradas por estado de ventana, las sin planificar por origen y el
-      botón Aplicar plan.
+   El plan listo: rutas, Paradas por estado de ventana, las sin planificar por origen y el
+   botón Aplicar plan.
 
 .. CAPTURA: 13_6_03 — descomentar el figure cuando esté la imagen
    .. figure:: /_static/img/13_optimization-course/13_6_optimization_03_pasadas.png

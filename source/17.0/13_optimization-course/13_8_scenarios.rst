@@ -24,8 +24,7 @@ Si algún Viaje de origen ya ha empezado, el Escenario es **Solo evaluación**: 
 aplica. Si las Paradas han cambiado desde que se cargaron, queda caducado hasta **Actualizar
 paradas**.
 
-.. CAPTURA: 13_8_01 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_8_scenarios_01_ventana.png
-      :alt: Ventana de un Escenario con motor, preset y nivel
+.. figure:: /_static/img/13_optimization-course/13_8_scenarios_01_ventana.png
+   :alt: Ventana de un Escenario con motor, preset y nivel
 
-      Una ventana de Escenario: motor, tipo de asignación, preset y el nivel de franja.
+   Una ventana de Escenario: motor, tipo de asignación, preset y el nivel de franja.

@@ -350,12 +350,11 @@ las mide con la misma regla, las pone una al lado de otra y **no toca ningún Vi
 aplica una**. En Odoo los escenarios se trabajan con tablas; el dibujo de las rutas sobre el mapa
 será de la torre de control.
 
-.. CAPTURA: 5_2_11 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/5_operational-flows/5_2_trip-generation_11_escenario.png
-      :alt: Escenario con dos ventanas y su comparativa
+.. figure:: /_static/img/5_operational-flows/5_2_trip-generation_11_escenario.png
+   :alt: Escenario con dos ventanas y su comparativa
 
-      Un escenario con dos ventanas y la pestaña Comparativa: la mejor cifra de cada fila
-      marcada y la columna Plan actual como referencia.
+   Un escenario con dos ventanas y la pestaña Comparativa: la mejor cifra de cada fila
+   marcada y la columna Plan actual como referencia.
 
 5.2.5.1 Origen, universo y caducidad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -83,12 +83,11 @@ abierto sale **Fuera de ventana**. La pasada la deja entrar; el estado dice la v
 pestaña **Puntualidad** de la Parada, con la **Desviación de la ventana (min)**, y como columna
 opcional con colores en las listas de Paradas.
 
-.. CAPTURA: 13_3_01 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_3_passes_01_puntualidad.png
-      :alt: Pestaña Puntualidad de una Parada con su franja, su estado de ventana y la desviación
+.. figure:: /_static/img/13_optimization-course/13_3_passes_01_puntualidad.png
+   :alt: Pestaña Puntualidad de una Parada con su franja, su estado de ventana y la desviación
 
-      La pestaña Puntualidad de una Parada: la franja real, el estado de la ventana y la
-      desviación en minutos.
+   La pestaña Puntualidad de una Parada: la franja real, el estado de la ventana y la
+   desviación en minutos.
 
 13.3.5 Cómo elegir niveles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

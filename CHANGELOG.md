@@ -8,6 +8,17 @@ Convención de release: cada publicación se etiqueta con tag git `AAMMDD_VNN`
 
 ## [Sin publicar]
 
+### Capturas de las pasadas, los escenarios y el canon, hechas y anonimizadas desde la copia local (2026-11-26)
+- Catorce capturas activadas: 4.3 (presets de serie, grupo Margen y pasadas), 5.2 (diálogo
+  Secuenciar viajes nuevo, Escenario con la Comparativa), 8.9 (política del canon y pestaña Canon
+  de combustible de una Orden) y ocho del cap. 13 (ficha del Planning, Puntualidad de una Parada,
+  diálogo y Pasadas de una Secuenciación, bloque Optimización, plan calculado, Encontrar ruta
+  con el Nivel, ventana de Escenario).
+- `tools/capturas`: anonimización en la propia página antes de disparar (reglas fuera de git),
+  recorte por selector, paso `rpc_action` (Acción › X de una lista) y usuario de pruebas en la
+  copia local.
+- Queda `13_6_03` (tabla de pasadas con Aplicar pasadas) y las tres de la demo con P8.
+
 ### Paradas sin planificar de una optimización (tarea D30, 2026-10-14)
 - **5.2.4**: el diálogo de progreso cuenta desde el principio las Paradas de la ejecución, las no
   enviadas al optimizador y las enviadas y sin planificar, con un aviso por motivo; Cancelar

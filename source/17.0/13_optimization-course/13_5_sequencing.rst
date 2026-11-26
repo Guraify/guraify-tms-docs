@@ -14,12 +14,11 @@ lanzamiento (un Viaje sin Planning se secuencia una vez a nivel Real). Se confir
 **Secuencia**. Lo que cada botón hace sobre el Viaje está en
 :doc:`5.2.3 </17.0/5_operational-flows/5_2_trip-generation>`.
 
-.. CAPTURA: 13_5_01 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_5_sequencing_01_dialogo.png
-      :alt: Diálogo Secuenciar viajes con Mantener orden relativo, Inicio de carga y las tres pasadas
+.. figure:: /_static/img/13_optimization-course/13_5_sequencing_01_dialogo.png
+   :alt: Diálogo Secuenciar viajes con Mantener orden relativo, Inicio de carga y las tres pasadas
 
-      El diálogo Secuenciar viajes: Mantener orden relativo, Inicio de carga y las tres pasadas
-      con su nivel.
+   El diálogo Secuenciar viajes: Mantener orden relativo, Inicio de carga y las tres pasadas
+   con su nivel.
 
 13.5.2 Qué pasa después
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,12 +59,11 @@ Hub).
 **Deshacer:** **Restaurar orden anterior**, en el Viaje o en la ejecución, devuelve orden, horas
 y distancias. Solo deshace la **última** secuenciación terminada del Viaje.
 
-.. CAPTURA: 13_5_02 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_5_sequencing_02_pasadas.png
-      :alt: Una Secuenciación con la pestaña Pasadas y el campo Qué hizo cada pasada
+.. figure:: /_static/img/13_optimization-course/13_5_sequencing_02_pasadas.png
+   :alt: Una Secuenciación con la pestaña Pasadas y el campo Qué hizo cada pasada
 
-      Una Secuenciación terminada: la pestaña Pasadas dice qué envió, qué colocó y qué saltó cada
-      una.
+   Una Secuenciación terminada: la pestaña Pasadas dice qué envió, qué colocó y qué saltó cada
+   una.
 
 13.5.5 Secuenciación automática
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

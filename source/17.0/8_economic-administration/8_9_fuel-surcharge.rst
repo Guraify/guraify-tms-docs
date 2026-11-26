@@ -20,12 +20,11 @@ Cuando lo pactado no es la fórmula legal, calcula también el valor legal y avi
 Es un módulo aparte (``tms_fuel_surcharge``) y nace **apagado**: hasta que un responsable activa
 el interruptor de la compañía, ninguna Orden ni factura recibe una línea de canon.
 
-.. CAPTURA: 8_9_01 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/8_economic-administration/8_9_fuel-surcharge_01_politica.png
-      :alt: Ficha de una política del canon de combustible con la fórmula legal
+.. figure:: /_static/img/8_economic-administration/8_9_fuel-surcharge_01_politica.png
+   :alt: Ficha de una política del canon de combustible con la fórmula legal
 
-      Una política del canon: lado, método y aplicación; dónde se toma la fecha de referencia y
-      la clase de vehículo; y los periodos calculados, mes a mes.
+   Una política del canon: lado, método y aplicación; dónde se toma la fecha de referencia y
+   la clase de vehículo; y los periodos calculados, mes a mes.
 
 8.9.1 Cómo se calcula
 ~~~~~~~~~~~~~~~~~~~~~
@@ -159,12 +158,11 @@ cliente») sin tocar la política.
 8.9.4 La línea del canon, orden a orden
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. CAPTURA: 8_9_02 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/8_economic-administration/8_9_fuel-surcharge_02_orden.png
-      :alt: Pestaña Canon de combustible de una Orden
+.. figure:: /_static/img/8_economic-administration/8_9_fuel-surcharge_02_orden.png
+   :alt: Pestaña Canon de combustible de una Orden
 
-      La pestaña Canon de combustible de una Orden: el porcentaje y el importe aplicados, el
-      valor legal, si difieren, y el botón Recalcular canon.
+   La pestaña Canon de combustible de una Orden: el porcentaje y el importe aplicados, el
+   valor legal, si difieren, y el botón Recalcular canon.
 
 Con una política de aplicación **orden a orden**, el canon se escribe **justo después de
 tarificar** (:doc:`/17.0/5_operational-flows/5_6_settlement`), en la venta y en la compra:

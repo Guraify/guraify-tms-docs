@@ -13,7 +13,7 @@ CAPTURAS_PENDIENTES.md.
    espacios, mayúsculas, numeración vieja. Si un fichero está mal nombrado, renómbralo con
    `git mv` al nombre que espera el .rst y dímelo.
 3. Revisa visualmente cada imagen nueva (léela) y comprueba los requisitos de la guía:
-   recortada a Odoo (sin barra del Mac, dock ni pestañas del navegador), Odoo en español,
+   recortada a Odoo (sin barra del Mac, dock ni pestañas del navegador), Odoo en inglés (decisión del 12-jun-2026),
    sin nombres, teléfonos ni direcciones reales, ancho 1400–1600 px. Si alguna no cumple,
    NO la actives: déjala en la lista como "rehacer" con el motivo.
 4. Actualiza CAPTURAS_PENDIENTES.md: ✅ las activadas, motivo en las que hay que rehacer, y

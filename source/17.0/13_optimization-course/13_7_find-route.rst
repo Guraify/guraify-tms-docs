@@ -24,11 +24,10 @@ ventana, menos en tolerancia y menos km. La ejecución enseña, por Orden, la ru
 en **Candidatas** están todas, con «Por qué no» en las descartadas y **Elegir** para cambiar la
 propuesta. **Aplicar** mueve las Órdenes; **Revertir** las devuelve.
 
-.. CAPTURA: 13_7_01 — descomentar el figure cuando esté la imagen
-   .. figure:: /_static/img/13_optimization-course/13_7_find-route_01_nivel.png
-      :alt: Ejecución de Encontrar ruta con la columna Nivel en la propuesta de cada Orden
+.. figure:: /_static/img/13_optimization-course/13_7_find-route_01_nivel.png
+   :alt: Ejecución de Encontrar ruta con la columna Nivel en la propuesta de cada Orden
 
-      La propuesta de Encontrar ruta: por Orden, la ruta elegida y el nivel de pasada al que cabe.
+   La propuesta de Encontrar ruta: por Orden, la ruta elegida y el nivel de pasada al que cabe.
 
 **Repartir un Viaje.** Si el Viaje se vacía, se conserva hasta pulsar **Borrar el viaje
 vaciado**; si ya había empezado, queda como repartido y sin cerrar hasta **Cerrar viaje
