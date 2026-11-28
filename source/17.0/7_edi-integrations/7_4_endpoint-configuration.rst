@@ -67,6 +67,15 @@ Paradas a una Agencia. Cada uno se declara con un propósito, ``dispatch`` para 
 la asignación o ``cancel`` para revertirla, de modo que la comunicación con la Agencia
 queda alineada con el ciclo de vida de la asignación.
 
+Las Paradas de una **devolución** o de una **destrucción** (los Tramos cuyo propósito no es
+Entrega; ver :ref:`gestion-del-fallo`) no se envían a la Agencia por las líneas de despacho de
+Parada: no son entregas. Una línea de despacho a nivel de Viaje recibe el Viaje entero, y es la
+plantilla la que debe filtrar por ``leg_purpose``. La conexión de seguimiento externo de la
+compañía es más estricta: **se niega a enviar un Viaje que lleve estas Paradas** mientras la
+plantilla de su endpoint de Viaje no lea ``leg_purpose``, y el Viaje queda con error de despacho
+y el texto de qué cambiar. La corrección es una condición en el bucle de Tramos de la plantilla
+(``leg.leg_purpose == 'delivery'``), y hay que hacerla antes de la primera devolución.
+
 7.4.4 Trazabilidad
 ------------------
 

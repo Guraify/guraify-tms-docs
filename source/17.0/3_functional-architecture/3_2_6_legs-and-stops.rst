@@ -319,18 +319,34 @@ muestra Odoo.
      - No se pudo ejecutar.
      - Cierre
      - Fallida
-   * - Reprogramada
-     - Se volverá a intentar en otra fecha.
-     - Cierre
-     - Reprogramado
    * - Devuelta
-     - La mercancía se ha devuelto.
+     - La mercancía se ha devuelto al cliente. Lo lee el **Tramo** de devolución cuando su Parada
+       se cierra; esa Parada, como tal, queda Completada.
      - Cierre
      - Devuelto
+   * - Destruida
+     - La mercancía se ha destruido y consta el documento que lo acredita.
+     - Cierre
+     - Destruido
    * - Cancelada
      - Anulada.
      - Cierre
      - Cancelado
+
+**Reprogramada** ya no se escribe: una entrega fallida se queda **Fallida** y el reintento es otro
+Tramo con otra Parada (:ref:`ciclo-fallo`). El estado sigue en las listas para leer operaciones
+antiguas.
+
+Tres datos del Tramo y de la Parada nacen de la :term:`Gestión del fallo`:
+
+- En el Tramo, el bloque **Intento**: el número de :term:`Intento`, el :term:`propósito
+  <Propósito del Tramo>` (Entrega, Devolución o Destrucción) y los enlaces al intento anterior y
+  al siguiente. Con ellos se recorre la historia de una entrega de fallo en fallo.
+- En el Tramo fallido, la **mercancía** (fuera, en el almacén, ya salida de nuevo) y la
+  **decisión** tomada, con quién la tomó y cuándo.
+- En la Parada, la :term:`Promesa`: la fecha y la franja que se le comunicaron al Destinatario y
+  cuándo. Una Parada con promesa no admite que se le cambie el día ni la franja a mano
+  (:ref:`gestion-del-fallo`).
 
 Los seis estados de cierre son los que el sistema mira para cerrar lo que está por encima: cuando
 todas las Paradas de un Viaje están cerradas, el Viaje se completa o queda por validar

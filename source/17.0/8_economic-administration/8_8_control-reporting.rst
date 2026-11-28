@@ -67,7 +67,11 @@ cuando la haya. El menú solo lo ven los responsables del TMS.
 Los indicadores operativos del núcleo son la entrega a tiempo, la tasa de retraso, la entrega
 al primer intento, las fallidas, el tiempo medio de entrega y el volumen; a ellos se suma, solo
 para el equipo interno, **Viajes por validar** (objetivo cero: si nadie valida, nadie factura;
-ver :doc:`/17.0/5_operational-flows/5_5_trip-closing`). Los de mantenimiento se describen en
+ver :doc:`/17.0/5_operational-flows/5_5_trip-closing`). La **entrega al primer intento** se
+calcula sobre las Paradas de un primer :term:`Intento`: una entrega que falla y se reprograma
+cuenta como fallo del primero, y su reintento no entra. Las Paradas de **devoluciones y
+destrucciones** quedan fuera de todos los indicadores de Parada: no son entregas. Los de
+mantenimiento se describen en
 :doc:`/17.0/6_resources/6_7_kpis`. Se administran en TMS › Métricas › KPIs.
 
 8.8.4 Tableros

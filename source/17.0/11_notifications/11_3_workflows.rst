@@ -33,6 +33,13 @@ creado: el implantador crea los que el cliente quiera, con las plantillas de ser
    * - **Cuándo**: Condición
      - Un filtro adicional sobre la Parada: solo entregas, solo con Reembolso, solo de un tipo de
        Orden. La Parada tiene que cumplirlo además del disparador.
+   * - **Cuándo**: «This notice commits a date» (este aviso compromete fecha)
+     - Se marca en los flujos al Destinatario que le dicen un día o una hora: planificado, el
+       día anterior, reprogramado. Cuando un aviso así **sale de verdad**, la Parada queda con
+       una :term:`Promesa`: desde entonces no se le cambia la fecha ni la franja a mano, y
+       sacarla de un Viaje despachado pregunta qué hacer (:ref:`gestion-del-fallo`). Solo
+       promete el primer aviso; uno retenido por la lista blanca de pruebas u omitido no
+       promete. Viene **desmarcada**: sin marcarla en ningún flujo no hay promesas.
    * - **Quién**: Rol del destinatario
      - **Destinatario** (el contacto de la Parada; si no tiene móvil, teléfono ni correo, el
        contacto de entrega de la Orden), **Cliente** (el que encargó la Orden) o **Seguidores

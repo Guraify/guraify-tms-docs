@@ -207,6 +207,12 @@ sin cambiar nada más.
        reembolso no cobrado. No hay perfiles de serie: se crean en la implantación, en TMS ›
        Configuración › App › Perfiles de la app, y sus motivos en App › Motivos de la app. Un
        Viaje con Paradas de varios Proyectos lleva a la app los perfiles de todos ellos.
+       Cada motivo de fallo lleva dos casillas (grupo «After a Failure» de su ficha), marcadas
+       por defecto, que gobiernan la :term:`Gestión del fallo`: **«Goods come back»** (la
+       mercancía vuelve al almacén y hay que confirmar su entrada antes de reintentar) y
+       **«Counts as attempt»** (el fallo cuenta para el máximo de intentos). Se desmarcan en
+       los motivos en los que la mercancía no llegó a salir, como «no ha entrado en el Hub» o
+       «bulto no encontrado» (:ref:`gestion-del-fallo`).
    * - POD digital
      - Al entregar, la app pide nombre, documento y firma en pantalla: la :term:`prueba de
        entrega (POD) <POD>` digital.
@@ -350,10 +356,13 @@ Viaje ya está planificado o en la calle.
        coste con lo que costaría meterlo en una ruta y, si meterlo sale más caro, lo deja fuera.
        Solo lo usa PTV OptiFlow. Vacío, no hay coste por dejarlo fuera.
    * - Política operativa
-     - La :term:`Política operativa` propia del Proyecto, que gana a la de la compañía para sus
-       Viajes: cuándo se recalcula el ETA, peajes y emisiones, geocerca, y lo reservado para la
-       torre de control. Como mucho una por Proyecto; la fila abre la ficha completa (ver
-       :ref:`politica-operativa`).
+     - La :term:`Política operativa` propia del Proyecto, que **sustituye entera** a la de la
+       compañía: cuándo se recalcula el ETA, peajes y emisiones, geocerca, la gestión del fallo
+       (reglas, máximo de intentos, plazo de almacén, direcciones) y lo de la torre de control.
+       Al crearla hay que rellenar también lo que se quiera conservar de la compañía: lo que
+       quede vacío no se hereda. Como mucho una por Proyecto; la fila abre la ficha completa
+       (ver :ref:`politica-operativa`). El **responsable del Proyecto** es quien recibe la
+       actividad cuando vence un plazo de almacén.
 
 Campos en :doc:`/17.0/annexes/A_18_proyecto`.
 

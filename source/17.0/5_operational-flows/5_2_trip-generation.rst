@@ -66,13 +66,18 @@ El asistente **Asignar** es la única puerta de la planificación manual y de la
 planificador elige Paradas y decide si van a un Viaje nuevo, a uno que ya existe o a los que
 proponga el motor de optimización. Se abre de dos maneras:
 
-- Desde la lista de **Órdenes**, seleccionando varias y pulsando **Asignar**. El asistente trabaja
-  con la Parada activa de cada Orden (ver :doc:`/17.0/3_functional-architecture/3_2_5_active-leg`);
-  las Órdenes sin validar no se admiten.
+- Desde la lista de **Órdenes**, seleccionando varias y pulsando **«Manage»**. El asistente
+  trabaja con la Parada activa de cada Orden (ver
+  :doc:`/17.0/3_functional-architecture/3_2_5_active-leg`); las Órdenes sin validar no se admiten.
 - Desde la lista de **Paradas**, seleccionando varias y abriendo **Acciones operativas**, con la
-  acción **Asignar a viaje**. El mismo menú ofrece **Reprogramar parada**
-  (:doc:`5_5_trip-closing`), **Establecer evento** (cerrar una Parada desde la oficina,
-  :doc:`5_4_app-execution`) y **Enviar por API**.
+  acción **«Manage»**. El mismo menú ofrece **Establecer evento** (cerrar una Parada desde la
+  oficina, :doc:`5_4_app-execution`) y **Enviar por API**.
+
+«Manage» («Gestionar») es una sola puerta para dos trabajos, y elige según lo seleccionado: con
+Paradas por planificar abre este asistente Asignar; con Órdenes que tienen una entrega fallida
+por decidir abre la gestión del fallo (reprogramar, devolver o destruir), y con Paradas ya
+despachadas ofrece fallarlas y reprogramarlas en bloque (:ref:`gestion-del-fallo`). La antigua
+acción «Reprogramar parada» ya no existe: reprogramar es una salida de la gestión del fallo.
 
 .. mermaid::
 

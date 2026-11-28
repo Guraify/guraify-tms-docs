@@ -36,6 +36,11 @@ lectura (:ref:`viaje-validacion`), y cualquier Parada que entre en el Viaje se d
 **Reenviar** repite el envío al mismo destino, por ejemplo tras cambiar una Parada; la lista de
 Viajes avisa de los que tienen instrucciones pendientes de reenviar.
 
+Si el Viaje lleva el **reintento de una entrega fallida** cuya mercancía no consta de vuelta en
+el almacén, Despachar se detiene con un diálogo que lista esas Órdenes y ofrece confirmar la
+entrada y despachar, o despachar sin ellas (:ref:`gestion-del-fallo`). Se despacha Viaje a
+Viaje: con varios seleccionados, el sistema pide hacerlo de uno en uno.
+
 Despachar también ocurre sin pulsar el botón. Al asignar Paradas a una agencia con el asistente
 (:doc:`5_2_trip-generation`), el Viaje nuevo se despacha en el mismo acto si la agencia recibe
 las instrucciones por API o si el Proyecto tiene activado **Procesar viaje de agencia
@@ -98,8 +103,7 @@ actualiza la estructura, en este orden:
    (:doc:`Guía del integrador </17.0/7_edi-integrations/index>`).
 
 El resultado, por tanto, se registra **una sola vez** y los demás niveles lo heredan. El
-esquema muestra de dónde toma cada uno su estado y qué pasa con los dos resultados que no
-terminan la Orden:
+esquema muestra de dónde toma cada uno su estado y qué pasa cuando el resultado es un fallo:
 
 .. mermaid::
 
@@ -109,18 +113,22 @@ terminan la Orden:
        B["Bulto con incidencia"] -. "Con reservas" .-> L
        L -->|"hereda del tramo activo"| O["Orden"]
        S -->|"hereda de todas<br/>sus Paradas"| T["Viaje"]
-       L -->|"Reprogramado"| N["Tramo nuevo<br/>y Parada nueva,<br/>sin planificar"]
+       L -->|"Fallido"| G{"Gestión del fallo"}
+       G -->|"Reprogramar"| N["Intento siguiente:<br/>Tramo y Parada nuevos,<br/>sin planificar"]
+       G -->|"Devolver al cliente"| R["Tramo de Devolución<br/>con su Parada"]
+       G -->|"Destruir"| X["Tramo de Destrucción"]
        N --> O
-       L -->|"Devuelto"| R["Mercancía de vuelta<br/>en el remitente"]
+       R --> O
+       X --> O
 
-Dos resultados mantienen la Orden abierta aunque la Parada se cierre. **Reprogramado** deja el
-Tramo cerrado y crea otro con una Parada nueva, pendiente de planificar: el tramo activo pasa
-al nuevo y la Orden sigue en marcha (:doc:`5_5_trip-closing`). **Devuelto** es para la entrega
-que falló, volvió al almacén y el cliente quiere de vuelta en sus instalaciones (o viene a
-buscarla): cierra el Tramo anotando que la mercancía está en el remitente. Hoy ese movimiento
-de vuelta no genera por sí solo un Tramo ni una Parada: se gestiona como una Orden nueva. El
-resto de resultados (Completado, Con reservas, Fallido) cierran el Tramo y, cuando era
-el último, dejan la Orden lista para confirmarse (ver :ref:`ciclo-estados`).
+Completado y Con reservas cierran el Tramo y, cuando era el último, dejan la Orden lista para
+confirmarse (ver :ref:`ciclo-estados`). **Fallido** también lo cierra, y para siempre: el Tramo y
+la Parada que fallaron no cambian ya de estado. Pero abre en la Orden la :term:`Gestión del
+fallo`, donde alguien decide si la entrega se **reprograma** (nace el intento siguiente, un
+Tramo y una Parada nuevos sin planificar), si la mercancía se **devuelve al cliente** o si se
+**destruye**; las dos últimas son también Tramos nuevos de la misma Orden, y la devolución
+tiene su Parada, que se planifica y se reporta como cualquier otra. La Orden sigue al Tramo
+nuevo. Todo el flujo está en :ref:`gestion-del-fallo`.
 
 Si el mismo evento llega dos veces (la app reintenta cuando no tiene cobertura), se procesa
 una sola. Si Odoo rechaza un evento por una regla de negocio, la app se lo dice al conductor
@@ -153,6 +161,7 @@ cierre de Parada: si sale, va con quien lo lleva; si llega o se entrega, se qued
 El asistente **solo mueve el Bulto**: el estado del Tramo, la Parada, el Viaje y la Orden lo
 mueven los eventos de Parada (Establecer evento o la app). No admite un Viaje completado ni una
 Orden facturada, ni el resultado Devuelto, para el que no hay regla de dónde queda el Bulto.
+Una incidencia de Bulto, además, no abre la gestión del fallo: esa es de la entrega.
 
 **Cerrar desde la oficina.** El asistente **Establecer evento** de la Parada (Acciones
 operativas) registra el mismo resultado que la app, pero **sin posición**: la traza de oficina

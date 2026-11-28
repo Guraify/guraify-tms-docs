@@ -428,10 +428,12 @@ están en :ref:`17.0/1_introduction/1_4_technological-architecture:1.4.2.1 Dos m
       geocercas, alarmas y privacidad del destinatario.
 
 La :term:`Política operativa` (``tms.operations.policy``) decide qué se hace con un Viaje que ya
-está en la calle: cuándo se recalcula su ETA, qué se le pide a PTV además de la ruta y, para
-cuando haya torre de control, qué alarmas salta y qué ve el Destinatario. Hay **una para la
-compañía**, sin Proyecto, y como mucho **una por Proyecto**, que gana a la de la compañía para
-los Viajes del Proyecto. La del Proyecto se crea desde su pestaña Operación (4.5.10). Sin
+está en la calle: cuándo se recalcula su ETA, qué se le pide a PTV además de la ruta, qué se
+propone cuando una entrega falla y, para la torre de control, qué alarmas salta y qué ve el
+Destinatario. Hay **una para la compañía**, sin Proyecto, y como mucho **una por Proyecto**, que
+**sustituye entera** a la de la compañía para ese Proyecto: no se mezclan campo a campo, y un
+Proyecto con política propia y sin reglas de fallo no hereda las de la compañía. La del Proyecto
+se crea desde su pestaña Operación (4.5.10). Sin
 ninguna, el sistema aplica los valores por defecto. La ven los usuarios del TMS; la cambian los
 responsables.
 
@@ -478,9 +480,33 @@ responsables.
      - Qué verá el Destinatario de la posición del vehículo (siempre, solo cuando es la
        siguiente Parada, o solo una cuenta atrás) y si podrá reprogramar o cambiar la
        dirección. Reservado para la torre de control: hoy no lo lee nadie.
+   * - Gestión del fallo: **reglas de fallo**
+     - Qué se propone cuando una entrega falla. Cada regla tiene motivos (vacío, cualquiera;
+       solo admite motivos de fallo), «From Attempt» (desde qué número de intentos casa) y la
+       propuesta: reprogramar, devolver al cliente o destruir. **Gana la primera que casa**, así
+       que la más específica va arriba. Una regla marcada «Storage Deadline Passed» solo se
+       mira cuando el plazo de almacén ha vencido. Las reglas proponen; nunca aplican.
+   * - Gestión del fallo: **máximo de intentos**
+     - Cuántos intentos de entrega admite una Orden («Max Delivery Attempts»; 0, sin límite).
+       Alcanzado, reprogramar se niega y solo un Responsable puede forzar otro.
+   * - Gestión del fallo: **plazo de almacén**
+     - Días que la mercancía fallida puede esperar decisión, desde la fecha del fallo
+       («Storage Max Days»; 0, sin plazo). Vencido, la Orden queda marcada y el responsable del
+       Proyecto recibe una actividad. Cambiarlo no toca los plazos ya puestos.
+   * - Gestión del fallo: **Dirección de devolución** y **Dirección de destrucción**
+     - Adónde van las devoluciones (sin ella, al punto de carga original de la Orden) y las
+       destrucciones (sin ella, hay que indicarla en cada decisión). Si la de destrucción es el
+       propio Hub, destruir no genera transporte.
 
 Mientras no lleguen posiciones reales de los vehículos (ver
 :ref:`17.0/1_introduction/1_4_technological-architecture:1.4.6 Evolución prevista`), el modo
 **Al desviarse del plan** no recalcula nunca: elegirlo equivale a no recalcular. El campo
 **Umbral de desviación (min)** que aparece con ese modo no lo usa ningún cálculo. Campos en
 :doc:`/17.0/annexes/A_31_politica-operativa`.
+
+El bloque de gestión del fallo («Failure Management» en la ficha) es lo que alimenta la propuesta
+del asistente y los filtros de la lista de Órdenes; cómo se trabaja con ellos está en
+:ref:`gestion-del-fallo`. Un ejemplo de reglas, de arriba abajo: *Rechazado → devolver al
+cliente*; *Ausente, desde el intento 3 → destruir*; *Ausente → reprogramar*. Al crear, cambiar o
+borrar una regla, el sistema recalcula la propuesta de las Órdenes con el fallo por decidir; las
+facturadas no se tocan.

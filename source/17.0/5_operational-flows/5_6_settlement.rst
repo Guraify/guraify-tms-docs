@@ -93,6 +93,14 @@ por línea de mercancía hay dos motivos más: un detalle que filtra por tipos d
 de mercancía sin tipo de bulto, y una Tarifa base de kilómetros u horas en un ámbito de línea,
 que no se admite.
 
+**Reintentos, devoluciones y destrucciones.** Cuando una entrega fallida se reprograma, la Orden
+se reabre y se tarifica de nuevo entera: como el intento siguiente es otro Tramo con otra
+Parada, el importe por entrega sale **una vez por intento**. Si la Orden ya estaba **facturada**
+no se toca: no recibe línea nueva y una nota en su historial avisa de que ese intento se cobra a
+mano. Lo mismo vale para una devolución o una destrucción con transporte, que se tarifican como
+cualquier Tramo; la destrucción en el mismo Hub no tiene transporte y no genera línea
+(:ref:`gestion-del-fallo`).
+
 Dos botones ayudan a resolverlo sin salir del registro. **Resolver diagnóstico** lleva al campo
 o al registro que hay que corregir según el motivo. **Crear trayecto faltante** abre un
 asistente que da de alta el precio entre las dos zonas que faltaban en la tarifa. Corregido el

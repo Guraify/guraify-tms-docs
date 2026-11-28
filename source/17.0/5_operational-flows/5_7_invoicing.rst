@@ -32,6 +32,10 @@ una a una o seleccionando varias en la lista. El asistente de Odoo incorpora un 
   componen.
 - **Estándar Odoo**, una factura por Orden con sus líneas tal cual.
 
+Una Orden facturada cuya entrega se reintenta, se devuelve o se destruye **después** no recibe
+líneas nuevas: su historial lleva una nota con lo que hay que cobrar a mano, en una factura
+aparte (:ref:`gestion-del-fallo`).
+
 El asistente permite además fijar la **fecha de factura**. También se puede facturar desde la
 lista de **Líneas de Orden de Venta**: seleccionando líneas de varias Órdenes y pulsando
 **Crear factura agrupada** se facturan solo esas líneas, siempre que pertenezcan a Órdenes

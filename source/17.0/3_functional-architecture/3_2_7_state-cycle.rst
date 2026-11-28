@@ -85,7 +85,7 @@ Odoo está en la referencia técnica de cada sección.
    * - **Resultado** (todas las Paradas cerradas)
      -
      - Pedido de venta
-     - Completado · Con reservas · Fallido · Reprogramado · Devuelto · Cancelado
+     - Completado · Con reservas · Fallido · Devuelto · Destruido · Cancelado
      - los mismos
      - **Por validar** (si el Proyecto pide revisión) · Completado · Fallido
      - Pedido de compra, bloqueada · Cancelada si el Viaje falla
@@ -97,9 +97,11 @@ Tres lecturas de la matriz:
 - **El pedido de venta va por detrás.** Validar la Orden la deja en *Presupuesto enviado* (sin
   enviar ningún correo: es solo el estado); reabrir el Manifiesto la devuelve a *Presupuesto*.
   Pasa a *Pedido de venta* cuando todos sus Tramos están cerrados **y el Tramo actual terminó en
-  Completado, Con reservas o Fallido**: una entrega reprogramada espera al siguiente intento. Lo
-  hace la tarea programada de tarificación, no el evento de la app, por lo que hay unos minutos
-  de desfase (:doc:`/17.0/5_operational-flows/5_6_settlement`).
+  Completado, Con reservas, Fallido, Devuelto o Destruido**. Si la entrega fallida se reprograma,
+  el Tramo actual pasa a ser el del nuevo intento, que está abierto, y la Orden vuelve a
+  *Presupuesto enviado* hasta que ese intento termine (3.2.7.4). Lo hace la tarea programada de
+  tarificación, no el evento de la app, por lo que hay unos minutos de desfase
+  (:doc:`/17.0/5_operational-flows/5_6_settlement`).
 - **El Viaje tiene dos estados que los demás no tienen.** *En curso* aparece en cuanto el
   conductor (o la API de la agencia) toca una Parada, aunque el Viaje no se hubiera despachado.
   *Por validar* solo existe en los Proyectos que exigen revisar el Viaje antes de facturar; el
@@ -142,7 +144,48 @@ bajarlo. La cabecera del Viaje solo muestra el botón que se puede pulsar en ese
   :doc:`/17.0/5_operational-flows/5_5_trip-closing`.
 - Un Viaje cuya Orden de compra está **facturada** no se recalcula ni se borra.
 
-3.2.7.4 Referencia técnica
+.. _ciclo-fallo:
+
+3.2.7.4 Cuando una entrega falla: el fallo permanece
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Un fallo no se borra con lo que venga después. El Tramo y la Parada que fallaron **se quedan
+Fallidos para siempre**, y lo que se decida hacer con la mercancía es **otro Tramo**, encadenado
+con el anterior. Así el historial de la Orden cuenta lo que pasó de verdad: cuántas veces se
+intentó, por qué falló cada una y cómo acabó.
+
+.. mermaid::
+
+   flowchart LR
+       I1["Tramo · intento 1<br/>Fallido"] --> D{"Decisión<br/>(Gestión del fallo)"}
+       D -->|"Reprogramar"| I2["Tramo · intento 2<br/>Entrega<br/>Validado → … → resultado"]
+       D -->|"Devolver al cliente"| R["Tramo de Devolución<br/>→ Devuelto"]
+       D -->|"Destruir"| X["Tramo de Destrucción<br/>→ Destruido"]
+       D -->|"Cerrar sin más"| N["La Orden se queda<br/>Fallida"]
+
+- **Cada entrega es un** :term:`Intento` **numerado.** Reprogramar crea el intento siguiente: un
+  Tramo y una Parada nuevos, sin planificar, que recorren el ciclo desde Validado. El Tramo
+  anterior deja de ser el :term:`tramo activo <Tramo activo>` y conserva su estado Fallido. La
+  constancia de que se reprogramó es una :term:`traza informativa <Traza informativa>` en el
+  Tramo y la Parada viejos: se ve en la Trazabilidad y en los avisos, y no cambia su estado.
+  **Reprogramado** como estado ya no lo escribe nadie; aparece solo en operaciones antiguas.
+- **Devolver y destruir crean un Tramo con otro** :term:`propósito <Propósito del Tramo>`. No es
+  una entrega ni cuenta como intento. El de **Devolución** se planifica, se despacha y se reporta
+  como cualquier Parada; cuando el conductor la cierra, la Parada queda Completada y **el Tramo
+  y la Orden leen Devuelto**. El de **Destrucción** acaba en **Destruido** solo cuando alguien
+  cierra la destrucción con el documento que la acredita; hasta entonces, entregada en el sitio,
+  sigue *En curso*. Si la mercancía se destruye en el mismo Hub donde está, el Tramo no tiene
+  Parada ni Viaje.
+- **La Orden lee siempre su Tramo actual.** Con un intento nuevo abierto, vuelve a estar abierta;
+  con la devolución entregada, Devuelta; con la destrucción cerrada, Destruida. Mientras tanto
+  lleva el :term:`Seguimiento del fallo`, que dice en qué punto está la gestión.
+- **Lo facturado no se recalcula.** Una Orden facturada conserva su pedido de venta y sus
+  líneas; de la gestión del fallo solo recibe el estado del resultado.
+
+El flujo de trabajo (quién decide, con qué asistente y qué pasa con la mercancía) está en
+:ref:`gestion-del-fallo`.
+
+3.2.7.5 Referencia técnica
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Los códigos son los mismos en los cuatro niveles hasta el despacho; la etiqueta cambia según
@@ -188,11 +231,16 @@ el nivel. Un mismo código, ``in_process``, se lee *Validado* en la Orden y el T
      - —
      - Por validar
      - Por validar
-   * - ``completed``, ``reserves``, ``failed``, ``rescheduled``, ``returned``, ``canceled``
-     - Completado, Con reservas, Fallido, Reprogramado, Devuelto, Cancelado
+   * - ``completed``, ``reserves``, ``failed``, ``returned``, ``destroyed``, ``canceled``
+     - Completado, Con reservas, Fallido, Devuelto, Destruido, Cancelado
      - los mismos
      - ``completed``, ``failed``
      - los seis :term:`estados de cierre <Estados de la Parada>`
+   * - ``rescheduled``
+     - Reprogramado (solo histórico)
+     - Reprogramado (solo histórico)
+     - —
+     - no se escribe desde la gestión del fallo
 
 Los momentos de la matriz corresponden a estos puntos del sistema: validar la Orden y cerrar el
 Manifiesto escriben ``in_process`` en Tramo y Orden y dejan el pedido en ``sent``; asignar o
@@ -201,3 +249,10 @@ que escribe ``processed`` (en los cuatro niveles) y anota ``dispatch_date``; el 
 lo calcula ``_compute_state_from_stops`` a partir de sus Paradas de ruta, de ``dispatch_date``,
 de ``validation_date`` y de la marca de Viaje repartido; el pedido pasa a ``sale`` por la tarea
 programada de tarificación cuando ``_tms_ready_to_confirm`` lo permite.
+
+De la gestión del fallo: el Tramo lleva ``attempt_number``, ``leg_purpose`` (``delivery``,
+``return``, ``destruction``), ``previous_leg_id`` y ``next_leg_id``; la traza informativa es
+``tms.traceability`` con ``tms_informative``; el Tramo de devolución cerrado lee ``returned``
+aunque su traza y su Parada digan ``completed``; ``destroyed`` lo escribe solo el cierre de la
+destrucción; la señal de la Orden es ``tms_followup`` (``goods_pending``, ``to_decide``,
+``in_progress``).

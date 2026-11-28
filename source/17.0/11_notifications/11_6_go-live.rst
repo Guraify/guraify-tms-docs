@@ -47,6 +47,9 @@ Este apartado es la receta para que esa prueba no se convierta en un envío masi
    recoge el consentimiento de WhatsApp.
 #. Crear los flujos, empezando por uno o dos (entregado, entrega no realizada) en un Proyecto, y
    ampliar después.
+#. Marcar **«This notice commits a date»** en los flujos al Destinatario que dicen un día o una
+   hora (:doc:`11_3_workflows`). Sin ella no hay promesas, y la gestión del fallo no protege la
+   fecha comunicada ni pregunta al sacar una Parada de un Viaje despachado.
 #. Activar las tareas programadas «TMS: send the notification queue» y «TMS: dispatch the
    time-based notifications», y vigilar el indicador **Avisos atascados en cola**.
 

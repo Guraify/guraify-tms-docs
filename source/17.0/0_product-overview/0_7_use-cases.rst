@@ -41,9 +41,11 @@ app.
 En cada entrega el conductor escanea el Bulto y recoge la firma. En ese instante el TMS envía
 a la plataforma el estado «entregado», tal como lo espera su sistema, con la firma adjunta, y
 la plataforma se lo muestra a su comprador. Si el destinatario no está, el conductor lo
-reporta, la Parada queda Fallida y la plataforma recibe el motivo. Al reprogramar la entrega
-para el día siguiente, la Orden recibe un Tramo nuevo para el segundo intento, sin que nadie
-cree otra Orden.
+reporta, la Parada queda Fallida y la plataforma recibe el motivo. La oficina ve la Orden entre
+las pendientes de decidir y, con un clic, la reprograma para el día siguiente: la misma Orden
+recibe un segundo intento, el comprador recibe el aviso con la nueva fecha y el primer intento
+queda en el historial como lo que fue, un fallo. Si la plataforma ha pedido que al tercer
+intento la mercancía se le devuelva, el sistema lo propone solo.
 
 Carga completa con transportista externo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

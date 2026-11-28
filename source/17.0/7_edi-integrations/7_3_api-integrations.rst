@@ -99,3 +99,10 @@ seguimiento (``tms_int.api.get.tracking``), que devuelve el estado de las Órden
 y la descarga de adjuntos (``tms_int.api.get.attachment``), que aplica control de acceso
 por Proyecto para que cada cliente solo acceda a su propia documentación. Sus contratos
 están en la pasarela (ver el índice del capítulo).
+
+Tres cosas de la API de seguimiento cambian con la gestión del fallo (:ref:`ciclo-fallo`). El
+intento que falló **sigue apareciendo como fallido** aunque se reprograme: la anotación de
+«reprogramado» sale en la lista de trazas, pero el estado actual es el del intento nuevo. El
+estado puede ser **devuelto** o **destruido**. Y cada traza lleva el **propósito del Tramo**
+(entrega, devolución o destrucción), que es lo que hay que mirar para saber si un «completado»
+es una entrega o el cierre de una devolución.

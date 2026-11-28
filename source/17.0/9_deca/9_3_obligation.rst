@@ -19,6 +19,9 @@ El motor evalúa las exenciones en un orden fijo y se detiene en la primera que 
 ninguna se cumple, el Tramo está obligado.
 
 #. La **compañía** tiene el DeCA apagado: nada que evaluar.
+#. **Sin transporte**: el Tramo es una destrucción de mercancía en el mismo Hub donde está
+   (:ref:`gestion-del-fallo`). No hay movimiento que documentar. Una destrucción o una
+   devolución **con** transporte se evalúan como cualquier otro Tramo.
 #. **Exención manual** del Tramo: un Usuario DeCA la marca en el Tramo con su motivo, para el
    caso suelto que las reglas no contemplan.
 #. **Exención fija del Proyecto** (ficha DeCA): internacional, sin licencia o manual.

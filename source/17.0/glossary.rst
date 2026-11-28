@@ -98,9 +98,11 @@ para quien lo necesite.
 
    Estados de la Parada
       Resultado de la ejecución de una Parada: **Completada** (todo conforme), **Con reservas**
-      (ejecutada con incidencias), **Fallida** (no ejecutada), **Reprogramada** (se volverá a
-      intentar), **Devuelta** (mercancía devuelta) y **Cancelada**. Son los estados que cierran la
-      Parada. Antes de cerrarse pasa por estados abiertos (sin planificar, planificada,
+      (ejecutada con incidencias), **Fallida** (no ejecutada), **Devuelta** (mercancía devuelta al
+      cliente), **Destruida** (mercancía destruida, con su documento) y **Cancelada**. Son los
+      estados que cierran la Parada. **Reprogramada** se conserva solo para el histórico: desde la
+      :term:`Gestión del fallo`, una entrega fallida se queda Fallida y el reintento es otro
+      :term:`Intento`. Antes de cerrarse pasa por estados abiertos (sin planificar, planificada,
       despachada, en curso, cargada…), que se detallan en el capítulo 3.2.6; cómo encajan con los
       del Tramo, la Orden y el Viaje, en el 3.2.7, y los eventos de la app, en la tabla de 5.4.5.
       (No se dice *Hecho*, *KO* ni *OK*, ni *en proceso* o *procesada* para los estados abiertos.)
@@ -549,9 +551,11 @@ para quien lo necesite.
    Política operativa
       Decisiones por compañía, y opcionalmente por Proyecto, sobre el Viaje en la calle: el
       recálculo del ETA (cuándo, cada cuánto, espaciado mínimo y tope diario), los extras que se
-      piden a PTV (peajes, esquema de emisiones, enriquecimiento), el reparto del CO₂ a las Órdenes
-      y la geocerca de llegada; y, reservadas para la torre de control, las alarmas y la privacidad
-      del Destinatario. La del Proyecto gana a la de la compañía. Modelo ``tms.operations.policy``.
+      piden a PTV (peajes, esquema de emisiones, enriquecimiento), el reparto del CO₂ a las Órdenes,
+      la geocerca de llegada y la :term:`Gestión del fallo` (reglas, máximo de intentos, plazo de
+      almacén y direcciones de devolución y destrucción); y, para la torre de control, las alarmas
+      y la privacidad del Destinatario. La del Proyecto **sustituye entera** a la de la compañía.
+      Modelo ``tms.operations.policy``.
 
    ETA
       Hora estimada de llegada a una Parada. El **ETA prometido** es el de la planificación y no
@@ -610,3 +614,62 @@ para quien lo necesite.
       Agrupación de Áreas geográficas o de códigos postales a efectos de precio. Los detalles de las
       Líneas de tarifa fijan importes por zona de origen y de destino. (No se dice *zona
       tarifaria*.) Modelo ``tms.pricelist.zone``.
+
+   Gestión del fallo
+      Lo que el sistema abre cuando una entrega falla, venga el fallo de la app, de una agencia o
+      de la oficina: la Orden queda señalada (:term:`Seguimiento del fallo`) hasta que alguien
+      decide una de las tres salidas, **Reprogramar**, **Devolver al cliente** o **Destruir**, o
+      la cierra sin más. Se decide desde el asistente «Manage» › «Manage failure», de una en una
+      o en bloque. Capítulo 5.5.
+
+   Seguimiento del fallo
+      Señal de la Orden mientras tiene un fallo sin resolver («Failure Follow-up»). Tres valores:
+      **mercancía por volver** (falló y la mercancía no consta de vuelta en el almacén), **por
+      decidir** (está de vuelta y falta elegir salida) y **en curso** (decidida; el reintento, la
+      devolución o la destrucción aún no ha terminado). Cada uno es un filtro de la lista de
+      Órdenes. Campo ``tms_followup`` de ``sale.order``.
+
+   Intento
+      Cada Tramo de entrega de una Orden, numerado: el primero es el intento 1 y cada
+      reprogramación crea el siguiente, encadenado con el anterior. El Tramo que falló **se queda
+      Fallido**; el reintento es un Tramo nuevo con su Parada. Campo ``attempt_number`` de
+      ``tms.shipment.leg``. (No se dice *reintento* para el Tramo; sí para el hecho de volver a
+      intentarlo.)
+
+   Propósito del Tramo
+      Para qué existe un Tramo: **Entrega** (lo normal), **Devolución** (llevar al cliente la
+      mercancía de una entrega fallida) o **Destrucción**. Los dos últimos nacen de la
+      :term:`Gestión del fallo`, no son entregas ni cuentan como :term:`Intento`, y quedan fuera
+      de los avisos al Destinatario, de los indicadores de Parada y de lo que se envía a agencias.
+      Campo ``leg_purpose``.
+
+   Promesa
+      Fecha y franja que se le han comunicado al Destinatario. La anota el sistema en la Parada
+      cuando sale de verdad un :term:`Aviso` de un :term:`Flujo de aviso` marcado como «compromete
+      fecha». Una Parada con promesa no cambia de día ni de franja a mano: se cambia fallando y
+      reprogramando, para que el Destinatario reciba el aviso. Campos ``promise_*`` de
+      ``tms.stop``.
+
+   Regla de fallo
+      Línea de la :term:`Política operativa` que, según el motivo del fallo y el número de
+      intentos, **propone** reprogramar, devolver o destruir. Nunca lo aplica: la decisión es
+      siempre de una persona. Gana la primera que casa. Modelo ``tms.failure.rule``.
+
+   Instrucción de la Orden
+      Lo que el cliente ha pedido que se haga con esa Orden si la entrega falla (reprogramar,
+      devolver o destruir). Manda sobre las :term:`Reglas de fallo <Regla de fallo>`. Campo
+      «Failure Instruction» de la Orden.
+
+   Máximo de intentos
+      Número de intentos de entrega que admite una Orden, fijado en la :term:`Política operativa`.
+      Alcanzado, reprogramar se niega y solo un Responsable del TMS puede forzar otro intento.
+
+   Plazo de almacén
+      Días que una mercancía fallida puede esperar decisión, contados desde el fallo y fijados en
+      la :term:`Política operativa`. Vencido sin decisión, la Orden queda marcada y el responsable
+      del Proyecto recibe una actividad.
+
+   Traza informativa
+      Anotación de :term:`Trazabilidad` que deja constancia de algo sin decidir el estado de nada.
+      La de «reprogramado» lo es: aparece en el historial, en los avisos y en la API de
+      seguimiento, pero el Tramo y la Parada que fallaron siguen Fallidos.

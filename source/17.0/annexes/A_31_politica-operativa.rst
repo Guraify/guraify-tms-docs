@@ -8,7 +8,7 @@ A.31 Política operativa
    Operación
 
 Modelo Odoo: ``tms.operations.policy``. Una política para la compañía (sin Proyecto) y, como
-mucho, una por Proyecto, que gana a la de la compañía. La leen los usuarios del TMS y la cambian
+mucho, una por Proyecto, que sustituye entera a la de la compañía. La leen los usuarios del TMS y la cambian
 los responsables. Sin ninguna, se aplican los valores por defecto de la tabla.
 
 .. list-table::
@@ -75,6 +75,33 @@ los responsables. Sin ninguna, se aplican los valores por defecto de la tabla.
    * - El destinatario puede reprogramar / cambiar la dirección
      - Sí/No
      - Lo que podrá hacer el Destinatario desde su página de seguimiento. Reservado.
+
+.. list-table:: Gestión del fallo (grupo «Failure Management»)
+   :header-rows: 1
+   :widths: 28 22 50
+
+   * - Campo
+     - Tipo
+     - Qué es
+   * - «Max Delivery Attempts»
+     - Número
+     - Máximo de intentos de entrega por Orden; 0 es sin límite (``max_delivery_attempts``).
+   * - «Storage Max Days»
+     - Número
+     - Plazo de almacén en días desde el fallo; 0 es sin plazo (``storage_max_days``).
+   * - Dirección de devolución
+     - Relación
+     - Dónde descargan las devoluciones. Vacía, el punto de carga de la Orden
+       (``return_address_id``).
+   * - Dirección de destrucción
+     - Relación
+     - Dónde se destruye por defecto; se puede cambiar en cada decisión
+       (``destruction_address_id``).
+   * - «Failure Rules»
+     - Líneas
+     - Las reglas de fallo (``tms.failure.rule``): orden, motivos («Reasons»), «From Attempt»,
+       propuesta («Proposal»: Reprogramar, Devolver al cliente, Destruir) y la casilla «Storage
+       Deadline Passed».
 
 «Reservado»: el campo se guarda, pero ningún proceso lo lee todavía; es para la torre de control.
 

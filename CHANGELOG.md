@@ -8,6 +8,31 @@ Convención de release: cada publicación se etiqueta con tag git `AAMMDD_VNN`
 
 ## [Sin publicar]
 
+### Gestión del fallo: intentos, promesa, reglas, devolver y destruir (tarea D35, 2026-11-28)
+- **Glosario**: Gestión del fallo, Seguimiento del fallo, Intento, Propósito del Tramo, Promesa,
+  Regla de fallo, Instrucción de la Orden, Máximo de intentos, Plazo de almacén, Traza informativa;
+  Estados de la Parada con **Destruida** y Reprogramada como histórico; Política operativa.
+- **3.2.7.4 Cuando una entrega falla: el fallo permanece** (nueva): el Tramo y la Parada fallidos
+  se quedan Fallidos, el reintento es otro Tramo numerado, devolución y destrucción con Tramo
+  propio; matriz y referencia técnica con Destruido. 3.2.1, 3.2.6, 2.1 y 2.2 enlazan.
+- **5.5.5 Cuando una entrega falla: la gestión del fallo** (nueva, diez apartados): la señal de la
+  Orden, la entrada en almacén y el diálogo del despacho, «Manage» y sus cuatro salidas, devolver,
+  destruir y Cerrar destrucción, Deshacer decisión, reglas, instrucción y plazo, fallar y
+  reprogramar en bloque, la promesa y sus tres salidas, lo que no hacen una devolución ni una
+  destrucción, referencia técnica. 5.5.3 ya no describe «Reprogramar parada».
+- **5.2.3** (el botón es «Manage»), **5.4.1** (despachar un reintento) y **5.4.3** (mermaid con
+  las tres salidas; «Devuelto» ya no es «una Orden nueva»).
+- **4.3.9 y A.31**: bloque de gestión del fallo de la política (reglas, máximo de intentos, plazo,
+  direcciones); la política del Proyecto sustituye entera a la de la compañía. **4.5.5**: las dos
+  casillas del motivo. **4.5.10**: el responsable del Proyecto y el plazo.
+- **5.6.4, 5.7** (una línea por intento; lo facturado, a mano), **5.8, 8.8** (primera entrega por
+  intento; devoluciones y destrucciones fuera), **11.1, 11.3, 11.6** (casilla que compromete
+  fecha, promesa, un solo aviso en bloque), **7.3.5, 7.4.3** (API de seguimiento; agencias y
+  seguimiento externo, la condición de la plantilla), **9.3.1** (exención sin transporte),
+  **10.4.6** (la devolución para el conductor), **12.1, 12.2**, 0.3 y 0.7.
+- Etiquetas de G1–G3 aún en inglés en la interfaz: se citan entre comillas (pedidas, Q-064).
+- Tres capturas nuevas registradas (`5_5_02` a `5_5_04`), para D39.
+
 ### Capturas de las pasadas, los escenarios y el canon, hechas y anonimizadas desde la copia local (2026-11-26)
 - Catorce capturas activadas: 4.3 (presets de serie, grupo Margen y pasadas), 5.2 (diálogo
   Secuenciar viajes nuevo, Escenario con la Comparativa), 8.9 (política del canon y pestaña Canon

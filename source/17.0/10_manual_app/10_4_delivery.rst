@@ -151,3 +151,12 @@ trabaje ese cliente; la app te muestra la que toca.
 
 La parada queda hecha y desaparece de tu ruta. La oficina la ve al momento si tienes cobertura;
 si no, en cuanto vuelva. Sigue con la siguiente.
+
+10.4.6 Si la parada es una devolución
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A veces lo que llevas no es una entrega nueva, sino mercancía que no se pudo entregar y que se
+le devuelve a quien la envió. En tu ruta aparece como una parada más y la haces igual: llegas,
+compruebas los bultos, recoges la firma de quien la recibe y la confirmas. No tienes que hacer
+nada distinto; la oficina ya sabe que es una devolución.
+

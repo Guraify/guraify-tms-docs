@@ -34,7 +34,7 @@ Además de los campos de la tabla, el maestro lleva tres de los campos comunes a
      - Papel de carga de una recogida a domicilio en el punto de recogida del Proyecto.
    * - Parada de Ruta
      - Sí/No
-     - Papel de parada en casa del cliente: la que se planifica, se asigna a un Viaje, se envía a una agencia y se reprograma.
+     - Papel de parada en casa del cliente: la que se planifica, se asigna a un Viaje, se envía a una agencia y, si falla, se reprograma.
    * - Recogida Directo
      - Sí/No
      - Papel de carga de un servicio directo. La etiqueta de la interfaz es «Recogida Directo».

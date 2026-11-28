@@ -59,9 +59,12 @@ El ciclo completo
 4. **Se ejecuta.** El conductor ve el Viaje en la app, va Parada a Parada, escanea, entrega,
    firma, cobra y reporta. Cada acción actualiza la Parada, el Tramo y la Orden al momento, y
    la oficina lo ve en pantalla sin llamar a nadie.
-5. **Se cierra.** Cuando todas las Paradas tienen un estado final (Completada, Con reservas,
-   Fallida, Reprogramada, Devuelta o Cancelada), el Viaje se cierra y la Orden se bloquea para
-   que nadie cambie lo que ya se ha ejecutado.
+5. **Se cierra.** Cuando todas las Paradas tienen un resultado (entregada, con reservas o
+   fallida), el Viaje se cierra y la Orden se bloquea para que nadie cambie lo que ya se ha
+   ejecutado. Si una entrega falla, la Orden queda señalada hasta que alguien decide qué hacer
+   con la mercancía: volver a intentarlo otro día, devolverla al cliente o destruirla. Cada
+   intento queda en el historial, y el sistema propone la salida según las reglas que se hayan
+   acordado con el cliente.
 6. **Se liquida y se factura.** El Viaje calcula el coste con la tarifa del transportista y
    genera su orden de compra. La Orden calcula el precio con la tarifa del cliente y queda
    lista para facturar. Las dos operaciones usan el mismo mecanismo de tarifas, así que el

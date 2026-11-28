@@ -169,7 +169,7 @@ ejecutables).
        la Parada queda con un tipo ajeno. Cada compañía nueva necesita sus seis.
 
 El papel condiciona lo que se puede hacer con la Parada. Solo las Paradas de Ruta y las
-directas se asignan a un Viaje, se envían a una agencia o se reprograman; las de hub las crea
+directas se asignan a un Viaje, se envían a una agencia o, si fallan, se reprograman; las de hub las crea
 y las quita el propio Viaje, y las de optimizador quedan fuera de la secuenciación y de los
 documentos de carga. Cómo se asigna el tipo al validar y qué estados recorre después la
 Parada está en :doc:`/17.0/3_functional-architecture/3_2_6_legs-and-stops`. Campos en

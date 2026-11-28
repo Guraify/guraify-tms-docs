@@ -52,7 +52,8 @@ tiene su sección.
    * - **6. Cierre**
      - La última Parada se cierra.
      - El Viaje pasa a Completado (o Por validar, o Fallido); se tarifica el pasivo; dejan de
-       recalcularse ETA; los avisos de resultado ya han salido.
+       recalcularse ETA; los avisos de resultado ya han salido. Las Órdenes con una entrega
+       fallida quedan señaladas hasta que se decide reprogramar, devolver o destruir.
      - Validación del Proyecto (4.5.3).
      - :doc:`5.5 </17.0/5_operational-flows/5_5_trip-closing>`; ciclo de estados (3.2.7).
 

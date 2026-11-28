@@ -41,6 +41,13 @@ requiere, y los sistemas externos pueden alimentar estados por API o por importa
    La trazabilidad no es declarativa. Se construye a partir de la ejecución real registrada en la
    app, en el backend de Odoo y en las integraciones.
 
+Casi todas las anotaciones mueven el estado de aquello sobre lo que se escriben: el estado de un
+Tramo o de una Parada es el de su última anotación. La excepción es la :term:`traza informativa
+<Traza informativa>`, que deja constancia sin decidir nada. La más habitual es la de
+«reprogramado»: cuando una entrega fallida se vuelve a programar, la anotación aparece en el
+historial, en los avisos al Destinatario y en la API de seguimiento, pero el Tramo y la Parada
+que fallaron siguen Fallidos (:ref:`ciclo-fallo`).
+
 Gracias a este diseño, cada entidad conserva un histórico completo y auditable. En cualquier
 momento es posible saber dónde está la mercancía, en qué estado operativo se encuentra, qué
 recurso la transporta o la ha transportado y qué incidencias han afectado al servicio. Eso da

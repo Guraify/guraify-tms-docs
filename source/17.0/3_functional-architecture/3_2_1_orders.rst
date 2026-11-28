@@ -66,15 +66,24 @@ de la Parada, el Viaje y el pedido de venta está en :ref:`ciclo-estados`:
    * - Fallida
      - No se pudo ejecutar.
      - Cierre
-   * - Reprogramada
-     - Se volverá a intentar en otra fecha.
-     - Cierre
    * - Devuelta
-     - Mercancía devuelta.
+     - La mercancía de una entrega fallida se ha devuelto al cliente.
+     - Cierre
+   * - Destruida
+     - La mercancía de una entrega fallida se ha destruido, con su documento.
      - Cierre
    * - Cancelada
      - Orden anulada.
      - Cierre
+
+**Reprogramada** queda solo en Órdenes antiguas. Hoy una entrega fallida deja la Orden **Fallida**
+y con el :term:`Seguimiento del fallo` encendido: una señal con tres valores (mercancía por
+volver, por decidir, en curso) que tiene su aviso en la ficha y sus filtros en la lista de
+Órdenes. Cuando se decide reprogramar, la Orden vuelve a estar abierta porque su tramo activo
+pasa a ser el del nuevo :term:`Intento`; cuando se devuelve o se destruye, acaba Devuelta o
+Destruida. La Orden puede llevar además una :term:`Instrucción de la Orden`, en la pestaña de
+más información: lo que el cliente quiere que se haga si falla. El ciclo está en
+:ref:`ciclo-fallo` y el trabajo diario, en :ref:`gestion-del-fallo`.
 
 Este cálculo automático es lo que convierte a la Orden en un reflejo fiel de la realidad
 operativa: el estado comercial no se declara, emerge de los eventos físicos registrados en las
@@ -157,9 +166,10 @@ El sistema aplica los dos gestos por sí solo siguiendo el estado de los Tramos:
 
 - **Bloqueo automático al completar.** Cuando **todos** los Tramos de la Orden (sin contar los
   de transferencia) alcanzan un estado de cierre **y el tramo actual ha terminado en Completada,
-  Con reservas o Fallida**, la Orden queda marcada como **pendiente de confirmar**. Un tramo
-  actual Reprogramado o Cancelado no cuenta como desenlace: la Orden espera al siguiente
-  intento. La tarea programada de tarificación, que corre cada cinco minutos, la recoge,
+  Con reservas, Fallida, Devuelta o Destruida**, la Orden queda marcada como **pendiente de
+  confirmar**. Un tramo actual Cancelado no cuenta como desenlace. Si después la entrega fallida
+  se reprograma, el intento nuevo reabre la Orden (es el desbloqueo automático de abajo) y se
+  vuelve a confirmar cuando ese intento termine. La tarea programada de tarificación, que corre cada cinco minutos, la recoge,
   vuelve a comprobar la regla (la app levanta la marca al cerrar un solo Tramo, con los demás
   aún abiertos), calcula sus líneas de venta si hacía falta y la confirma. El desfase de unos
   minutos entre el cierre de la última parada y la confirmación es deliberado: confirmar en

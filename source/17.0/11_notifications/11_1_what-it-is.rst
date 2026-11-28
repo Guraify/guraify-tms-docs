@@ -38,6 +38,11 @@ motivo.
      - Cuando el conductor marca que está en la Parada.
    * - Entregado · Entregado con reservas · Orden Fallida · Reprogramado · Devuelto
      - Cuando la Parada se cierra con ese resultado, desde la app o desde la oficina.
+       **Reprogramado** sale al reprogramar una entrega fallida en la gestión del fallo
+       (:ref:`gestion-del-fallo`); cuando se falla y reprograma en bloque, el Destinatario recibe
+       solo ese y no también el de fallida. **Devuelto** sale al cerrarse la devolución, para los
+       flujos dirigidos al Cliente o a los seguidores: en las Paradas de una devolución o de una
+       destrucción el **Destinatario no recibe ningún aviso**, porque no son entregas.
    * - Dirección cambiada
      - Cuando cambia la dirección de la Parada.
    * - El día anterior

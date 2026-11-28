@@ -31,10 +31,11 @@ desencadena cada uno fuera de los estados:
      - Nada más. Es el único evento que no dispara ningún aviso ni recálculo.
    * - Llegada (En curso)
      - Dispara el aviso **Vehículo llegado** al Destinatario de la Parada.
-   * - Resultado de una entrega (Completada, Con reservas, Fallida, Reprogramada, Devuelta)
+   * - Resultado de una entrega (Completada, Con reservas, Fallida)
      - Cierra la Parada: pide el **recálculo del ETA** de las Paradas pendientes del Viaje;
        dispara el aviso del resultado al Destinatario y el aviso **Eres el siguiente** al de la
-       Parada siguiente; si era la última, cierra el Viaje.
+       Parada siguiente; si era la última, cierra el Viaje. Una **Fallida** abre además la
+       gestión del fallo en la Orden (:ref:`gestion-del-fallo`).
    * - Resultado de una carga (Cargada, con reservas, No cargada)
      - Cierra la Parada igual: recálculo del ETA y cierre del Viaje si era la última. Los avisos
        de resultado son de entregas; una carga no avisa al Destinatario.

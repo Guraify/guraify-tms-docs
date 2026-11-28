@@ -64,8 +64,9 @@ entre sus Tramos (:doc:`/17.0/8_economic-administration/8_2_sales-split`).
 
 Su función es permitir que una Orden se descomponga en movimientos independientes sin perder la
 unidad contractual. Un servicio puerta a puerta es un Tramo; un servicio con paso por Hub son dos
-o más Tramos dentro de la misma Orden; y una reprogramación o una devolución se resuelven
-añadiendo Tramos, no creando Órdenes nuevas. El Tramo es la pieza que traduce el compromiso
+o más Tramos dentro de la misma Orden; y cuando una entrega falla, el reintento, la devolución
+al cliente o la destrucción de la mercancía son Tramos nuevos de esa misma Orden, encadenados
+con el que falló, no Órdenes nuevas (:ref:`ciclo-fallo`). El Tramo es la pieza que traduce el compromiso
 comercial en movimientos concretos y la que da origen a las Paradas: sin Tramo no hay evento
 físico que planificar.
 

@@ -24,8 +24,8 @@ El indicador de la Parada (``tms.stop``) condensa cuatro informaciones en un mis
   hub, recogida a domicilio o recogida o entrega directa.
 - **Estado de la Parada**: por el color del triángulo. Gris para los estados abiertos
   (sin planificar, planificada, despachada y los intermedios de la app); verde para **Completada**;
-  rojo para **Fallida**, **Devuelta** y **Cancelada**; amarillo para **Con reservas** y
-  **Reprogramada** (ver :term:`Estados de la Parada`).
+  rojo para **Fallida**, **Devuelta**, **Destruida** y **Cancelada**; amarillo para **Con
+  reservas** y, en operaciones antiguas, **Reprogramada** (ver :term:`Estados de la Parada`).
 - **Puntualidad**: una barra de color que compara la hora real con la prevista: verde si la
   Parada se ejecutó a tiempo, roja si con retraso y azul si con adelanto, con una etiqueta que
   resume el desvío en minutos.
